@@ -1,0 +1,12 @@
+{
+  "name": "search_member",
+  "version": "0.01",
+  "description": "",
+  "main": "",
+  "repository": "",
+  "author": "KNakano",
+  "license": "MIT",
+  "devDependencies": {
+    "@nestjs/cli": "^10.2.0"
+  }
+}
