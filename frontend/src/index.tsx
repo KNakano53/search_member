@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import SearchBox from './searchBox';
+import SearchBox from './SearchBox';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(

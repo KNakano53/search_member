@@ -10,7 +10,7 @@ function SearchResult(props :Props){
     }
     return(
         <div>
-            result
+            <h2>result</h2>
         </div>
     );
 
