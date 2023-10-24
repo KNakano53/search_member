@@ -1,0 +1,12 @@
+{
+  "name": "search_member",
+  "version": "0.01",
+  "main": "index.js",
+  "repository": "https://github.com/KNakano53/search_member.git",
+  "author": "KNakano",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@nestjs/cli": "^10.2.0"
+  }
+}
