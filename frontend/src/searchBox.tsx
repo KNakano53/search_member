@@ -8,10 +8,11 @@ function SearchBox() {
   return ( 
     <div className="App">
       <div>
+        <h1>testPage</h1>
         <input type='text' />
         <Button variant="primary" onClick={()=> setSeatchFlag(true) }>検索</Button>
       </div>
-      <SearchResult searchFlag= {searchFlag} />
+      <SearchResult searchFlag = {searchFlag} />
     </div>
   );
 }

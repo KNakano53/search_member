@@ -1,7 +1,11 @@
 import React from "react";
 
-function SearchResult(searchFlag :boolean){
-    if(!searchFlag){
+type Props={
+    searchFlag :boolean;
+}
+
+function SearchResult(props :Props){
+    if(!props.searchFlag){
         return null;
     }
     return(
