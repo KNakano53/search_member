@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import SearchResult from './SearchResult';
+import SearchResult from './searchResult';
 import Button from 'react-bootstrap/Button';
 
 function SearchBox() {
@@ -11,7 +11,7 @@ function SearchBox() {
         <input type='text' />
         <Button variant="primary" onClick={()=> setSeatchFlag(true) }>検索</Button>
       </div>
-      <SearchResult searchFlag={searchFlag} />
+      <SearchResult searchFlag= {searchFlag} />
     </div>
   );
 }

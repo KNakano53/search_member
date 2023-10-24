@@ -4,6 +4,11 @@ function SearchResult(searchFlag :boolean){
     if(!searchFlag){
         return null;
     }
+    return(
+        <div>
+            result
+        </div>
+    );
 
 }
 
