@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import SearchBox from "./SearchBox";
 import reportWebVitals from "./reportWebVitals";
 import "./css/index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

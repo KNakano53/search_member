@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import SearchResult from "./searchResult";
 import "./css/SearchPage.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 function SearchBox() {
   const [searchFlag, setSeatchFlag] = useState(false);
