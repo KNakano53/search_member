@@ -1,5 +1,4 @@
 import { UserModel } from "./userModel";
-import "./css/ResultTable.css";
 
 type Props = {
   searchFlag: boolean;
