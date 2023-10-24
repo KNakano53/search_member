@@ -1,4 +1,5 @@
 import { UserModel } from "./userModel";
+import "./css/ResultTable.css";
 
 type Props = {
   searchFlag: boolean;
@@ -24,8 +25,8 @@ function SearchResult(props: Props) {
     return null;
   }
   return (
-    <div>
-      <table>
+    <div className="resultTable">
+      <table className="table">
         <thead>
           <tr>
             {TABLE_HEAD.map((def) => (

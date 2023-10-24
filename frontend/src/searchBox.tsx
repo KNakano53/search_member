@@ -9,9 +9,12 @@ function SearchBox() {
   return (
     <div className="App">
       <h1>testPage</h1>
-      <input type="text" />
+      <input name="inputUserId" type="text" />
       <button className="btn btn-primary" onClick={() => setSeatchFlag(true)}>
         検索
+      </button>
+      <button className="btn btn-primary" onClick={() => setSeatchFlag(false)}>
+        リセット
       </button>
       <SearchResult searchFlag={searchFlag} />
     </div>
