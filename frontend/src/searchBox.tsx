@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SearchResult from "./searchResult";
-import "./App.css";
+import "./css/SearchPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function SearchBox() {
