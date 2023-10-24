@@ -1,10 +1,10 @@
 import React from "react";
 
-function searchResult(searchFlag :boolean){
+function SearchResult(searchFlag :boolean){
     if(!searchFlag){
         return null;
     }
-    
+
 }
 
-export default searchResult;
+export default SearchResult;

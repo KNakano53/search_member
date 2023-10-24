@@ -1,16 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import SearchResult from './SearchResult';
 import Button from 'react-bootstrap/Button';
 
-function searchBox() {
-  return (
+function SearchBox() {
+  const [searchFlag, setSeatchFlag] = useState(false);
+
+  return ( 
     <div className="App">
       <div>
         <input type='text' />
-
+        <Button variant="primary" onClick={()=> setSeatchFlag(true) }>検索</Button>
       </div>
+      <SearchResult searchFlag={searchFlag} />
     </div>
   );
 }
 
-export default searchBox;
+export default SearchBox;
