@@ -18,7 +18,7 @@ function SearchBox() {
                 name="inputUserId"
                 id="inputUserID"
                 type="text"
-                style={{ margin: "5px" }}
+                className="searchInput"
               />
             </div>
             <div>
@@ -28,7 +28,7 @@ function SearchBox() {
                 name="inputUserName"
                 id="inputUserName"
                 type="text"
-                style={{ margin: "5px" }}
+                className="searchInput"
               />
             </div>
           </div>
@@ -40,7 +40,7 @@ function SearchBox() {
                 name="inputUserId"
                 id="inputUserAddress"
                 type="text"
-                style={{ margin: "5px" }}
+                className="searchInput"
               />
             </div>
             <div>
@@ -50,7 +50,7 @@ function SearchBox() {
                 name="inputUserId"
                 id="inputUserTel"
                 type="text"
-                style={{ margin: "5px" }}
+                className="searchInput"
               />
             </div>
           </div>
