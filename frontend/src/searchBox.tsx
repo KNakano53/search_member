@@ -7,42 +7,80 @@ function SearchBox() {
 
   return (
     <div className="App">
-      <h1>testPage</h1>
-      <form id="searchUserForm">
-        <div className="d-flex flex-row">
-          <div>
-            <label htmlFor="inputUserID">加入者番号</label>
-            <br />
-            <input name="inputUserId" id="inputUserID" type="text" />
+      <h1 className="text-center">加入者検索</h1>
+      <div className="searchBox mx-auto">
+        <div id="searchUserForm">
+          <div className="d-flex flex-row">
+            <div>
+              <label htmlFor="inputUserID">加入者番号</label>
+              <br />
+              <input
+                name="inputUserId"
+                id="inputUserID"
+                type="text"
+                style={{ margin: "5px" }}
+              />
+            </div>
+            <div>
+              <label htmlFor="inputUserName">氏名</label>
+              <br />
+              <input
+                name="inputUserName"
+                id="inputUserName"
+                type="text"
+                style={{ margin: "5px" }}
+              />
+            </div>
+          </div>
+          <div className="d-flex flex-row">
+            <div>
+              <label htmlFor="inputUserAddress">住所</label>
+              <br />
+              <input
+                name="inputUserId"
+                id="inputUserAddress"
+                type="text"
+                style={{ margin: "5px" }}
+              />
+            </div>
+            <div>
+              <label htmlFor="inputUserTel">電話番号</label>
+              <br />
+              <input
+                name="inputUserId"
+                id="inputUserTel"
+                type="text"
+                style={{ margin: "5px" }}
+              />
+            </div>
           </div>
           <div>
-            <label htmlFor="inputUserName">氏名</label>
-            <br />
-            <input name="inputUserName" id="inputUserName" type="text" />
+            <input
+              type="checkbox"
+              id="showAll"
+              style={{ marginLeft: "20px" }}
+            />
+            <label
+              htmlFor="showAll"
+              style={{ marginRight: "5px", marginLeft: "5px" }}
+            >
+              全件表示
+            </label>
+            <button
+              className="btn btn-primary"
+              onClick={() => setSeatchFlag(true)}
+            >
+              検索
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={() => setSeatchFlag(false)}
+            >
+              リセット
+            </button>
           </div>
         </div>
-        <div className="d-flex flex-row">
-          <div>
-            <label htmlFor="inputUserAddress">住所</label>
-            <br />
-            <input name="inputUserId" id="inputUserAddress" type="text" />
-          </div>
-          <div>
-            <label htmlFor="inputUserTel">電話番号</label>
-            <br />
-            <input name="inputUserId" id="inputUserTel" type="text" />
-          </div>
-        </div>
-        <button className="btn btn-primary" onClick={() => setSeatchFlag(true)}>
-          検索
-        </button>
-        <button
-          className="btn btn-primary"
-          onClick={() => setSeatchFlag(false)}
-        >
-          リセット
-        </button>
-      </form>
+      </div>
       <SearchResult searchFlag={searchFlag} />
     </div>
   );

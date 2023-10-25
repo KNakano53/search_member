@@ -1,7 +1,11 @@
 .btn {
-  margin: 20px;
+  margin: 5px;
 }
 
-#serchUserForm {
-  margin: o auto;
+.searchBox {
+  width: 25em;
+}
+
+.resultTable {
+  width: 70em;
 }

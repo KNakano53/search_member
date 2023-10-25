@@ -23,7 +23,7 @@ function SearchResult(props: Props) {
   if (!props.searchFlag) return null;
 
   return (
-    <div className="resultTable">
+    <div className="resultTable mx-auto">
       <table className="table">
         <thead>
           <tr>
