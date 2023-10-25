@@ -20,9 +20,8 @@ const users: UserModel[] = [
 ];
 
 function SearchResult(props: Props) {
-  if (!props.searchFlag) {
-    return null;
-  }
+  if (!props.searchFlag) return null;
+
   return (
     <div className="resultTable">
       <table className="table">
