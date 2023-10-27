@@ -6,19 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.FindAllModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
-const find_all_module_1 = require("./find-all/find-all.module");
-let AppModule = class AppModule {
+const find_all_service_1 = require("./find-all.service");
+const find_all_controller_1 = require("./find-all.controller");
+let FindAllModule = class FindAllModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+exports.FindAllModule = FindAllModule;
+exports.FindAllModule = FindAllModule = __decorate([
     (0, common_1.Module)({
-        imports: [find_all_module_1.FindAllModule],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [find_all_service_1.FindAllService],
+        controllers: [find_all_controller_1.FindAllController],
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], FindAllModule);
+//# sourceMappingURL=find-all.module.js.map
