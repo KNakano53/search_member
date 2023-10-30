@@ -6,11 +6,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FindAllService = void 0;
+exports.SearchMemberService = void 0;
 const common_1 = require("@nestjs/common");
 const user_model_1 = require("../entity/user-model/user-model");
 const response_type_1 = require("../response.type");
-let FindAllService = class FindAllService {
+let SearchMemberService = class SearchMemberService {
+    searchMember(body) {
+        console.log(body);
+        if (body.findAllFlag) {
+            return this.findAll();
+        }
+        else {
+            return this.findByAddress();
+        }
+    }
     findAll() {
         const users = [
             new user_model_1.UserModel('TS1234', '田中 太郎', '愛知県', '012-345-678'),
@@ -22,9 +31,17 @@ let FindAllService = class FindAllService {
         const response = new response_type_1.Response(users);
         return response;
     }
+    findByAddress() {
+        const users = [
+            new user_model_1.UserModel('TS3234', '伊織 順平', '東京都', '012-345-678'),
+            new user_model_1.UserModel('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
+        ];
+        const response = new response_type_1.Response(users);
+        return response;
+    }
 };
-exports.FindAllService = FindAllService;
-exports.FindAllService = FindAllService = __decorate([
+exports.SearchMemberService = SearchMemberService;
+exports.SearchMemberService = SearchMemberService = __decorate([
     (0, common_1.Injectable)()
-], FindAllService);
-//# sourceMappingURL=find-all.service.js.map
+], SearchMemberService);
+//# sourceMappingURL=search-member.service.js.map

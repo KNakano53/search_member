@@ -6,20 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.SearchMemberModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
-const find_all_module_1 = require("./find-all/find-all.module");
-const search_member_module_1 = require("./search-member/search-member.module");
-let AppModule = class AppModule {
+const search_member_controller_1 = require("./search-member.controller");
+const search_member_service_1 = require("./search-member.service");
+let SearchMemberModule = class SearchMemberModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+exports.SearchMemberModule = SearchMemberModule;
+exports.SearchMemberModule = SearchMemberModule = __decorate([
     (0, common_1.Module)({
-        imports: [find_all_module_1.FindAllModule, search_member_module_1.SearchMemberModule],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        controllers: [search_member_controller_1.SearchMemberController],
+        providers: [search_member_service_1.SearchMemberService],
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], SearchMemberModule);
+//# sourceMappingURL=search-member.module.js.map

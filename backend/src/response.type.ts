@@ -1,14 +1,14 @@
-export interface IResponse<T> {
+export interface IResponse {
   statusCode: number;
   message: string;
-  data: T;
+  data: string;
 }
 
-export class Response<T> implements IResponse<T> {
+export class Response implements IResponse {
   public statusCode = 200;
   public message = 'SUCCESS';
-  public data: T;
-  constructor(data: T) {
-    this.data = data;
+  public data: string;
+  constructor(data: any) {
+    this.data = JSON.stringify(data);
   }
 }

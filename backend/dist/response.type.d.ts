@@ -1,11 +1,11 @@
-export interface IResponse<T> {
+export interface IResponse {
     statusCode: number;
     message: string;
-    data: T;
+    data: string;
 }
-export declare class Response<T> implements IResponse<T> {
+export declare class Response implements IResponse {
     statusCode: number;
     message: string;
-    data: T;
-    constructor(data: T);
+    data: string;
+    constructor(data: any);
 }

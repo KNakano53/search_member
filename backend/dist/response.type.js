@@ -5,7 +5,7 @@ class Response {
     constructor(data) {
         this.statusCode = 200;
         this.message = 'SUCCESS';
-        this.data = data;
+        this.data = JSON.stringify(data);
     }
 }
 exports.Response = Response;
