@@ -6,9 +6,11 @@ export interface IResponse {
 
 export class Response implements IResponse {
   public statusCode = 200;
-  public message = 'SUCCESS';
+  public message: string;
   public data: string;
-  constructor(data: any) {
-    this.data = JSON.stringify(data);
+
+  constructor(data: any, message?: string) {
+    this.message = message ?? 'SUCCESS';
+    this.data = data;
   }
 }

@@ -10,14 +10,13 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
-const find_all_module_1 = require("./find-all/find-all.module");
 const search_member_module_1 = require("./search-member/search-member.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [find_all_module_1.FindAllModule, search_member_module_1.SearchMemberModule],
+        imports: [search_member_module_1.SearchMemberModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

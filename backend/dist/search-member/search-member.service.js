@@ -36,7 +36,7 @@ let SearchMemberService = class SearchMemberService {
             new user_model_1.UserModel('TS3234', '伊織 順平', '東京都', '012-345-678'),
             new user_model_1.UserModel('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
         ];
-        const response = new response_type_1.Response(users);
+        const response = new response_type_1.Response(users, 'not All');
         return response;
     }
 };

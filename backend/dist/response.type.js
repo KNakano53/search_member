@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Response = void 0;
 class Response {
-    constructor(data) {
+    constructor(data, message) {
         this.statusCode = 200;
-        this.message = 'SUCCESS';
-        this.data = JSON.stringify(data);
+        this.message = message ?? 'SUCCESS';
+        this.data = data;
     }
 }
 exports.Response = Response;

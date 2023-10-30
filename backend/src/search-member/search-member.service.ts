@@ -7,7 +7,6 @@ import { SearchPostBody } from 'src/postBody.type';
 @Injectable()
 export class SearchMemberService {
   searchMember(body: SearchPostBody): Response {
-    console.log(body);
     if (body.findAllFlag) {
       return this.findAll();
     } else {
@@ -31,7 +30,7 @@ export class SearchMemberService {
       new UserModel('TS3234', '伊織 順平', '東京都', '012-345-678'),
       new UserModel('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
     ];
-    const response: Response = new Response(users);
+    const response: Response = new Response(users, 'not All');
     return response;
   }
 }
