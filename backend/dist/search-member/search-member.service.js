@@ -12,7 +12,6 @@ const user_model_1 = require("../entity/user-model/user-model");
 const response_type_1 = require("../response.type");
 let SearchMemberService = class SearchMemberService {
     searchMember(body) {
-        console.log(body);
         if (body.findAllFlag) {
             return this.findAll();
         }
