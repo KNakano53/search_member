@@ -68,7 +68,10 @@ function SearchBox() {
             </label>
             <button
               className="btn btn-primary"
-              onClick={() => setSeatchFlag(true)}
+              onClick={() => {
+                searchMember();
+                setSeatchFlag(true);
+              }}
             >
               検索
             </button>
@@ -84,6 +87,36 @@ function SearchBox() {
       <SearchResult searchFlag={searchFlag} />
     </div>
   );
+}
+
+async function searchMember() {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+      id: "",
+      name: "",
+      address: "",
+      tel: "",
+      findAllFlag: "true",
+    }),
+  };
+  fetch("http://localhost:3001/search-member", requestOptions)
+    .then(async (response) => {
+      const responseJson = await response.json();
+
+      if (!response.ok) {
+        const error = (responseJson && responseJson.message) || response.status;
+        return Promise.reject(error);
+      }
+      console.log(responseJson);
+    })
+    .catch((error) => {
+      console.error("There was an error!", error);
+    });
 }
 
 export default SearchBox;

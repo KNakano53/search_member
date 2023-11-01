@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import SearchBox from "./SearchBox";
+import SearchBox from "./searchBox";
 import reportWebVitals from "./reportWebVitals";
 import "./css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
