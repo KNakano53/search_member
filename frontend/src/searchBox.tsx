@@ -1,9 +1,54 @@
-import { useState } from "react";
 import SearchResult from "./searchResult";
 import "./css/SearchPage.css";
+import React, { useState } from "react";
 
 function SearchBox() {
-  const [searchFlag, setSeatchFlag] = useState(false);
+  const idInput = React.createRef<HTMLInputElement>();
+  const nameInput = React.createRef<HTMLInputElement>();
+  const addressInput = React.createRef<HTMLInputElement>();
+  const telInput = React.createRef<HTMLInputElement>();
+  const [data, setData] = useState([]);
+
+  async function callApi(
+    id: string | undefined,
+    name: string | undefined,
+    address: string | undefined,
+    tel: string | undefined
+  ) {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        id: id,
+        name: name,
+        address: address,
+        tel: tel,
+      }),
+    };
+    console.log(requestOptions);
+    const url = "http://localhost:3001/search-member";
+
+    const response = await fetch(url, requestOptions);
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const json = await response.json();
+    setData(json.data);
+  }
+
+  const submitHandler = () => {
+    const id = idInput.current?.value;
+    const name = nameInput.current?.value;
+    const address = addressInput.current?.value;
+    const tel = telInput.current?.value;
+    callApi(id, name, address, tel);
+  };
+  const resetData = () => {
+    setData([]);
+  };
 
   return (
     <div className="App">
@@ -19,6 +64,7 @@ function SearchBox() {
                 id="inputUserID"
                 type="text"
                 className="searchInput"
+                ref={idInput}
               />
             </div>
             <div>
@@ -29,6 +75,7 @@ function SearchBox() {
                 id="inputUserName"
                 type="text"
                 className="searchInput"
+                ref={nameInput}
               />
             </div>
           </div>
@@ -41,6 +88,7 @@ function SearchBox() {
                 id="inputUserAddress"
                 type="text"
                 className="searchInput"
+                ref={addressInput}
               />
             </div>
             <div>
@@ -51,6 +99,7 @@ function SearchBox() {
                 id="inputUserTel"
                 type="text"
                 className="searchInput"
+                ref={telInput}
               />
             </div>
           </div>
@@ -69,54 +118,25 @@ function SearchBox() {
             <button
               className="btn btn-primary"
               onClick={() => {
-                searchMember();
-                setSeatchFlag(true);
+                submitHandler();
               }}
             >
               検索
             </button>
             <button
               className="btn btn-primary"
-              onClick={() => setSeatchFlag(false)}
+              onClick={() => {
+                resetData();
+              }}
             >
               リセット
             </button>
           </div>
         </div>
       </div>
-      <SearchResult searchFlag={searchFlag} />
+      <SearchResult data={data} />
     </div>
   );
-}
-
-async function searchMember() {
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    },
-    body: JSON.stringify({
-      id: "",
-      name: "",
-      address: "",
-      tel: "",
-      findAllFlag: "true",
-    }),
-  };
-  fetch("http://localhost:3001/search-member", requestOptions)
-    .then(async (response) => {
-      const responseJson = await response.json();
-
-      if (!response.ok) {
-        const error = (responseJson && responseJson.message) || response.status;
-        return Promise.reject(error);
-      }
-      console.log(responseJson);
-    })
-    .catch((error) => {
-      console.error("There was an error!", error);
-    });
 }
 
 export default SearchBox;

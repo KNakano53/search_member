@@ -1,13 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserModel = void 0;
-class UserModel {
-    constructor(id, name, address, tel) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.tel = tel;
-    }
+exports.generateUser = void 0;
+function generateUser(id, name, address, tel) {
+    return { id, name, address, tel };
 }
-exports.UserModel = UserModel;
+exports.generateUser = generateUser;
 //# sourceMappingURL=user-model.js.map

@@ -8,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchMemberService = void 0;
 const common_1 = require("@nestjs/common");
-const user_model_1 = require("../entity/user-model/user-model");
 const response_type_1 = require("../response.type");
+const user_model_1 = require("../entity/user-model/user-model");
 let SearchMemberService = class SearchMemberService {
     searchMember(body) {
         if (body.findAllFlag) {
@@ -21,19 +21,19 @@ let SearchMemberService = class SearchMemberService {
     }
     findAll() {
         const users = [
-            new user_model_1.UserModel('TS1234', '田中 太郎', '愛知県', '012-345-678'),
-            new user_model_1.UserModel('TS2234', '藤本 亮介', '千葉県', '012-345-678'),
-            new user_model_1.UserModel('TS3234', '伊織 順平', '東京都', '012-345-678'),
-            new user_model_1.UserModel('TS4234', '里中 千枝', '長野県', '012-345-678'),
-            new user_model_1.UserModel('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
+            (0, user_model_1.generateUser)('TS1234', '田中 太郎', '愛知県', '012-345-678'),
+            (0, user_model_1.generateUser)('TS2234', '藤本 亮介', '千葉県', '012-345-678'),
+            (0, user_model_1.generateUser)('TS3234', '伊織 順平', '東京都', '012-345-678'),
+            (0, user_model_1.generateUser)('TS4234', '里中 千枝', '長野県', '012-345-678'),
+            (0, user_model_1.generateUser)('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
         ];
         const response = new response_type_1.Response(users);
         return response;
     }
     findByAddress() {
         const users = [
-            new user_model_1.UserModel('TS3234', '伊織 順平', '東京都', '012-345-678'),
-            new user_model_1.UserModel('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
+            (0, user_model_1.generateUser)('TS3234', '伊織 順平', '東京都', '012-345-678'),
+            (0, user_model_1.generateUser)('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
         ];
         const response = new response_type_1.Response(users, 'not All');
         return response;
