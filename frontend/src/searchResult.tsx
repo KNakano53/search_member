@@ -1,4 +1,5 @@
 import { UserModel } from "./userModel";
+import _ from "lodash";
 
 type Props = {
   data: any;
@@ -13,7 +14,7 @@ const TABLE_HEAD = [
 
 function SearchResult(props: Props) {
   const data = props.data;
-  if (data === undefined) {
+  if (_.isEqual(data, [])) {
     return null;
   }
   return (
@@ -27,7 +28,6 @@ function SearchResult(props: Props) {
           </tr>
         </thead>
         <tbody>
-          {/* 定義にしたがって各プロパティを呼び出して Cell を作成 */}
           {data.map((row: UserModel) => (
             <tr key={row.id}>
               {TABLE_HEAD.map((def) => {
