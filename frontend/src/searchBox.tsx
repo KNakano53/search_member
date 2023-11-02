@@ -7,13 +7,15 @@ function SearchBox() {
   const nameInput = React.createRef<HTMLInputElement>();
   const addressInput = React.createRef<HTMLInputElement>();
   const telInput = React.createRef<HTMLInputElement>();
+  const findAllFlag = React.createRef<HTMLInputElement>();
   const [data, setData] = useState([]);
 
   async function callApi(
     id: string | undefined,
     name: string | undefined,
     address: string | undefined,
-    tel: string | undefined
+    tel: string | undefined,
+    findAll: string | undefined
   ) {
     const requestOptions = {
       method: "POST",
@@ -44,7 +46,8 @@ function SearchBox() {
     const name = nameInput.current?.value;
     const address = addressInput.current?.value;
     const tel = telInput.current?.value;
-    callApi(id, name, address, tel);
+    const findAll = findAllFlag.current?.value;
+    callApi(id, name, address, tel, findAll);
   };
   const resetData = () => {
     setData([]);
@@ -103,18 +106,7 @@ function SearchBox() {
               />
             </div>
           </div>
-          <div>
-            <input
-              type="checkbox"
-              id="showAll"
-              style={{ marginLeft: "20px" }}
-            />
-            <label
-              htmlFor="showAll"
-              style={{ marginRight: "5px", marginLeft: "5px" }}
-            >
-              全件表示
-            </label>
+          <div style={{ marginLeft: "7em" }}>
             <button
               className="btn btn-primary"
               onClick={() => {

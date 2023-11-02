@@ -3,5 +3,4 @@ export type SearchPostBody = {
   name: string;
   address: string;
   tel: string;
-  findAllFlag: boolean;
 };

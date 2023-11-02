@@ -4,4 +4,5 @@ export declare class SearchMemberService {
     searchMember(body: SearchPostBody): Response;
     private findAll;
     private findByAddress;
+    private getFindAllFlag;
 }

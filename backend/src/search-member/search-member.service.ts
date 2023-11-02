@@ -6,7 +6,7 @@ import { generateUser } from 'src/entity/user-model/user-model';
 @Injectable()
 export class SearchMemberService {
   searchMember(body: SearchPostBody): Response {
-    if (body.findAllFlag) {
+    if (this.getFindAllFlag(body)) {
       return this.findAll();
     } else {
       return this.findByAddress();
@@ -31,5 +31,17 @@ export class SearchMemberService {
     ];
     const response: Response = new Response(users, 'not All');
     return response;
+  }
+
+  private getFindAllFlag(body: SearchPostBody): boolean {
+    if (
+      '' == body.id &&
+      '' == body.name &&
+      '' == body.address &&
+      '' == body.tel
+    ) {
+      return true;
+    }
+    return false;
   }
 }

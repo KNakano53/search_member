@@ -12,7 +12,7 @@ const response_type_1 = require("../response.type");
 const user_model_1 = require("../entity/user-model/user-model");
 let SearchMemberService = class SearchMemberService {
     searchMember(body) {
-        if (body.findAllFlag) {
+        if (this.getFindAllFlag(body)) {
             return this.findAll();
         }
         else {
@@ -37,6 +37,15 @@ let SearchMemberService = class SearchMemberService {
         ];
         const response = new response_type_1.Response(users, 'not All');
         return response;
+    }
+    getFindAllFlag(body) {
+        if ('' == body.id &&
+            '' == body.name &&
+            '' == body.address &&
+            '' == body.tel) {
+            return true;
+        }
+        return false;
     }
 };
 exports.SearchMemberService = SearchMemberService;
