@@ -70,7 +70,7 @@ function SearchBox() {
                 name="inputUserId"
                 id="inputUserID"
                 type="text"
-                className="searchInput"
+                className="searchInput form-control"
                 ref={idInput}
               />
             </div>
@@ -81,7 +81,7 @@ function SearchBox() {
                 name="inputUserName"
                 id="inputUserName"
                 type="text"
-                className="searchInput"
+                className="searchInput form-control"
                 ref={nameInput}
               />
             </div>
@@ -91,10 +91,10 @@ function SearchBox() {
               <label htmlFor="inputUserAddress">住所</label>
               <br />
               <input
-                name="inputUserId"
+                name="inputUserAddress"
                 id="inputUserAddress"
                 type="text"
-                className="searchInput"
+                className="searchInput form-control"
                 ref={addressInput}
               />
             </div>
@@ -102,10 +102,10 @@ function SearchBox() {
               <label htmlFor="inputUserTel">電話番号</label>
               <br />
               <input
-                name="inputUserId"
+                name="inputUserTel"
                 id="inputUserTel"
-                type="text"
-                className="searchInput"
+                type="number"
+                className="searchInput form-control"
                 ref={telInput}
               />
             </div>

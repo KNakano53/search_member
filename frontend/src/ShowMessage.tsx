@@ -2,8 +2,7 @@ type Props = {
   message: string;
 };
 export function ShowMessage(props: Props) {
-  // eslint-disable-next-line eqeqeq
-  if ("SUCCESS" == props.message || "" == props.message) {
+  if ("SUCCESS" === props.message || "" === props.message) {
     return null;
   }
   return (
