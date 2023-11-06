@@ -29,7 +29,10 @@ export class SearchMemberService {
       generateUser('TS3234', '伊織 順平', '東京都', '012-345-678'),
       generateUser('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
     ];
-    const response: Response = new Response(users, 'not All');
+    const response: Response = new Response(
+      users,
+      '検索処理でエラーが発生しました',
+    );
     return response;
   }
 

@@ -1,6 +1,7 @@
 import SearchResult from "./searchResult";
 import "./css/SearchPage.css";
 import React, { useState } from "react";
+import { ShowMessage } from "./ShowMessage";
 
 function SearchBox() {
   const idInput = React.createRef<HTMLInputElement>();
@@ -9,6 +10,7 @@ function SearchBox() {
   const telInput = React.createRef<HTMLInputElement>();
   const findAllFlag = React.createRef<HTMLInputElement>();
   const [data, setData] = useState([]);
+  const [message, setMesssage] = useState("");
 
   async function callApi(
     id: string | undefined,
@@ -38,6 +40,7 @@ function SearchBox() {
       throw new Error(response.statusText);
     }
     const json = await response.json();
+    setMesssage(json.message);
     setData(json.data);
   }
 
@@ -50,6 +53,7 @@ function SearchBox() {
     callApi(id, name, address, tel, findAll);
   };
   const resetData = () => {
+    setMesssage("");
     setData([]);
   };
 
@@ -126,6 +130,7 @@ function SearchBox() {
           </div>
         </div>
       </div>
+      <ShowMessage message={message} />
       <SearchResult data={data} />
     </div>
   );

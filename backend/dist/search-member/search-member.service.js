@@ -35,7 +35,7 @@ let SearchMemberService = class SearchMemberService {
             (0, user_model_1.generateUser)('TS3234', '伊織 順平', '東京都', '012-345-678'),
             (0, user_model_1.generateUser)('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
         ];
-        const response = new response_type_1.Response(users, 'not All');
+        const response = new response_type_1.Response(users, '検索処理でエラーが発生しました');
         return response;
     }
     getFindAllFlag(body) {
