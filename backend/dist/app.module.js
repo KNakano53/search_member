@@ -11,12 +11,26 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const search_member_module_1 = require("./search-member/search-member.module");
+const typeorm_1 = require("@nestjs/typeorm");
+const users_entity_1 = require("./entity/user/users.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [search_member_module_1.SearchMemberModule],
+        imports: [
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'mysql',
+                host: 'localhost',
+                port: 3306,
+                username: 'root',
+                password: 'password',
+                database: 'search_member',
+                entities: [users_entity_1.Users],
+                synchronize: true,
+            }),
+            search_member_module_1.SearchMemberModule,
+        ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

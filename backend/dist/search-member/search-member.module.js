@@ -10,11 +10,14 @@ exports.SearchMemberModule = void 0;
 const common_1 = require("@nestjs/common");
 const search_member_controller_1 = require("./search-member.controller");
 const search_member_service_1 = require("./search-member.service");
+const typeorm_1 = require("@nestjs/typeorm");
+const users_entity_1 = require("../entity/user/users.entity");
 let SearchMemberModule = class SearchMemberModule {
 };
 exports.SearchMemberModule = SearchMemberModule;
 exports.SearchMemberModule = SearchMemberModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([users_entity_1.Users])],
         controllers: [search_member_controller_1.SearchMemberController],
         providers: [search_member_service_1.SearchMemberService],
     })

@@ -5,12 +5,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchMemberService = void 0;
 const common_1 = require("@nestjs/common");
 const response_type_1 = require("../response.type");
 const user_model_1 = require("../entity/user-model/user-model");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const users_entity_1 = require("../entity/user/users.entity");
 let SearchMemberService = class SearchMemberService {
+    constructor(repository) {
+        this.repository = repository;
+    }
     searchMember(body) {
         if (this.getFindAllFlag(body)) {
             return this.findAll();
@@ -19,18 +31,12 @@ let SearchMemberService = class SearchMemberService {
             return this.findByAddress();
         }
     }
-    findAll() {
-        const users = [
-            (0, user_model_1.generateUser)('TS1234', '田中 太郎', '愛知県', '012-345-678'),
-            (0, user_model_1.generateUser)('TS2234', '藤本 亮介', '千葉県', '012-345-678'),
-            (0, user_model_1.generateUser)('TS3234', '伊織 順平', '東京都', '012-345-678'),
-            (0, user_model_1.generateUser)('TS4234', '里中 千枝', '長野県', '012-345-678'),
-            (0, user_model_1.generateUser)('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
-        ];
+    async findAll() {
+        const users = await this.repository.find();
         const response = new response_type_1.Response(users);
         return response;
     }
-    findByAddress() {
+    async findByAddress() {
         const users = [
             (0, user_model_1.generateUser)('TS3234', '伊織 順平', '東京都', '012-345-678'),
             (0, user_model_1.generateUser)('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
@@ -50,6 +56,8 @@ let SearchMemberService = class SearchMemberService {
 };
 exports.SearchMemberService = SearchMemberService;
 exports.SearchMemberService = SearchMemberService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __param(0, (0, typeorm_1.InjectRepository)(users_entity_1.Users)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], SearchMemberService);
 //# sourceMappingURL=search-member.service.js.map
