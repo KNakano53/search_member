@@ -10,7 +10,7 @@ function SearchBox() {
   const telInput = React.createRef<HTMLInputElement>();
   const [data, setData] = useState([]);
   const [message, setMesssage] = useState("");
-  const [searchFlag, setSearchFlag] = useState(false);
+  const [pageIndex, setPageIndex] = useState(0);
 
   async function callApi(
     id: string | undefined,
@@ -48,7 +48,7 @@ function SearchBox() {
     const name = nameInput.current?.value;
     const address = addressInput.current?.value;
     const tel = telInput.current?.value;
-    setSearchFlag(true);
+    setPageIndex(0);
     callApi(id, name, address, tel);
   };
 
@@ -131,7 +131,11 @@ function SearchBox() {
         </div>
       </div>
       <ShowMessage message={message} />
-      <ShowTable data={data} searchFlag={searchFlag} />
+      <ShowTable
+        data={data}
+        pageIndex={pageIndex}
+        setPageIndex={setPageIndex}
+      />
     </div>
   );
 }

@@ -1,15 +1,14 @@
 import ReactPaginate from "react-paginate";
 import SearchResult from "./searchResult";
-import { useState } from "react";
 import _ from "lodash";
 
 type Props = {
   data: any;
-  searchFlag: boolean;
+  pageIndex: number;
+  setPageIndex: any;
 };
 
 export function ShowTable(props: Props) {
-  const [pageIndex, setPageIndex] = useState(0);
   const pageSize: number = 20;
 
   if (_.isEqual(props.data, [])) {
@@ -17,22 +16,15 @@ export function ShowTable(props: Props) {
   }
 
   const handlePageChange = (event: any) => {
-    // ページ番号のチェック
-    if (pageIndex > props.data.length / pageSize) {
-      // ページ番号がなくなった場合
-      setPageIndex(0);
-    } else {
-      // ページ番号が残っている場合
-      setPageIndex(event.selected);
-    }
+    props.setPageIndex(event.selected);
   };
 
   return (
     <div>
       <SearchResult
         data={props.data.slice(
-          pageIndex * pageSize,
-          (pageIndex + 1) * pageSize
+          props.pageIndex * pageSize,
+          (props.pageIndex + 1) * pageSize
         )}
       />
       <div className="paginate mx-auto">
