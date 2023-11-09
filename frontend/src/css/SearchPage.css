@@ -16,3 +16,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.paginate {
+  width: 15em;
+}

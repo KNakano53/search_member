@@ -1,23 +1,22 @@
-import SearchResult from "./searchResult";
 import "./css/SearchPage.css";
 import React, { useState } from "react";
 import { ShowMessage } from "./ShowMessage";
+import { ShowTable } from "./ShowTable";
 
 function SearchBox() {
   const idInput = React.createRef<HTMLInputElement>();
   const nameInput = React.createRef<HTMLInputElement>();
   const addressInput = React.createRef<HTMLInputElement>();
   const telInput = React.createRef<HTMLInputElement>();
-  const findAllFlag = React.createRef<HTMLInputElement>();
   const [data, setData] = useState([]);
   const [message, setMesssage] = useState("");
+  const [searchFlag, setSearchFlag] = useState(false);
 
   async function callApi(
     id: string | undefined,
     name: string | undefined,
     address: string | undefined,
-    tel: string | undefined,
-    findAll: string | undefined
+    tel: string | undefined
   ) {
     const requestOptions = {
       method: "POST",
@@ -49,9 +48,10 @@ function SearchBox() {
     const name = nameInput.current?.value;
     const address = addressInput.current?.value;
     const tel = telInput.current?.value;
-    const findAll = findAllFlag.current?.value;
-    callApi(id, name, address, tel, findAll);
+    setSearchFlag(true);
+    callApi(id, name, address, tel);
   };
+
   const resetData = () => {
     setMesssage("");
     setData([]);
@@ -131,7 +131,7 @@ function SearchBox() {
         </div>
       </div>
       <ShowMessage message={message} />
-      <SearchResult data={data} />
+      <ShowTable data={data} searchFlag={searchFlag} />
     </div>
   );
 }

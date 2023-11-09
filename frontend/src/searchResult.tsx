@@ -1,5 +1,4 @@
 import { UserModel } from "./userModel";
-import _ from "lodash";
 
 type Props = {
   data: any;
@@ -14,9 +13,7 @@ const TABLE_HEAD = [
 
 function SearchResult(props: Props) {
   const data = props.data;
-  if (_.isEqual(data, [])) {
-    return null;
-  }
+
   return (
     <div className="resultTable mx-auto">
       <table className="table">
