@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Response } from 'src/response.type';
 import { SearchPostBody } from 'src/postBody.type';
-import { generateUser } from 'src/entity/user-model/user-model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Users } from 'src/entity/user/users.entity';
@@ -24,14 +23,8 @@ export class SearchMemberService {
   }
 
   private async findByAddress(): Promise<Response> {
-    const users = [
-      generateUser('TS3234', '伊織 順平', '東京都', '012-345-678'),
-      generateUser('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
-    ];
-    const response: Response = new Response(
-      users,
-      '検索処理でエラーが発生しました',
-    );
+    const users = [];
+    const response: Response = new Response(users, '検索処理は実装中です');
     return response;
   }
 
