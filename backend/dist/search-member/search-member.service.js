@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchMemberService = void 0;
 const common_1 = require("@nestjs/common");
 const response_type_1 = require("../type/response.type");
-const user_model_1 = require("../entity/user-model/user-model");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const users_entity_1 = require("../entity/user/users.entity");
@@ -69,14 +68,6 @@ let SearchMemberService = class SearchMemberService {
             }
             return conditions;
         }
-    }
-    async findByAddress() {
-        const users = [
-            (0, user_model_1.generateUser)('TS3234', '伊織 順平', '東京都', '012-345-678'),
-            (0, user_model_1.generateUser)('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
-        ];
-        const response = new response_type_1.Response(users, '検索処理でエラーが発生しました');
-        return response;
     }
     getFindAllFlag(body) {
         if ('' == body.id &&

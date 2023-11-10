@@ -18,6 +18,7 @@ export class SearchMemberService {
       return this.findByParam(body);
     }
   }
+
   private async findAll(): Promise<Response> {
     const users = await this.repository.find();
     const response: Response = new Response(users);
@@ -34,6 +35,7 @@ export class SearchMemberService {
           id: 'asc',
         },
       });
+
       const response = new Response(users);
       return response;
     } catch (e) {
@@ -59,18 +61,6 @@ export class SearchMemberService {
       }
       return conditions;
     }
-  }
-
-  private async findByAddress(): Promise<Response> {
-    const users = [
-      generateUser('TS3234', '伊織 順平', '東京都', '012-345-678'),
-      generateUser('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
-    ];
-    const response: Response = new Response(
-      users,
-      '検索処理でエラーが発生しました',
-    );
-    return response;
   }
 
   private getFindAllFlag(body: SearchPostBody): boolean {

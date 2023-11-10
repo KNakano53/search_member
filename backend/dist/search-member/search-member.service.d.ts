@@ -8,6 +8,5 @@ export declare class SearchMemberService {
     searchMember(body: SearchPostBody): Promise<Response>;
     private findAll;
     private findByParam;
-    private findByAddress;
     private getFindAllFlag;
 }
