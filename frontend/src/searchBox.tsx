@@ -4,10 +4,6 @@ import { ShowMessage } from "./ShowMessage";
 import { ShowTable } from "./ShowTable";
 
 function SearchBox() {
-  const idInput = React.createRef<HTMLInputElement>();
-  const nameInput = React.createRef<HTMLInputElement>();
-  const addressInput = React.createRef<HTMLInputElement>();
-  const telInput = React.createRef<HTMLInputElement>();
   const [data, setData] = useState([]);
   const [message, setMesssage] = useState("");
   const [pageIndex, setPageIndex] = useState(0);
@@ -43,6 +39,10 @@ function SearchBox() {
     setData(json.data);
   }
 
+  const idInput = React.createRef<HTMLInputElement>();
+  const nameInput = React.createRef<HTMLInputElement>();
+  const addressInput = React.createRef<HTMLInputElement>();
+  const telInput = React.createRef<HTMLInputElement>();
   const submitHandler = () => {
     const id = idInput.current?.value;
     const name = nameInput.current?.value;
