@@ -18,6 +18,7 @@ const response_type_1 = require("../type/response.type");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const users_entity_1 = require("../entity/user/users.entity");
+const _ = require("lodash");
 let SearchMemberService = class SearchMemberService {
     constructor(repository) {
         this.repository = repository;
@@ -40,8 +41,10 @@ let SearchMemberService = class SearchMemberService {
                 id: 'asc',
             },
         });
-        const response = new response_type_1.Response(users);
-        return response;
+        if (_.isEmpty(users)) {
+            return new response_type_1.Response([], '検索結果がありません');
+        }
+        return new response_type_1.Response(users);
     }
     createWhereConditions(body) {
         const conditions = {};

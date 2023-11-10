@@ -5,6 +5,7 @@ import { Like, Repository } from 'typeorm';
 import { IUsers } from 'src/entity/user/user.interface';
 import { Users } from 'src/entity/user/users.entity';
 import { SearchObject } from 'src/type/object.interface';
+import * as _ from 'lodash';
 
 @Injectable()
 export class SearchMemberService {
@@ -30,8 +31,11 @@ export class SearchMemberService {
       },
     });
 
-    const response = new Response(users);
-    return response;
+    if (_.isEmpty(users)) {
+      return new Response([], '検索結果がありません');
+    }
+
+    return new Response(users);
   }
 
   private createWhereConditions(body: IUsers): SearchObject {

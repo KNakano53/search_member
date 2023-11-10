@@ -32,12 +32,12 @@ function SearchBox() {
         tel: tel,
       }),
     };
-    console.log(requestOptions);
+    // console.log(requestOptions);
     const url = "http://localhost:3001/search-member";
 
     const response = await fetch(url, requestOptions);
     if (!response.ok) {
-      throw new Error(response.statusText);
+      setMesssage("通信に失敗しました");
     }
     const json = await response.json();
     setMesssage(json.message);
@@ -118,7 +118,7 @@ function SearchBox() {
               <input
                 name="inputUserTel"
                 id="inputUserTel"
-                type="number"
+                type="text"
                 className="searchInput form-control"
                 value={telInput}
                 onChange={(e) => {
