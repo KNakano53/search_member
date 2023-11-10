@@ -1,7 +1,8 @@
-import "./css/SearchPage.css";
+import "../css/SearchPage.css";
 import React, { useState } from "react";
-import { ShowMessage } from "./ShowMessage";
+import { ShowMessage } from "../ShowMessage";
 import { ShowTable } from "./ShowTable";
+import { Link } from "react-router-dom";
 
 function SearchBox(): JSX.Element {
   const [data, setData] = useState([]);
@@ -147,6 +148,9 @@ function SearchBox(): JSX.Element {
           </div>
         </div>
       </div>
+      <Link to={"/insertUser"}>
+        <button className="btn btn-primary position-right">加入者登録</button>
+      </Link>
       <ShowMessage message={message} />
       <ShowTable
         data={data}

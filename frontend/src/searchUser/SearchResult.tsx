@@ -1,4 +1,4 @@
-import { UserModel } from "./userModel";
+import { UserModel } from "../userModel";
 import React from "react";
 
 type Props = {

@@ -1,16 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import SearchBox from "./searchBox";
 import reportWebVitals from "./reportWebVitals";
 import "./css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { App } from "./app";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <SearchBox />
+    <App />
   </React.StrictMode>
 );
 

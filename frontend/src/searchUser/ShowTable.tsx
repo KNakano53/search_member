@@ -1,8 +1,8 @@
 import ReactPaginate from "react-paginate";
-import SearchResult from "./searchResult";
+import SearchResult from "./SearchResult";
 import _ from "lodash";
 import React from "react";
-import { UserModel } from "./userModel";
+import { UserModel } from "../userModel";
 
 type Props = {
   data: UserModel[];
