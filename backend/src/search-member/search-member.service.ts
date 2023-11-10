@@ -5,34 +5,33 @@ import { Like, Repository } from 'typeorm';
 import { IUsers } from 'src/entity/user/user.interface';
 import { Users } from 'src/entity/user/users.entity';
 import { SearchObject } from 'src/type/object.interface';
-import * as _ from 'lodash';
 
 @Injectable()
 export class SearchMemberService {
   constructor(@InjectRepository(Users) private repository: Repository<Users>) {}
 
   async searchMember(body: IUsers): Promise<Response> {
-    const conditions = this.createWhereConditions(body);
+    try {
+      const conditions = this.createWhereConditions(body);
 
-    return this.findByParam(conditions);
+      return this.findByParam(conditions);
+    } catch (e) {
+      console.log(e);
+      const response = new Response([], '検索処理でエラーが発生しました。');
+      return response;
+    }
   }
 
   private async findByParam(conditions: SearchObject): Promise<Response> {
-    try {
-      const users = await this.repository.find({
-        where: conditions,
-        order: {
-          id: 'asc',
-        },
-      });
+    const users = await this.repository.find({
+      where: conditions,
+      order: {
+        id: 'asc',
+      },
+    });
 
-      const response = new Response(users);
-      return response;
-    } catch (e) {
-      console.log(e);
-      const response = new Response([], '検索処理でエラーが発生しました');
-      return response;
-    }
+    const response = new Response(users);
+    return response;
   }
 
   private createWhereConditions(body: IUsers): SearchObject {

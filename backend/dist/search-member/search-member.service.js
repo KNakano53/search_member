@@ -23,25 +23,25 @@ let SearchMemberService = class SearchMemberService {
         this.repository = repository;
     }
     async searchMember(body) {
-        const conditions = this.createWhereConditions(body);
-        return this.findByParam(conditions);
-    }
-    async findByParam(conditions) {
         try {
-            const users = await this.repository.find({
-                where: conditions,
-                order: {
-                    id: 'asc',
-                },
-            });
-            const response = new response_type_1.Response(users);
-            return response;
+            const conditions = this.createWhereConditions(body);
+            return this.findByParam(conditions);
         }
         catch (e) {
             console.log(e);
-            const response = new response_type_1.Response([], '検索処理でエラーが発生しました');
+            const response = new response_type_1.Response([], '検索処理でエラーが発生しました。');
             return response;
         }
+    }
+    async findByParam(conditions) {
+        const users = await this.repository.find({
+            where: conditions,
+            order: {
+                id: 'asc',
+            },
+        });
+        const response = new response_type_1.Response(users);
+        return response;
     }
     createWhereConditions(body) {
         const conditions = {};
