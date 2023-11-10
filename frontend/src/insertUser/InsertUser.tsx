@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/InsertPage.css";
+import { ShowMessage } from "../ShowMessage";
 
 export function InsertUser(): JSX.Element {
-  const [idInput, setIdInput] = useState("");
   const [nameInput, setNameInput] = useState("");
   const [addressInput, setAddressInput] = useState("");
   const [telInput, setTelInput] = useState("");
 
+  const [message, setMesssage] = useState("");
+
   async function callApi(
-    id: string | undefined,
     name: string | undefined,
     address: string | undefined,
     tel: string | undefined
@@ -21,7 +22,6 @@ export function InsertUser(): JSX.Element {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        id,
         name,
         address,
         tel,
@@ -34,22 +34,19 @@ export function InsertUser(): JSX.Element {
     if (!response.ok) {
       //   setMesssage("通信に失敗しました");
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const json = await response.json();
-    // setMesssage(json.message);
+    setMesssage(json.message);
     // setData(json.data);
   }
 
   const submitHandler = () => {
-    const id = idInput;
     const name = nameInput;
     const address = addressInput;
     const tel = telInput;
-    callApi(id, name, address, tel);
+    callApi(name, address, tel);
   };
 
   const resetData = () => {
-    setIdInput("");
     setNameInput("");
     setAddressInput("");
     setTelInput("");
@@ -62,20 +59,6 @@ export function InsertUser(): JSX.Element {
         <button className="btn btn-primary position-left">戻る</button>
       </Link>
       <div className="insertForm mx-auto">
-        <div>
-          <label htmlFor="inputUserID">加入者番号</label>
-          <br />
-          <input
-            name="inputUserId"
-            id="inputUserID"
-            type="text"
-            className="searchInput form-control"
-            value={idInput}
-            onChange={(e) => {
-              setIdInput(e.target.value);
-            }}
-          />
-        </div>
         <div>
           <label htmlFor="inputUserName">氏名</label>
           <br />
@@ -137,6 +120,7 @@ export function InsertUser(): JSX.Element {
           </button>
         </div>
       </div>
+      <ShowMessage message={message} />
     </div>
   );
 }

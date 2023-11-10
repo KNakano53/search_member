@@ -50,8 +50,12 @@ function SearchBox(): JSX.Element {
     const name = nameInput;
     const address = addressInput;
     const tel = telInput;
-    setPageIndex(0);
-    callApi(id, name, address, tel);
+    try {
+      setPageIndex(0);
+      callApi(id, name, address, tel);
+    } catch (e) {
+      setMesssage("通信処理に失敗しました");
+    }
   };
 
   const resetData = () => {
