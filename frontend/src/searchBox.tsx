@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ShowMessage } from "./ShowMessage";
 import { ShowTable } from "./ShowTable";
 
-function SearchBox() {
+function SearchBox(): JSX.Element {
   const [data, setData] = useState([]);
   const [message, setMesssage] = useState("");
   const [pageIndex, setPageIndex] = useState(0);
@@ -26,10 +26,10 @@ function SearchBox() {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        id: id,
-        name: name,
-        address: address,
-        tel: tel,
+        id,
+        name,
+        address,
+        tel,
       }),
     };
     // console.log(requestOptions);

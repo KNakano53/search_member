@@ -1,11 +1,13 @@
 import ReactPaginate from "react-paginate";
 import SearchResult from "./searchResult";
 import _ from "lodash";
+import React from "react";
+import { UserModel } from "./userModel";
 
 type Props = {
-  data: any;
+  data: UserModel[];
   pageIndex: number;
-  setPageIndex: any;
+  setPageIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export function ShowTable(props: Props) {
@@ -15,8 +17,8 @@ export function ShowTable(props: Props) {
     return null;
   }
 
-  const handlePageChange = (event: any) => {
-    props.setPageIndex(event.selected);
+  const handlePageChange = (selectedItem: { selected: number }) => {
+    props.setPageIndex(selectedItem.selected);
   };
 
   return (

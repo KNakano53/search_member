@@ -1,7 +1,8 @@
 import { UserModel } from "./userModel";
+import React from "react";
 
 type Props = {
-  data: any;
+  data: UserModel[];
 };
 
 const TABLE_HEAD = [
