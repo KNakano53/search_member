@@ -14,8 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchMemberService = void 0;
 const common_1 = require("@nestjs/common");
-const response_type_1 = require("../response.type");
-const user_model_1 = require("../entity/user-model/user-model");
+const response_type_1 = require("../type/response.type");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const users_entity_1 = require("../entity/user/users.entity");
@@ -23,35 +22,42 @@ let SearchMemberService = class SearchMemberService {
     constructor(repository) {
         this.repository = repository;
     }
-    searchMember(body) {
-        if (this.getFindAllFlag(body)) {
-            return this.findAll();
+    async searchMember(body) {
+        try {
+            const conditions = this.createWhereConditions(body);
+            return this.findByParam(conditions);
         }
-        else {
-            return this.findByAddress();
+        catch (e) {
+            console.log(e);
+            const response = new response_type_1.Response([], '検索処理でエラーが発生しました。');
+            return response;
         }
     }
-    async findAll() {
-        const users = await this.repository.find();
+    async findByParam(conditions) {
+        const users = await this.repository.find({
+            where: conditions,
+            order: {
+                id: 'asc',
+            },
+        });
         const response = new response_type_1.Response(users);
         return response;
     }
-    async findByAddress() {
-        const users = [
-            (0, user_model_1.generateUser)('TS3234', '伊織 順平', '東京都', '012-345-678'),
-            (0, user_model_1.generateUser)('TS5234', '雨宮 蓮', '東京都', '012-345-678'),
-        ];
-        const response = new response_type_1.Response(users, '検索処理でエラーが発生しました');
-        return response;
-    }
-    getFindAllFlag(body) {
-        if ('' == body.id &&
-            '' == body.name &&
-            '' == body.address &&
-            '' == body.tel) {
-            return true;
+    createWhereConditions(body) {
+        const conditions = {};
+        if (body.id !== '') {
+            conditions.id = body.id;
         }
-        return false;
+        if (body.name !== '') {
+            conditions.name = (0, typeorm_2.Like)('%' + body.name + '%');
+        }
+        if (body.address !== '') {
+            conditions.address = (0, typeorm_2.Like)('%' + body.address + '%');
+        }
+        if (body.tel !== '') {
+            conditions.tel = body.tel;
+        }
+        return conditions;
     }
 };
 exports.SearchMemberService = SearchMemberService;

@@ -1,13 +1,13 @@
 export interface IResponse {
   statusCode: number;
   message: string;
-  data: string;
+  data: any;
 }
 
 export class Response implements IResponse {
   public statusCode = 200;
   public message: string;
-  public data: string;
+  public data: any;
 
   constructor(data: any, message?: string) {
     this.message = message ?? 'SUCCESS';

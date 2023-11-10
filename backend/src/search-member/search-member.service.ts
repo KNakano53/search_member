@@ -1,42 +1,54 @@
 import { Injectable } from '@nestjs/common';
-import { Response } from 'src/response.type';
-import { SearchPostBody } from 'src/postBody.type';
+import { Response } from 'src/type/response.type';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
+import { IUsers } from 'src/entity/user/user.interface';
 import { Users } from 'src/entity/user/users.entity';
+import { SearchObject } from 'src/type/object.interface';
 
 @Injectable()
 export class SearchMemberService {
   constructor(@InjectRepository(Users) private repository: Repository<Users>) {}
 
-  searchMember(body: SearchPostBody): Promise<Response> {
-    if (this.getFindAllFlag(body)) {
-      return this.findAll();
-    } else {
-      return this.findByAddress();
+  async searchMember(body: IUsers): Promise<Response> {
+    try {
+      const conditions = this.createWhereConditions(body);
+
+      return this.findByParam(conditions);
+    } catch (e) {
+      console.log(e);
+      const response = new Response([], '検索処理でエラーが発生しました。');
+      return response;
     }
   }
-  private async findAll(): Promise<Response> {
-    const users = await this.repository.find();
-    const response: Response = new Response(users);
+
+  private async findByParam(conditions: SearchObject): Promise<Response> {
+    const users = await this.repository.find({
+      where: conditions,
+      order: {
+        id: 'asc',
+      },
+    });
+
+    const response = new Response(users);
     return response;
   }
 
-  private async findByAddress(): Promise<Response> {
-    const users = [];
-    const response: Response = new Response(users, '検索処理は実装中です');
-    return response;
-  }
+  private createWhereConditions(body: IUsers): SearchObject {
+    const conditions: SearchObject = {};
 
-  private getFindAllFlag(body: SearchPostBody): boolean {
-    if (
-      '' == body.id &&
-      '' == body.name &&
-      '' == body.address &&
-      '' == body.tel
-    ) {
-      return true;
+    if (body.id !== '') {
+      conditions.id = body.id;
     }
-    return false;
+    if (body.name !== '') {
+      conditions.name = Like('%' + body.name + '%');
+    }
+    if (body.address !== '') {
+      conditions.address = Like('%' + body.address + '%');
+    }
+    if (body.tel !== '') {
+      conditions.tel = body.tel;
+    }
+    return conditions;
   }
 }
