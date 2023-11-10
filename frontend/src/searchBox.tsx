@@ -8,6 +8,11 @@ function SearchBox() {
   const [message, setMesssage] = useState("");
   const [pageIndex, setPageIndex] = useState(0);
 
+  const [idInput, setIdInput] = useState("");
+  const [nameInput, setNameInput] = useState("");
+  const [addressInput, setAddressInput] = useState("");
+  const [telInput, setTelInput] = useState("");
+
   async function callApi(
     id: string | undefined,
     name: string | undefined,
@@ -39,15 +44,11 @@ function SearchBox() {
     setData(json.data);
   }
 
-  const idInput = React.createRef<HTMLInputElement>();
-  const nameInput = React.createRef<HTMLInputElement>();
-  const addressInput = React.createRef<HTMLInputElement>();
-  const telInput = React.createRef<HTMLInputElement>();
   const submitHandler = () => {
-    const id = idInput.current?.value;
-    const name = nameInput.current?.value;
-    const address = addressInput.current?.value;
-    const tel = telInput.current?.value;
+    const id = idInput;
+    const name = nameInput;
+    const address = addressInput;
+    const tel = telInput;
     setPageIndex(0);
     callApi(id, name, address, tel);
   };
@@ -55,6 +56,10 @@ function SearchBox() {
   const resetData = () => {
     setMesssage("");
     setData([]);
+    setIdInput("");
+    setNameInput("");
+    setAddressInput("");
+    setTelInput("");
   };
 
   return (
@@ -71,7 +76,10 @@ function SearchBox() {
                 id="inputUserID"
                 type="text"
                 className="searchInput form-control"
-                ref={idInput}
+                value={idInput}
+                onChange={(e) => {
+                  setIdInput(e.target.value);
+                }}
               />
             </div>
             <div>
@@ -82,7 +90,10 @@ function SearchBox() {
                 id="inputUserName"
                 type="text"
                 className="searchInput form-control"
-                ref={nameInput}
+                value={nameInput}
+                onChange={(e) => {
+                  setNameInput(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -95,7 +106,10 @@ function SearchBox() {
                 id="inputUserAddress"
                 type="text"
                 className="searchInput form-control"
-                ref={addressInput}
+                value={addressInput}
+                onChange={(e) => {
+                  setAddressInput(e.target.value);
+                }}
               />
             </div>
             <div>
@@ -106,7 +120,10 @@ function SearchBox() {
                 id="inputUserTel"
                 type="number"
                 className="searchInput form-control"
-                ref={telInput}
+                value={telInput}
+                onChange={(e) => {
+                  setTelInput(e.target.value);
+                }}
               />
             </div>
           </div>
