@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { SearchMemberService } from './search-member.service';
-import { SearchPostBody } from 'src/postBody.type';
+import { SearchPostBody } from 'src/type/postBody.type';
 
 @Controller('search-member')
 export class SearchMemberController {

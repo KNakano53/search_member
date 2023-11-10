@@ -1,5 +1,5 @@
-import { Response } from 'src/response.type';
-import { SearchPostBody } from 'src/postBody.type';
+import { Response } from 'src/type/response.type';
+import { SearchPostBody } from 'src/type/postBody.type';
 import { Repository } from 'typeorm';
 import { Users } from 'src/entity/user/users.entity';
 export declare class SearchMemberService {
@@ -7,6 +7,7 @@ export declare class SearchMemberService {
     constructor(repository: Repository<Users>);
     searchMember(body: SearchPostBody): Promise<Response>;
     private findAll;
+    private findByParam;
     private findByAddress;
     private getFindAllFlag;
 }

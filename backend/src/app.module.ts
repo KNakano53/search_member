@@ -14,7 +14,6 @@ import { Users } from './entity/user/users.entity';
       username: 'root',
       password: 'password',
       database: 'search_member',
-      // database: 'test1',
       entities: [Users],
       synchronize: true,
     }),

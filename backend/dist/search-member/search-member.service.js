@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchMemberService = void 0;
 const common_1 = require("@nestjs/common");
-const response_type_1 = require("../response.type");
+const response_type_1 = require("../type/response.type");
 const user_model_1 = require("../entity/user-model/user-model");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
@@ -28,13 +28,47 @@ let SearchMemberService = class SearchMemberService {
             return this.findAll();
         }
         else {
-            return this.findByAddress();
+            return this.findByParam(body);
         }
     }
     async findAll() {
         const users = await this.repository.find();
         const response = new response_type_1.Response(users);
         return response;
+    }
+    async findByParam(body) {
+        try {
+            const conditions = createWhereConditions();
+            const users = await this.repository.find({
+                where: conditions,
+                order: {
+                    id: 'asc',
+                },
+            });
+            const response = new response_type_1.Response(users);
+            return response;
+        }
+        catch (e) {
+            console.log(e);
+            const response = new response_type_1.Response([], '検索処理でエラーが発生しました');
+            return response;
+        }
+        function createWhereConditions() {
+            const conditions = {};
+            if (body.id !== '') {
+                conditions.id = body.id;
+            }
+            if (body.name !== '') {
+                conditions.name = (0, typeorm_2.Like)('%' + body.name + '%');
+            }
+            if (body.address !== '') {
+                conditions.address = (0, typeorm_2.Like)('%' + body.address + '%');
+            }
+            if (body.tel !== '') {
+                conditions.tel = body.tel;
+            }
+            return conditions;
+        }
     }
     async findByAddress() {
         const users = [
