@@ -22,22 +22,12 @@ let SearchMemberService = class SearchMemberService {
     constructor(repository) {
         this.repository = repository;
     }
-    searchMember(body) {
-        if (this.getFindAllFlag(body)) {
-            return this.findAll();
-        }
-        else {
-            return this.findByParam(body);
-        }
+    async searchMember(body) {
+        const conditions = this.createWhereConditions(body);
+        return this.findByParam(conditions);
     }
-    async findAll() {
-        const users = await this.repository.find();
-        const response = new response_type_1.Response(users);
-        return response;
-    }
-    async findByParam(body) {
+    async findByParam(conditions) {
         try {
-            const conditions = createWhereConditions();
             const users = await this.repository.find({
                 where: conditions,
                 order: {
@@ -52,31 +42,22 @@ let SearchMemberService = class SearchMemberService {
             const response = new response_type_1.Response([], '検索処理でエラーが発生しました');
             return response;
         }
-        function createWhereConditions() {
-            const conditions = {};
-            if (body.id !== '') {
-                conditions.id = body.id;
-            }
-            if (body.name !== '') {
-                conditions.name = (0, typeorm_2.Like)('%' + body.name + '%');
-            }
-            if (body.address !== '') {
-                conditions.address = (0, typeorm_2.Like)('%' + body.address + '%');
-            }
-            if (body.tel !== '') {
-                conditions.tel = body.tel;
-            }
-            return conditions;
-        }
     }
-    getFindAllFlag(body) {
-        if ('' == body.id &&
-            '' == body.name &&
-            '' == body.address &&
-            '' == body.tel) {
-            return true;
+    createWhereConditions(body) {
+        const conditions = {};
+        if (body.id !== '') {
+            conditions.id = body.id;
         }
-        return false;
+        if (body.name !== '') {
+            conditions.name = (0, typeorm_2.Like)('%' + body.name + '%');
+        }
+        if (body.address !== '') {
+            conditions.address = (0, typeorm_2.Like)('%' + body.address + '%');
+        }
+        if (body.tel !== '') {
+            conditions.tel = body.tel;
+        }
+        return conditions;
     }
 };
 exports.SearchMemberService = SearchMemberService;

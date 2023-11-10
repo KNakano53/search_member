@@ -1,12 +1,11 @@
 import { Response } from 'src/type/response.type';
-import { SearchPostBody } from 'src/type/postBody.type';
 import { Repository } from 'typeorm';
+import { IUsers } from 'src/entity/user/user.interface';
 import { Users } from 'src/entity/user/users.entity';
 export declare class SearchMemberService {
     private repository;
     constructor(repository: Repository<Users>);
-    searchMember(body: SearchPostBody): Promise<Response>;
-    private findAll;
+    searchMember(body: IUsers): Promise<Response>;
     private findByParam;
-    private getFindAllFlag;
+    private createWhereConditions;
 }
