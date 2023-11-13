@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchMemberController = void 0;
 const common_1 = require("@nestjs/common");
 const search_member_service_1 = require("./search-member.service");
+const search_user_dto_1 = require("../entity/user/search.user.dto");
 let SearchMemberController = class SearchMemberController {
     constructor(service) {
         this.service = service;
@@ -28,7 +29,7 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [search_user_dto_1.SearchUserDTO]),
     __metadata("design:returntype", void 0)
 ], SearchMemberController.prototype, "searchMember", null);
 exports.SearchMemberController = SearchMemberController = __decorate([

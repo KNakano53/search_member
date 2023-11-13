@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { Response } from 'src/type/response.type';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
-import { IUsers } from 'src/entity/user/user.interface';
 import { Users } from 'src/entity/user/users.entity';
 import { SearchObject } from 'src/type/object.interface';
 import * as _ from 'lodash';
+import { IUsers } from 'src/entity/user/user.interface';
 
 @Injectable()
 export class SearchMemberService {
