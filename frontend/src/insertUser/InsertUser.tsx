@@ -22,6 +22,7 @@ export function InsertUser(): JSX.Element {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
+        id: "",
         name,
         address,
         tel,
@@ -32,7 +33,7 @@ export function InsertUser(): JSX.Element {
 
     const response = await fetch(url, requestOptions);
     if (!response.ok) {
-      //   setMesssage("通信に失敗しました");
+      setMesssage("通信に失敗しました");
     }
     const json = await response.json();
     setMesssage(json.message);

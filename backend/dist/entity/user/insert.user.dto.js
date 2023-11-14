@@ -19,17 +19,19 @@ __decorate([
     __metadata("design:type", String)
 ], InsertUserDTO.prototype, "id", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)((o, v) => v != '' && v.length),
+    (0, class_validator_1.IsNotEmpty)({ message: '氏名は必須です' }),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(127, { message: '氏名は127文字以内で入力してください' }),
     __metadata("design:type", String)
 ], InsertUserDTO.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)((o, v) => v != '' && v.length),
+    (0, class_validator_1.IsNotEmpty)({ message: '住所は必須です' }),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(127, { message: '住所は127文字以内で入力してください' }),
     __metadata("design:type", String)
 ], InsertUserDTO.prototype, "address", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)((o, v) => v != '' && v.length),
+    (0, class_validator_1.IsNotEmpty)({ message: '電話番号は必須です' }),
     (0, class_validator_1.IsNumberString)(undefined, {
         message: '電話番号は半角数字で入力してください',
     }),

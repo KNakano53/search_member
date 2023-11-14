@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const search_member_module_1 = require("./search-member/search-member.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const users_entity_1 = require("./entity/user/users.entity");
+const insert_member_module_1 = require("./insert-member/insert-member.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -28,6 +29,7 @@ exports.AppModule = AppModule = __decorate([
                 synchronize: true,
             }),
             search_member_module_1.SearchMemberModule,
+            insert_member_module_1.InsertMemberModule,
         ],
     })
 ], AppModule);

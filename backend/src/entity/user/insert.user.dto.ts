@@ -11,17 +11,17 @@ export class InsertUserDTO implements IUsers {
   @IsEmpty()
   id: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: '氏名は必須です' })
   @IsString()
-  @MaxLength(127, { message: '氏名は11桁以内で入力してください' })
+  @MaxLength(127, { message: '氏名は127文字以内で入力してください' })
   name: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: '住所は必須です' })
   @IsString()
-  @MaxLength(127, { message: '住所は11桁以内で入力してください' })
+  @MaxLength(127, { message: '住所は127文字以内で入力してください' })
   address: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: '電話番号は必須です' })
   @IsNumberString(undefined, {
     message: '電話番号は半角数字で入力してください',
   })
