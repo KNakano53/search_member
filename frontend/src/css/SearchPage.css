@@ -21,7 +21,6 @@ input::-webkit-inner-spin-button {
   width: 15em;
 }
 
-.position-right {
-  float: right;
-  margin-right: 10%;
+.btn-div {
+  width: 85%;
 }

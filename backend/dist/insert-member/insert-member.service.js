@@ -13,10 +13,10 @@ const _ = require("lodash");
 let InsertMemberService = class InsertMemberService {
     async insertUser(body) {
         if (!_.isEmpty(body.name)) {
-            return new response_type_1.Response([], '登録が完了しました');
+            return new response_type_1.Response([], ['登録が完了しました', '新規加入者番号:TS0101']);
         }
         else {
-            return new response_type_1.Response([], '登録に失敗しました');
+            return new response_type_1.Response([], ['登録に失敗しました']);
         }
     }
 };

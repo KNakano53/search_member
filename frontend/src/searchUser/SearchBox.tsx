@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function SearchBox(): JSX.Element {
   const [data, setData] = useState([]);
-  const [message, setMesssage] = useState("");
+  const [message, setMesssage] = useState([""]);
   const [pageIndex, setPageIndex] = useState(0);
 
   const [idInput, setIdInput] = useState("");
@@ -38,7 +38,7 @@ function SearchBox(): JSX.Element {
 
     const response = await fetch(url, requestOptions);
     if (!response.ok) {
-      setMesssage("通信に失敗しました");
+      setMesssage(["通信に失敗しました"]);
     }
     const json = await response.json();
     setMesssage(json.message);
@@ -54,12 +54,12 @@ function SearchBox(): JSX.Element {
       setPageIndex(0);
       callApi(id, name, address, tel);
     } catch (e) {
-      setMesssage("通信処理に失敗しました");
+      setMesssage(["通信処理に失敗しました"]);
     }
   };
 
   const resetData = () => {
-    setMesssage("");
+    setMesssage([""]);
     setData([]);
     setIdInput("");
     setNameInput("");
@@ -152,9 +152,11 @@ function SearchBox(): JSX.Element {
           </div>
         </div>
       </div>
-      <Link to={"/insertUser"}>
-        <button className="btn btn-primary position-right">加入者登録</button>
-      </Link>
+      <div className="d-flex flex-row-reverse btn-div">
+        <Link to={"/insertUser"}>
+          <button className="btn btn-primary btn-insert">加入者登録</button>
+        </Link>
+      </div>
       <ShowMessage message={message} />
       <ShowTable
         data={data}

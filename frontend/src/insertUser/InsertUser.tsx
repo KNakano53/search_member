@@ -8,7 +8,7 @@ export function InsertUser(): JSX.Element {
   const [addressInput, setAddressInput] = useState("");
   const [telInput, setTelInput] = useState("");
 
-  const [message, setMesssage] = useState("");
+  const [message, setMesssage] = useState([""]);
 
   async function callApi(
     name: string | undefined,
@@ -29,15 +29,19 @@ export function InsertUser(): JSX.Element {
       }),
     };
     // console.log(requestOptions);
-    const url = "http://localhost:3001/search-member/insert";
+    const url = "http://localhost:3001/insert-member";
 
     const response = await fetch(url, requestOptions);
     if (!response.ok) {
-      setMesssage("通信に失敗しました");
+      setMesssage(["通信に失敗しました"]);
     }
     const json = await response.json();
     setMesssage(json.message);
-    // setData(json.data);
+    if (200 == json.statusCode) {
+      setNameInput("");
+      setAddressInput("");
+      setTelInput("");
+    }
   }
 
   const submitHandler = () => {

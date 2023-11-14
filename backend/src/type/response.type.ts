@@ -1,16 +1,16 @@
 export interface IResponse {
   statusCode: number;
-  message: string;
-  data: any;
+  message: string[];
+  data: unknown;
 }
 
 export class Response implements IResponse {
   public statusCode = 200;
-  public message: string;
-  public data: any;
+  public message: string[];
+  public data: unknown;
 
-  constructor(data: any, message?: string) {
-    this.message = message ?? 'SUCCESS';
+  constructor(data: unknown, message?: string[]) {
+    this.message = message ?? ['SUCCESS'];
     this.data = data;
   }
 }

@@ -4,7 +4,7 @@ exports.Response = void 0;
 class Response {
     constructor(data, message) {
         this.statusCode = 200;
-        this.message = message ?? 'SUCCESS';
+        this.message = message ?? ['SUCCESS'];
         this.data = data;
     }
 }

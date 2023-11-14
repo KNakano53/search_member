@@ -18,7 +18,7 @@ export class SearchMemberService {
       return this.findByParam(conditions);
     } catch (e) {
       console.log(e);
-      const response = new Response([], '検索処理でエラーが発生しました。');
+      const response = new Response([], ['検索処理でエラーが発生しました。']);
       return response;
     }
   }
@@ -32,7 +32,7 @@ export class SearchMemberService {
     });
 
     if (_.isEmpty(users)) {
-      return new Response([], '検索結果がありません');
+      return new Response([], ['検索結果がありません']);
     }
 
     return new Response(users);

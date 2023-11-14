@@ -17,7 +17,7 @@ exports.SearchUserDTO = SearchUserDTO;
 __decorate([
     (0, class_validator_1.ValidateIf)((o, v) => v != '' && v.length),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MaxLength)(6, { message: 'IDは6文字以下で入力してください' }),
+    (0, class_validator_1.MaxLength)(6, { message: '加入者番号は6文字以下で入力してください' }),
     __metadata("design:type", String)
 ], SearchUserDTO.prototype, "id", void 0);
 __decorate([

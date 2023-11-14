@@ -1,3 +1,3 @@
 export interface SearchObject {
-    [props: string]: any;
+    [props: string]: unknown;
 }

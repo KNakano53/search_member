@@ -1,15 +1,21 @@
 import React from "react";
 
 type Props = {
-  message: string;
+  message: string[];
 };
 export function ShowMessage(props: Props) {
-  if ("SUCCESS" === props.message || "" === props.message) {
+  if ("SUCCESS" === props.message[0] || "" === props.message[0]) {
     return null;
   }
   return (
     <div className="message">
-      <h3 className="text-center text-danger">{props.message}</h3>
+      {props.message.map((eachMessage, index) => {
+        return (
+          <h3 className="text-center text-danger" key={index}>
+            {eachMessage}
+          </h3>
+        );
+      })}
     </div>
   );
 }

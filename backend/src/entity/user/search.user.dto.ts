@@ -9,7 +9,7 @@ import {
 export class SearchUserDTO implements IUsers {
   @ValidateIf((o, v) => v != '' && v.length)
   @IsString()
-  @MaxLength(6, { message: 'IDは6文字以下で入力してください' })
+  @MaxLength(6, { message: '加入者番号は6文字以下で入力してください' })
   id: string;
 
   @ValidateIf((o, v) => v != '' && v.length)
