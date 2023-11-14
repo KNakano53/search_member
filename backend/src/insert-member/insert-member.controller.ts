@@ -3,6 +3,7 @@ import { InsertUserDTO } from 'src/entity/user/insert.user.dto';
 import { InsertMemberService } from './insert-member.service';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
+import { Response } from 'src/type/response.type';
 
 @Controller('insert-member')
 export class InsertMemberController {
@@ -13,9 +14,9 @@ export class InsertMemberController {
   ) {}
 
   @Post()
-  async insertUser(@Body() body: InsertUserDTO) {
+  async insertUser(@Body() body: InsertUserDTO): Promise<Response> {
     return await this.manager.transaction(async (manager) => {
-      return this.service.insertUser(body, manager);
+      return await this.service.insertUser(body, manager);
     });
   }
 }

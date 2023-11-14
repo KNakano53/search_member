@@ -7,8 +7,10 @@ import { Sequence } from 'src/entity/user/sequence.entity';
 
 @Injectable()
 export class InsertMemberService {
-  constructor() {}
-  async insertUser(body: InsertUserDTO, manager?: EntityManager) {
+  async insertUser(
+    body: InsertUserDTO,
+    manager?: EntityManager,
+  ): Promise<Response> {
     try {
       const savedUser = await this.saveUser(body, manager);
       return new Response(

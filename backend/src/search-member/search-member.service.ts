@@ -15,7 +15,7 @@ export class SearchMemberService {
     try {
       const conditions = this.createWhereConditions(body);
 
-      return this.findByParam(conditions);
+      return await this.findByParam(conditions);
     } catch (e) {
       console.log(e);
       const response = new Response([], ['検索処理でエラーが発生しました。']);
