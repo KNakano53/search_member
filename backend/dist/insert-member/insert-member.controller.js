@@ -23,8 +23,10 @@ let InsertMemberController = class InsertMemberController {
         this.service = service;
         this.manager = manager;
     }
-    insertUser(body) {
-        return this.service.insertUser(body, this.manager);
+    async insertUser(body) {
+        return await this.manager.transaction(async (manager) => {
+            return this.service.insertUser(body, manager);
+        });
     }
 };
 exports.InsertMemberController = InsertMemberController;
@@ -33,7 +35,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [insert_user_dto_1.InsertUserDTO]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], InsertMemberController.prototype, "insertUser", null);
 exports.InsertMemberController = InsertMemberController = __decorate([
     (0, common_1.Controller)('insert-member'),

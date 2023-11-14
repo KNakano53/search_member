@@ -13,7 +13,9 @@ export class InsertMemberController {
   ) {}
 
   @Post()
-  insertUser(@Body() body: InsertUserDTO) {
-    return this.service.insertUser(body, this.manager);
+  async insertUser(@Body() body: InsertUserDTO) {
+    return await this.manager.transaction(async (manager) => {
+      return this.service.insertUser(body, manager);
+    });
   }
 }

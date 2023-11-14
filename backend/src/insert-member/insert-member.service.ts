@@ -30,17 +30,18 @@ export class InsertMemberService {
     return manager.getRepository(Users).save(user);
   }
 
-  private async getLastNum(manager: EntityManager): Promise<number> {
+  private async getLastNum(manager: EntityManager): Promise<Sequence> {
     const sequence = await manager
       .getRepository(Sequence)
-      .createQueryBuilder()
-      .select('LAST_INSERT_ID(id+1)', 'id')
+      .createQueryBuilder('sequence')
+      .select('MAX(id)+1', 'id')
       .getRawOne<Sequence>();
-    return sequence.id;
+
+    return manager.getRepository(Sequence).save(sequence);
   }
 
   private async generateUserID(manager: EntityManager): Promise<string> {
-    const idNum: number = await this.getLastNum(manager);
+    const idNum: number = (await this.getLastNum(manager)).id;
     const strHeader: string = 'TS';
     return strHeader + this.zeroPadding(idNum, 4);
   }

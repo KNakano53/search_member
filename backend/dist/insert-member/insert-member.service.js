@@ -34,13 +34,13 @@ let InsertMemberService = class InsertMemberService {
     async getLastNum(manager) {
         const sequence = await manager
             .getRepository(sequence_entity_1.Sequence)
-            .createQueryBuilder()
-            .select('LAST_INSERT_ID(id+1)', 'id')
+            .createQueryBuilder('sequence')
+            .select('MAX(id)+1', 'id')
             .getRawOne();
-        return sequence.id;
+        return manager.getRepository(sequence_entity_1.Sequence).save(sequence);
     }
     async generateUserID(manager) {
-        const idNum = await this.getLastNum(manager);
+        const idNum = (await this.getLastNum(manager)).id;
         const strHeader = 'TS';
         return strHeader + this.zeroPadding(idNum, 4);
     }

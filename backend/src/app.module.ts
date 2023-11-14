@@ -3,6 +3,7 @@ import { SearchMemberModule } from './search-member/search-member.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from './entity/user/users.entity';
 import { InsertMemberModule } from './insert-member/insert-member.module';
+import { Sequence } from './entity/user/sequence.entity';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { InsertMemberModule } from './insert-member/insert-member.module';
       username: 'root',
       password: 'password',
       database: 'search_member',
-      entities: [Users],
+      entities: [Users, Sequence],
       synchronize: true,
     }),
     SearchMemberModule,

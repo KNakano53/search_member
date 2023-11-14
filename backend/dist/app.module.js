@@ -12,6 +12,7 @@ const search_member_module_1 = require("./search-member/search-member.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const users_entity_1 = require("./entity/user/users.entity");
 const insert_member_module_1 = require("./insert-member/insert-member.module");
+const sequence_entity_1 = require("./entity/user/sequence.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -25,7 +26,7 @@ exports.AppModule = AppModule = __decorate([
                 username: 'root',
                 password: 'password',
                 database: 'search_member',
-                entities: [users_entity_1.Users],
+                entities: [users_entity_1.Users, sequence_entity_1.Sequence],
                 synchronize: true,
             }),
             search_member_module_1.SearchMemberModule,

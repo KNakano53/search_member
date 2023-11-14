@@ -18,7 +18,7 @@ let Sequence = class Sequence {
 };
 exports.Sequence = Sequence;
 __decorate([
-    (0, typeorm_1.Column)({ nullable: false }),
+    (0, typeorm_1.PrimaryColumn)({ nullable: false }),
     __metadata("design:type", Number)
 ], Sequence.prototype, "id", void 0);
 exports.Sequence = Sequence = __decorate([
