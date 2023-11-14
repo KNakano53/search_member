@@ -25,7 +25,7 @@ let InsertMemberController = class InsertMemberController {
     }
     async insertUser(body) {
         return await this.manager.transaction(async (manager) => {
-            return this.service.insertUser(body, manager);
+            return await this.service.insertUser(body, manager);
         });
     }
 };

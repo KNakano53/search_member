@@ -18,7 +18,7 @@ const response_type_1 = require("../type/response.type");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const users_entity_1 = require("../entity/user/users.entity");
-const _ = require("lodash");
+const lodash_1 = require("lodash");
 let SearchMemberService = class SearchMemberService {
     constructor(repository) {
         this.repository = repository;
@@ -26,7 +26,7 @@ let SearchMemberService = class SearchMemberService {
     async searchMember(body) {
         try {
             const conditions = this.createWhereConditions(body);
-            return this.findByParam(conditions);
+            return await this.findByParam(conditions);
         }
         catch (e) {
             console.log(e);
@@ -41,7 +41,7 @@ let SearchMemberService = class SearchMemberService {
                 id: 'asc',
             },
         });
-        if (_.isEmpty(users)) {
+        if ((0, lodash_1.isEmpty)(users)) {
             return new response_type_1.Response([], ['検索結果がありません']);
         }
         return new response_type_1.Response(users);

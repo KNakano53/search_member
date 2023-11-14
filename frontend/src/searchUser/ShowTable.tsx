@@ -1,6 +1,6 @@
 import ReactPaginate from "react-paginate";
 import SearchResult from "./SearchResult";
-import * as _ from "lodash";
+import { isEmpty } from "lodash";
 import React from "react";
 import { UserModel } from "../userModel";
 
@@ -13,7 +13,7 @@ type Props = {
 export function ShowTable(props: Props) {
   const pageSize: number = 20;
 
-  if (_.isEmpty(props.data)) {
+  if (isEmpty(props.data)) {
     return null;
   }
 

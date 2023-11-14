@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { Users } from 'src/entity/user/users.entity';
 import { SearchObject } from 'src/type/object.interface';
-import * as _ from 'lodash';
+import { isEmpty } from 'lodash';
 import { IUsers } from 'src/entity/user/user.interface';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class SearchMemberService {
       },
     });
 
-    if (_.isEmpty(users)) {
+    if (isEmpty(users)) {
       return new Response([], ['検索結果がありません']);
     }
 

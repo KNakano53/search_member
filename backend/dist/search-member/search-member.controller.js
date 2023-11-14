@@ -20,8 +20,8 @@ let SearchMemberController = class SearchMemberController {
     constructor(service) {
         this.service = service;
     }
-    searchMember(body) {
-        return this.service.searchMember(body);
+    async searchMember(body) {
+        return await this.service.searchMember(body);
     }
 };
 exports.SearchMemberController = SearchMemberController;
@@ -30,7 +30,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [search_user_dto_1.SearchUserDTO]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], SearchMemberController.prototype, "searchMember", null);
 exports.SearchMemberController = SearchMemberController = __decorate([
     (0, common_1.Controller)('search-member'),
