@@ -16,12 +16,15 @@ exports.InsertMemberController = void 0;
 const common_1 = require("@nestjs/common");
 const insert_user_dto_1 = require("../entity/user/insert.user.dto");
 const insert_member_service_1 = require("./insert-member.service");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
 let InsertMemberController = class InsertMemberController {
-    constructor(service) {
+    constructor(service, manager) {
         this.service = service;
+        this.manager = manager;
     }
     insertUser(body) {
-        return this.service.insertUser(body);
+        return this.service.insertUser(body, this.manager);
     }
 };
 exports.InsertMemberController = InsertMemberController;
@@ -34,6 +37,8 @@ __decorate([
 ], InsertMemberController.prototype, "insertUser", null);
 exports.InsertMemberController = InsertMemberController = __decorate([
     (0, common_1.Controller)('insert-member'),
-    __metadata("design:paramtypes", [insert_member_service_1.InsertMemberService])
+    __param(1, (0, typeorm_1.InjectEntityManager)()),
+    __metadata("design:paramtypes", [insert_member_service_1.InsertMemberService,
+        typeorm_2.EntityManager])
 ], InsertMemberController);
 //# sourceMappingURL=insert-member.controller.js.map

@@ -16,7 +16,7 @@ exports.InsertMemberModule = InsertMemberModule;
 exports.InsertMemberModule = InsertMemberModule = __decorate([
     (0, common_1.Module)({
         controllers: [insert_member_controller_1.InsertMemberController],
-        providers: [insert_member_service_1.InsertMemberService]
+        providers: [insert_member_service_1.InsertMemberService],
     })
 ], InsertMemberModule);
 //# sourceMappingURL=insert-member.module.js.map

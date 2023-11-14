@@ -4,6 +4,6 @@ import { InsertMemberService } from './insert-member.service';
 
 @Module({
   controllers: [InsertMemberController],
-  providers: [InsertMemberService]
+  providers: [InsertMemberService],
 })
 export class InsertMemberModule {}
