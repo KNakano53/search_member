@@ -6,16 +6,22 @@ import { Users } from 'src/entity/user/users.entity';
 import { SearchObject } from 'src/type/object.interface';
 import { isEmpty } from 'lodash';
 import { IUsers } from 'src/entity/user/user.interface';
+import {
+  IPaginationOptions,
+  Pagination,
+  paginate,
+} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class SearchMemberService {
   constructor(@InjectRepository(Users) private repository: Repository<Users>) {}
 
-  async searchMember(body: IUsers): Promise<Response> {
+  async searchMember(body: IUsers, option?: IPaginationOptions) {
     try {
       const conditions = this.createWhereConditions(body);
 
-      return await this.findByParam(conditions);
+      // return await this.findByParam(conditions);
+      return await this.findForPaginate(option, conditions);
     } catch (e) {
       console.log(e);
       const response = new Response([], ['検索処理でエラーが発生しました。']);
@@ -54,5 +60,18 @@ export class SearchMemberService {
       conditions.tel = body.tel;
     }
     return conditions;
+  }
+
+  private async findForPaginate(
+    option: IPaginationOptions,
+    conditions: SearchObject,
+  ): Promise<Pagination<Users>> {
+    console.log(conditions);
+    return paginate<Users>(this.repository, option, {
+      where: conditions,
+      order: {
+        id: 'asc',
+      },
+    });
   }
 }

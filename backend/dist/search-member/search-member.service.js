@@ -19,14 +19,15 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const users_entity_1 = require("../entity/user/users.entity");
 const lodash_1 = require("lodash");
+const nestjs_typeorm_paginate_1 = require("nestjs-typeorm-paginate");
 let SearchMemberService = class SearchMemberService {
     constructor(repository) {
         this.repository = repository;
     }
-    async searchMember(body) {
+    async searchMember(body, option) {
         try {
             const conditions = this.createWhereConditions(body);
-            return await this.findByParam(conditions);
+            return await this.findForPaginate(option, conditions);
         }
         catch (e) {
             console.log(e);
@@ -61,6 +62,15 @@ let SearchMemberService = class SearchMemberService {
             conditions.tel = body.tel;
         }
         return conditions;
+    }
+    async findForPaginate(option, conditions) {
+        console.log(conditions);
+        return (0, nestjs_typeorm_paginate_1.paginate)(this.repository, option, {
+            where: conditions,
+            order: {
+                id: 'asc',
+            },
+        });
     }
 };
 exports.SearchMemberService = SearchMemberService;
