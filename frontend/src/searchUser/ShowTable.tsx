@@ -3,35 +3,70 @@ import SearchResult from "./SearchResult";
 import { isEmpty } from "lodash";
 import React from "react";
 import { UserModel } from "../userModel";
+import { Meta } from "../response.type";
 
 type Props = {
-  data: UserModel[];
-  pageIndex: number;
-  setPageIndex: React.Dispatch<React.SetStateAction<number>>;
+  param: { id: string; name: string; address: string; tel: string };
+  metaState: {
+    meta: Meta;
+    setMeta: React.Dispatch<React.SetStateAction<Meta>>;
+  };
+  dataState: {
+    data: UserModel[];
+    setData: React.Dispatch<React.SetStateAction<never[]>>;
+  };
+  messageState: {
+    message: string[];
+    setMesssage: React.Dispatch<React.SetStateAction<string[]>>;
+  };
 };
 
 export function ShowTable(props: Props) {
-  const pageSize: number = 20;
+  const meta = props.metaState.meta;
 
-  if (isEmpty(props.data)) {
+  if (isEmpty(props.dataState.data)) {
     return null;
   }
 
+  async function callApi(
+    param: { id: string; name: string; address: string; tel: string },
+    selectedPage: number
+  ) {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        id: param.id,
+        name: param.name,
+        address: param.address,
+        tel: param.tel,
+      }),
+    };
+    const url = "http://localhost:3001/search-member?page=" + selectedPage;
+
+    const response = await fetch(url, requestOptions);
+    if (!response.ok) {
+      props.messageState.setMesssage(["通信に失敗しました"]);
+    }
+    const json = await response.json();
+    props.messageState.setMesssage(json.message);
+    props.dataState.setData(json.data.items);
+    props.metaState.setMeta(json.data.meta);
+  }
+
   const handlePageChange = (selectedItem: { selected: number }) => {
-    props.setPageIndex(selectedItem.selected);
+    callApi(props.param, selectedItem.selected + 1);
   };
 
   return (
     <div>
-      <SearchResult
-        data={props.data.slice(
-          props.pageIndex * pageSize,
-          (props.pageIndex + 1) * pageSize
-        )}
-      />
+      <SearchResult data={props.dataState.data} />
       <div className="paginate mx-auto">
         <ReactPaginate
-          pageCount={Math.ceil(props.data.length / pageSize)}
+          pageCount={meta.totalPages}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={handlePageChange}

@@ -20,7 +20,7 @@ let SearchMemberController = class SearchMemberController {
     constructor(service) {
         this.service = service;
     }
-    async searchMemberForPagination(page = 1, limit = 10, body) {
+    async searchMemberForPagination(page = 1, limit = 20, body) {
         return await this.service.searchMember(body, {
             page,
             limit,
@@ -33,16 +33,15 @@ let SearchMemberController = class SearchMemberController {
 };
 exports.SearchMemberController = SearchMemberController;
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Post)(),
     __param(0, (0, common_1.Query)('page', new common_1.DefaultValuePipe(1), common_1.ParseIntPipe)),
-    __param(1, (0, common_1.Query)('limit', new common_1.DefaultValuePipe(10), common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Query)('limit', new common_1.DefaultValuePipe(20), common_1.ParseIntPipe)),
     __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number, search_user_dto_1.SearchUserDTO]),
     __metadata("design:returntype", Promise)
 ], SearchMemberController.prototype, "searchMemberForPagination", null);
 __decorate([
-    (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [search_user_dto_1.SearchUserDTO]),

@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   DefaultValuePipe,
-  Get,
   ParseIntPipe,
   Post,
   Query,
@@ -14,10 +13,11 @@ import { SearchUserDTO } from 'src/entity/user/search.user.dto';
 export class SearchMemberController {
   constructor(private service: SearchMemberService) {}
 
-  @Get()
+  // @Get()
+  @Post()
   async searchMemberForPagination(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+    @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit: number = 20,
     @Body() body: SearchUserDTO,
   ) {
     return await this.service.searchMember(body, {
@@ -27,7 +27,7 @@ export class SearchMemberController {
     });
   }
 
-  @Post()
+  // @Post()
   async searchMember(@Body() body: SearchUserDTO) {
     return await this.service.searchMember(body);
   }

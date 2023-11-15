@@ -3,16 +3,24 @@ import React, { useState } from "react";
 import { ShowMessage } from "../ShowMessage";
 import { ShowTable } from "./ShowTable";
 import { Link } from "react-router-dom";
+import { Meta } from "../response.type";
 
 function SearchBox(): JSX.Element {
   const [data, setData] = useState([]);
   const [message, setMesssage] = useState([""]);
-  const [pageIndex, setPageIndex] = useState(0);
 
-  const [idInput, setIdInput] = useState("");
-  const [nameInput, setNameInput] = useState("");
-  const [addressInput, setAddressInput] = useState("");
-  const [telInput, setTelInput] = useState("");
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [tel, setTel] = useState("");
+
+  const [meta, setMeta] = useState<Meta>({
+    totalItems: 0,
+    itemCount: 0,
+    itemsPerPage: 0,
+    totalPages: 0,
+    currentPage: 0,
+  });
 
   async function callApi(
     id: string | undefined,
@@ -33,7 +41,6 @@ function SearchBox(): JSX.Element {
         tel,
       }),
     };
-    // console.log(requestOptions);
     const url = "http://localhost:3001/search-member";
 
     const response = await fetch(url, requestOptions);
@@ -42,16 +49,13 @@ function SearchBox(): JSX.Element {
     }
     const json = await response.json();
     setMesssage(json.message);
-    setData(json.data);
+    setData(json.data.items);
+    setMeta(json.data.meta);
   }
 
   const submitHandler = () => {
-    const id = idInput;
-    const name = nameInput;
-    const address = addressInput;
-    const tel = telInput;
     try {
-      setPageIndex(0);
+      setData([]);
       callApi(id, name, address, tel);
     } catch (e) {
       setMesssage(["通信処理に失敗しました"]);
@@ -61,10 +65,10 @@ function SearchBox(): JSX.Element {
   const resetData = () => {
     setMesssage([""]);
     setData([]);
-    setIdInput("");
-    setNameInput("");
-    setAddressInput("");
-    setTelInput("");
+    setId("");
+    setName("");
+    setAddress("");
+    setTel("");
   };
 
   return (
@@ -80,10 +84,10 @@ function SearchBox(): JSX.Element {
                 name="inputUserId"
                 id="inputUserID"
                 type="text"
-                className="searchInput form-control"
-                value={idInput}
+                className="search form-control"
+                value={id}
                 onChange={(e) => {
-                  setIdInput(e.target.value);
+                  setId(e.target.value);
                 }}
               />
             </div>
@@ -94,10 +98,10 @@ function SearchBox(): JSX.Element {
                 name="inputUserName"
                 id="inputUserName"
                 type="text"
-                className="searchInput form-control"
-                value={nameInput}
+                className="search form-control"
+                value={name}
                 onChange={(e) => {
-                  setNameInput(e.target.value);
+                  setName(e.target.value);
                 }}
               />
             </div>
@@ -110,10 +114,10 @@ function SearchBox(): JSX.Element {
                 name="inputUserAddress"
                 id="inputUserAddress"
                 type="text"
-                className="searchInput form-control"
-                value={addressInput}
+                className="search form-control"
+                value={address}
                 onChange={(e) => {
-                  setAddressInput(e.target.value);
+                  setAddress(e.target.value);
                 }}
               />
             </div>
@@ -124,10 +128,10 @@ function SearchBox(): JSX.Element {
                 name="inputUserTel"
                 id="inputUserTel"
                 type="text"
-                className="searchInput form-control"
-                value={telInput}
+                className="search form-control"
+                value={tel}
                 onChange={(e) => {
-                  setTelInput(e.target.value);
+                  setTel(e.target.value);
                 }}
               />
             </div>
@@ -159,9 +163,10 @@ function SearchBox(): JSX.Element {
       </div>
       <ShowMessage message={message} />
       <ShowTable
-        data={data}
-        pageIndex={pageIndex}
-        setPageIndex={setPageIndex}
+        param={{ id, name, address, tel }}
+        metaState={{ meta, setMeta }}
+        dataState={{ data, setData }}
+        messageState={{ message, setMesssage }}
       />
     </div>
   );

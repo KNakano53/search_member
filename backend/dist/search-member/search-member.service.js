@@ -64,13 +64,16 @@ let SearchMemberService = class SearchMemberService {
         return conditions;
     }
     async findForPaginate(option, conditions) {
-        console.log(conditions);
-        return (0, nestjs_typeorm_paginate_1.paginate)(this.repository, option, {
+        const result = await (0, nestjs_typeorm_paginate_1.paginate)(this.repository, option, {
             where: conditions,
             order: {
                 id: 'asc',
             },
         });
+        if ((0, lodash_1.isEmpty)(result.items)) {
+            return new response_type_1.Response([], ['検索結果がありません']);
+        }
+        return new response_type_1.Response(result);
     }
 };
 exports.SearchMemberService = SearchMemberService;

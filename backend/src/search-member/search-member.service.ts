@@ -3,14 +3,10 @@ import { Response } from 'src/type/response.type';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { Users } from 'src/entity/user/users.entity';
-import { SearchObject } from 'src/type/object.interface';
+import { CustomObject } from 'src/type/object.interface';
 import { isEmpty } from 'lodash';
 import { IUsers } from 'src/entity/user/user.interface';
-import {
-  IPaginationOptions,
-  Pagination,
-  paginate,
-} from 'nestjs-typeorm-paginate';
+import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class SearchMemberService {
@@ -29,7 +25,7 @@ export class SearchMemberService {
     }
   }
 
-  private async findByParam(conditions: SearchObject): Promise<Response> {
+  private async findByParam(conditions: CustomObject): Promise<Response> {
     const users = await this.repository.find({
       where: conditions,
       order: {
@@ -44,8 +40,8 @@ export class SearchMemberService {
     return new Response(users);
   }
 
-  private createWhereConditions(body: IUsers): SearchObject {
-    const conditions: SearchObject = {};
+  private createWhereConditions(body: IUsers): CustomObject {
+    const conditions: CustomObject = {};
 
     if (body.id !== '') {
       conditions.id = body.id;
@@ -64,14 +60,17 @@ export class SearchMemberService {
 
   private async findForPaginate(
     option: IPaginationOptions,
-    conditions: SearchObject,
-  ): Promise<Pagination<Users>> {
-    console.log(conditions);
-    return paginate<Users>(this.repository, option, {
+    conditions: CustomObject,
+  ): Promise<Response> {
+    const result = await paginate<Users>(this.repository, option, {
       where: conditions,
       order: {
         id: 'asc',
       },
     });
+    if (isEmpty(result.items)) {
+      return new Response([], ['検索結果がありません']);
+    }
+    return new Response(result);
   }
 }

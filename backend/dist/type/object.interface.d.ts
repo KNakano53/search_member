@@ -1,3 +1,3 @@
-export interface SearchObject {
+export interface CustomObject {
     [props: string]: unknown;
 }
