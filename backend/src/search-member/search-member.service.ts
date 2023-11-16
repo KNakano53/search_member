@@ -20,7 +20,9 @@ export class SearchMemberService {
       return await this.findForPaginate(option, conditions);
     } catch (e) {
       console.log(e);
-      const response = new Response([], ['検索処理でエラーが発生しました。']);
+      const response = new Response({ items: [] }, [
+        '検索処理でエラーが発生しました。',
+      ]);
       return response;
     }
   }
@@ -34,7 +36,7 @@ export class SearchMemberService {
     });
 
     if (isEmpty(users)) {
-      return new Response([], ['検索結果がありません']);
+      return new Response({ items: [] }, ['検索結果がありません']);
     }
 
     return new Response(users);
@@ -69,7 +71,7 @@ export class SearchMemberService {
       },
     });
     if (isEmpty(result.items)) {
-      return new Response([], ['検索結果がありません']);
+      return new Response({ items: [] }, ['検索結果がありません']);
     }
     return new Response(result);
   }

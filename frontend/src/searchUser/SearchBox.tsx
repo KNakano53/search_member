@@ -49,10 +49,11 @@ function SearchBox(): JSX.Element {
       setMesssage(["通信に失敗しました"]);
     }
     const json = await response.json();
+    if (json.error == undefined) {
+      setData(json.data.items);
+      setMeta(json.data.meta);
+    }
     setMesssage(json.message);
-    setData(json.data.items);
-    setMeta(json.data.meta);
-    setLimit(json.data.meta.itemsPerPage);
   }
 
   const submitHandler = () => {

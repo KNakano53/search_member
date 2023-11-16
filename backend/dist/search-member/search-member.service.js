@@ -31,7 +31,9 @@ let SearchMemberService = class SearchMemberService {
         }
         catch (e) {
             console.log(e);
-            const response = new response_type_1.Response([], ['検索処理でエラーが発生しました。']);
+            const response = new response_type_1.Response({ items: [] }, [
+                '検索処理でエラーが発生しました。',
+            ]);
             return response;
         }
     }
@@ -43,7 +45,7 @@ let SearchMemberService = class SearchMemberService {
             },
         });
         if ((0, lodash_1.isEmpty)(users)) {
-            return new response_type_1.Response([], ['検索結果がありません']);
+            return new response_type_1.Response({ items: [] }, ['検索結果がありません']);
         }
         return new response_type_1.Response(users);
     }
@@ -71,7 +73,7 @@ let SearchMemberService = class SearchMemberService {
             },
         });
         if ((0, lodash_1.isEmpty)(result.items)) {
-            return new response_type_1.Response([], ['検索結果がありません']);
+            return new response_type_1.Response({ items: [] }, ['検索結果がありません']);
         }
         return new response_type_1.Response(result);
     }
