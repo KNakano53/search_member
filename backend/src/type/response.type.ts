@@ -1,16 +1,15 @@
-export interface IResponse {
+export type Response = {
   statusCode: number;
   message: string[];
   data: unknown;
-}
+};
 
-export class Response implements IResponse {
-  public statusCode = 200;
-  public message: string[];
-  public data: unknown;
-
-  constructor(data: unknown, message?: string[]) {
-    this.message = message ?? ['SUCCESS'];
-    this.data = data;
-  }
+export function generateResponse(
+  data: unknown,
+  message?: string[],
+  statusCode?: number,
+): Response {
+  statusCode ??= 200;
+  message ??= [''];
+  return { statusCode: statusCode, message: message, data: data };
 }

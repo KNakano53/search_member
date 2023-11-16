@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InsertUserDTO } from 'src/entity/user/insert.user.dto';
-import { Response } from 'src/type/response.type';
+import { Response, generateResponse } from 'src/type/response.type';
 import { Users } from 'src/entity/user/users.entity';
 import { EntityManager } from 'typeorm';
 import { Sequence } from 'src/entity/user/sequence.entity';
@@ -13,13 +13,13 @@ export class InsertMemberService {
   ): Promise<Response> {
     try {
       const savedUser = await this.saveUser(body, manager);
-      return new Response(
+      return generateResponse(
         [],
         ['登録が完了しました', '新規得意先番号:' + savedUser.id],
       );
     } catch (e) {
       console.log(e);
-      return new Response([], ['登録処理に失敗しました']);
+      return generateResponse([], ['登録処理に失敗しました'], 400);
     }
   }
 

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Response } from 'src/type/response.type';
+import { Response, generateResponse } from 'src/type/response.type';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { Users } from 'src/entity/user/users.entity';
-import { CustomObject } from 'src/type/object.interface';
+import { CustomObject } from 'src/type/object.type';
 import { isEmpty } from 'lodash';
 import { IUsers } from 'src/entity/user/user.interface';
 import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
@@ -19,7 +19,7 @@ export class SearchMemberService {
       return await this.findForPaginate(option, conditions);
     } catch (e) {
       console.log(e);
-      const response = new Response({ items: [] }, [
+      const response = generateResponse({ items: [] }, [
         '検索処理でエラーが発生しました。',
       ]);
       return response;
@@ -55,8 +55,8 @@ export class SearchMemberService {
       },
     });
     if (isEmpty(result.items)) {
-      return new Response({ items: [] }, ['検索結果がありません']);
+      return generateResponse({ items: [] }, ['検索結果がありません']);
     }
-    return new Response(result);
+    return generateResponse(result);
   }
 }
