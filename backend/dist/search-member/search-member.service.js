@@ -31,7 +31,7 @@ let SearchMemberService = class SearchMemberService {
         }
         catch (e) {
             console.log(e);
-            const response = new response_type_1.Response({ items: [] }, [
+            const response = (0, response_type_1.generateResponse)({ items: [] }, [
                 '検索処理でエラーが発生しました。',
             ]);
             return response;
@@ -61,9 +61,9 @@ let SearchMemberService = class SearchMemberService {
             },
         });
         if ((0, lodash_1.isEmpty)(result.items)) {
-            return new response_type_1.Response({ items: [] }, ['検索結果がありません']);
+            return (0, response_type_1.generateResponse)({ items: [] }, ['検索結果がありません']);
         }
-        return new response_type_1.Response(result);
+        return (0, response_type_1.generateResponse)(result);
     }
 };
 exports.SearchMemberService = SearchMemberService;

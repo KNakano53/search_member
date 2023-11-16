@@ -15,11 +15,11 @@ let InsertMemberService = class InsertMemberService {
     async insertUser(body, manager) {
         try {
             const savedUser = await this.saveUser(body, manager);
-            return new response_type_1.Response([], ['登録が完了しました', '新規得意先番号:' + savedUser.id]);
+            return (0, response_type_1.generateResponse)([], ['登録が完了しました', '新規得意先番号:' + savedUser.id]);
         }
         catch (e) {
             console.log(e);
-            return new response_type_1.Response([], ['登録処理に失敗しました']);
+            return (0, response_type_1.generateResponse)([], ['登録処理に失敗しました'], 400);
         }
     }
     async saveUser(body, manager) {
