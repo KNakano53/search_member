@@ -1,5 +1,4 @@
 import ReactPaginate from "react-paginate";
-import SearchResult from "./SearchResult";
 import { isEmpty } from "lodash";
 import React from "react";
 import { UserModel } from "../userModel";
@@ -19,7 +18,18 @@ type Props = {
     message: string[];
     setMesssage: React.Dispatch<React.SetStateAction<string[]>>;
   };
+  limitState: {
+    limit: number;
+    setLimit: React.Dispatch<React.SetStateAction<number>>;
+  };
 };
+
+const TABLE_HEAD = [
+  { label: "加入者番号", key: "id" },
+  { label: "氏名", key: "name" },
+  { label: "住所", key: "address" },
+  { label: "電話番号", key: "tel" },
+];
 
 export function ShowTable(props: Props) {
   const meta = props.metaState.meta;
@@ -30,7 +40,8 @@ export function ShowTable(props: Props) {
 
   async function callApi(
     param: { id: string; name: string; address: string; tel: string },
-    selectedPage: number
+    selectedPage: number,
+    pageLimit?: number
   ) {
     const requestOptions = {
       method: "POST",
@@ -45,7 +56,12 @@ export function ShowTable(props: Props) {
         tel: param.tel,
       }),
     };
-    const url = "http://localhost:3001/search-member?page=" + selectedPage;
+    pageLimit ??= meta.itemsPerPage;
+    const url =
+      "http://localhost:3001/search-member?page=" +
+      selectedPage +
+      "&limit=" +
+      pageLimit;
 
     const response = await fetch(url, requestOptions);
     if (!response.ok) {
@@ -61,9 +77,44 @@ export function ShowTable(props: Props) {
     callApi(props.param, selectedItem.selected + 1);
   };
 
+  const handleLimitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    props.limitState.setLimit(parseInt(event.target.value));
+    props.dataState.setData([]);
+    callApi(props.param, 1, parseInt(event.target.value));
+  };
+
   return (
     <div>
-      <SearchResult data={props.dataState.data} />
+      <div className="resultTable mx-auto">
+        <label htmlFor="pageLimit">表示件数</label>
+        <select
+          id="pageLimit"
+          value={props.limitState.limit}
+          onChange={(e) => handleLimitChange(e)}
+        >
+          <option value={20}>20</option>
+          <option value={50}>50</option>
+          <option value={100}>100</option>
+        </select>
+        <table className="table">
+          <thead>
+            <tr>
+              {TABLE_HEAD.map((def) => (
+                <th key={def.key}>{def.label}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {props.dataState.data.map((row: UserModel) => (
+              <tr key={row.id}>
+                {TABLE_HEAD.map((def) => {
+                  return <td key={`${row.id} ${def.key}`}>{row[def.key]}</td>;
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <div className="paginate mx-auto">
         <ReactPaginate
           pageCount={meta.totalPages}

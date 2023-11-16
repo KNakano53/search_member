@@ -21,6 +21,7 @@ function SearchBox(): JSX.Element {
     totalPages: 0,
     currentPage: 0,
   });
+  const [limit, setLimit] = useState(20);
 
   async function callApi(
     id: string | undefined,
@@ -41,7 +42,7 @@ function SearchBox(): JSX.Element {
         tel,
       }),
     };
-    const url = "http://localhost:3001/search-member";
+    const url = "http://localhost:3001/search-member?limit=" + limit;
 
     const response = await fetch(url, requestOptions);
     if (!response.ok) {
@@ -51,6 +52,7 @@ function SearchBox(): JSX.Element {
     setMesssage(json.message);
     setData(json.data.items);
     setMeta(json.data.meta);
+    setLimit(json.data.meta.itemsPerPage);
   }
 
   const submitHandler = () => {
@@ -167,6 +169,7 @@ function SearchBox(): JSX.Element {
         metaState={{ meta, setMeta }}
         dataState={{ data, setData }}
         messageState={{ message, setMesssage }}
+        limitState={{ limit, setLimit }}
       />
     </div>
   );
