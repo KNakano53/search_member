@@ -63,14 +63,21 @@ export function ShowTable(props: Props) {
       "&limit=" +
       pageLimit;
 
-    const response = await fetch(url, requestOptions);
-    if (!response.ok) {
-      props.messageState.setMesssage(["通信に失敗しました"]);
-    }
-    const json = await response.json();
-    props.messageState.setMesssage(json.message);
-    props.dataState.setData(json.data.items);
-    props.metaState.setMeta(json.data.meta);
+    fetch(url, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          props.messageState.setMesssage(["通信に失敗しました"]);
+        }
+        response.json().then((json) => {
+          props.messageState.setMesssage(json.message);
+          props.dataState.setData(json.data.items);
+          props.metaState.setMeta(json.data.meta);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        props.messageState.setMesssage(["通信に失敗しました"]);
+      });
   }
 
   const handlePageChange = (selectedItem: { selected: number }) => {

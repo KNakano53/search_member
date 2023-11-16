@@ -44,16 +44,23 @@ function SearchBox(): JSX.Element {
     };
     const url = "http://localhost:3001/search-member?limit=" + limit;
 
-    const response = await fetch(url, requestOptions);
-    if (!response.ok) {
-      setMesssage(["通信に失敗しました"]);
-    }
-    const json = await response.json();
-    if (json.error == undefined) {
-      setData(json.data.items);
-      setMeta(json.data.meta);
-    }
-    setMesssage(json.message);
+    fetch(url, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          setMesssage(["通信に失敗しました"]);
+        }
+        response.json().then((json) => {
+          if (json.error == undefined) {
+            setData(json.data.items);
+            setMeta(json.data.meta);
+          }
+          setMesssage(json.message);
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        setMesssage(["通信に失敗しました"]);
+      });
   }
 
   const submitHandler = () => {

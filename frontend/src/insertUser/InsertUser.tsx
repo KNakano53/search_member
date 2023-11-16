@@ -28,20 +28,26 @@ export function InsertUser(): JSX.Element {
         tel,
       }),
     };
-    // console.log(requestOptions);
     const url = "http://localhost:3001/insert-member";
 
-    const response = await fetch(url, requestOptions);
-    if (!response.ok) {
-      setMesssage(["通信に失敗しました"]);
-    }
-    const json = await response.json();
-    setMesssage(json.message);
-    if (200 == json.statusCode) {
-      setNameInput("");
-      setAddressInput("");
-      setTelInput("");
-    }
+    fetch(url, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          setMesssage(["通信に失敗しました"]);
+        }
+        response.json().then((json) => {
+          setMesssage(json.message);
+          if (200 == json.statusCode) {
+            setNameInput("");
+            setAddressInput("");
+            setTelInput("");
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        setMesssage(["通信に失敗しました"]);
+      });
   }
 
   const submitHandler = () => {
