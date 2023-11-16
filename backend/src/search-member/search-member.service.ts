@@ -16,7 +16,6 @@ export class SearchMemberService {
     try {
       const conditions = this.createWhereConditions(body);
 
-      // return await this.findByParam(conditions);
       return await this.findForPaginate(option, conditions);
     } catch (e) {
       console.log(e);
@@ -25,21 +24,6 @@ export class SearchMemberService {
       ]);
       return response;
     }
-  }
-
-  private async findByParam(conditions: CustomObject): Promise<Response> {
-    const users = await this.repository.find({
-      where: conditions,
-      order: {
-        id: 'asc',
-      },
-    });
-
-    if (isEmpty(users)) {
-      return new Response({ items: [] }, ['検索結果がありません']);
-    }
-
-    return new Response(users);
   }
 
   private createWhereConditions(body: IUsers): CustomObject {

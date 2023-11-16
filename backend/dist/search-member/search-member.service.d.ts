@@ -7,7 +7,6 @@ export declare class SearchMemberService {
     private repository;
     constructor(repository: Repository<Users>);
     searchMember(body: IUsers, option?: IPaginationOptions): Promise<Response>;
-    private findByParam;
     private createWhereConditions;
     private findForPaginate;
 }

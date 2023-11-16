@@ -27,9 +27,6 @@ let SearchMemberController = class SearchMemberController {
             route: 'http://localhost:3001/search-member',
         });
     }
-    async searchMember(body) {
-        return await this.service.searchMember(body);
-    }
 };
 exports.SearchMemberController = SearchMemberController;
 __decorate([
@@ -41,12 +38,6 @@ __decorate([
     __metadata("design:paramtypes", [Number, Number, search_user_dto_1.SearchUserDTO]),
     __metadata("design:returntype", Promise)
 ], SearchMemberController.prototype, "searchMemberForPagination", null);
-__decorate([
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [search_user_dto_1.SearchUserDTO]),
-    __metadata("design:returntype", Promise)
-], SearchMemberController.prototype, "searchMember", null);
 exports.SearchMemberController = SearchMemberController = __decorate([
     (0, common_1.Controller)('search-member'),
     __metadata("design:paramtypes", [search_member_service_1.SearchMemberService])

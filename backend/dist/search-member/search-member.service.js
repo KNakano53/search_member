@@ -37,18 +37,6 @@ let SearchMemberService = class SearchMemberService {
             return response;
         }
     }
-    async findByParam(conditions) {
-        const users = await this.repository.find({
-            where: conditions,
-            order: {
-                id: 'asc',
-            },
-        });
-        if ((0, lodash_1.isEmpty)(users)) {
-            return new response_type_1.Response({ items: [] }, ['検索結果がありません']);
-        }
-        return new response_type_1.Response(users);
-    }
     createWhereConditions(body) {
         const conditions = {};
         if (body.id !== '') {
