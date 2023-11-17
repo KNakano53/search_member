@@ -27,33 +27,32 @@ let SearchMemberService = class SearchMemberService {
     async searchMember(body, option) {
         try {
             const conditions = this.createWhereConditions(body);
-            return await this.findForPaginate(option, conditions);
+            return await this.findByConditions(option, conditions);
         }
         catch (e) {
             console.log(e);
-            const response = (0, response_type_1.generateResponse)({ items: [] }, [
+            return (0, response_type_1.generateResponse)({ items: [] }, [
                 '検索処理でエラーが発生しました。',
             ]);
-            return response;
         }
     }
     createWhereConditions(body) {
         const conditions = {};
-        if (body.id !== '') {
+        if ('' !== body.id) {
             conditions.id = body.id;
         }
-        if (body.name !== '') {
+        if ('' !== body.name) {
             conditions.name = (0, typeorm_2.Like)('%' + body.name + '%');
         }
-        if (body.address !== '') {
+        if ('' !== body.address) {
             conditions.address = (0, typeorm_2.Like)('%' + body.address + '%');
         }
-        if (body.tel !== '') {
+        if ('' !== body.tel) {
             conditions.tel = body.tel;
         }
         return conditions;
     }
-    async findForPaginate(option, conditions) {
+    async findByConditions(option, conditions) {
         const result = await (0, nestjs_typeorm_paginate_1.paginate)(this.repository, option, {
             where: conditions,
             order: {

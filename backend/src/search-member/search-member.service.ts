@@ -16,35 +16,34 @@ export class SearchMemberService {
     try {
       const conditions = this.createWhereConditions(body);
 
-      return await this.findForPaginate(option, conditions);
+      return await this.findByConditions(option, conditions);
     } catch (e) {
       console.log(e);
-      const response = generateResponse({ items: [] }, [
+      return generateResponse({ items: [] }, [
         '検索処理でエラーが発生しました。',
       ]);
-      return response;
     }
   }
 
   private createWhereConditions(body: IUsers): CustomObject {
     const conditions: CustomObject = {};
 
-    if (body.id !== '') {
+    if ('' !== body.id) {
       conditions.id = body.id;
     }
-    if (body.name !== '') {
+    if ('' !== body.name) {
       conditions.name = Like('%' + body.name + '%');
     }
-    if (body.address !== '') {
+    if ('' !== body.address) {
       conditions.address = Like('%' + body.address + '%');
     }
-    if (body.tel !== '') {
+    if ('' !== body.tel) {
       conditions.tel = body.tel;
     }
     return conditions;
   }
 
-  private async findForPaginate(
+  private async findByConditions(
     option: IPaginationOptions,
     conditions: CustomObject,
   ): Promise<Response> {
