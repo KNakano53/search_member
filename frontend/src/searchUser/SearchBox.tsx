@@ -50,7 +50,7 @@ function SearchBox(): JSX.Element {
           setMesssage(["通信に失敗しました"]);
         }
         response.json().then((json) => {
-          if (json.error == undefined) {
+          if (undefined == json.error) {
             setData(json.data.items);
             setMeta(json.data.meta);
           }
