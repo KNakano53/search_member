@@ -15,7 +15,7 @@ export class InsertMemberService {
       const savedUser = await this.saveUser(body, manager);
       return generateResponse(
         [],
-        ['登録が完了しました', '新規得意先番号:' + savedUser.id],
+        ['登録が完了しました', '新規加入者番号:' + savedUser.id],
       );
     } catch (e) {
       console.log(e);
