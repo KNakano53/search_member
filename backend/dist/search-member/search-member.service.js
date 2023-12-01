@@ -31,9 +31,7 @@ let SearchMemberService = class SearchMemberService {
         }
         catch (e) {
             console.log(e);
-            return (0, response_type_1.generateResponse)({ items: [] }, [
-                '検索処理でエラーが発生しました。',
-            ]);
+            return (0, response_type_1.generateResponse)({ items: [] }, ['検索処理でエラーが発生しました。'], 400);
         }
     }
     createWhereConditions(body) {

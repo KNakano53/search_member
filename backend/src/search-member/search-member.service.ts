@@ -19,9 +19,11 @@ export class SearchMemberService {
       return await this.findByConditions(option, conditions);
     } catch (e) {
       console.log(e);
-      return generateResponse({ items: [] }, [
-        '検索処理でエラーが発生しました。',
-      ]);
+      return generateResponse(
+        { items: [] },
+        ['検索処理でエラーが発生しました。'],
+        400,
+      );
     }
   }
 
