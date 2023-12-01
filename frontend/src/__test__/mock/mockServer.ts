@@ -12,25 +12,27 @@ import {
 } from "./mockResponse";
 
 export const getServer = setupServer(
-  http.post("http://localhost:3001/search-member", ({ params }) => {
-    if (!_.isEmpty(params.id)) {
-      if (_.isEqual("TS", params.id)) {
-        return HttpResponse.json(JSON.stringify(emptyResponse));
+  http.post("http://localhost:3001/search-member", async ({ request }) => {
+    const body = await request.json();
+    if (!_.isEmpty(body.id)) {
+      if (_.isEqual("TS", body.id)) {
+        return HttpResponse.json(emptyResponse);
       }
-      return HttpResponse.json(JSON.stringify(idResponse));
+      return HttpResponse.json(idResponse);
     }
-    if (!_.isEmpty(params.name)) {
-      return HttpResponse.json(JSON.stringify(nameResponse));
+    if (!_.isEmpty(body.name)) {
+      return HttpResponse.json(nameResponse);
     }
-    if (!_.isEmpty(params.address)) {
-      return HttpResponse.json(JSON.stringify(addressResponse));
+    if (!_.isEmpty(body.address)) {
+      return HttpResponse.json(addressResponse);
     }
-    if (!_.isEmpty(params.tel)) {
-      if (_.isEqual("000", params.tel)) {
-        return HttpResponse.json(JSON.stringify(errorResponse));
+    if (!_.isEmpty(body.tel)) {
+      if (_.isEqual("000", body.tel)) {
+        return HttpResponse.json(errorResponse);
       }
-      return HttpResponse.json(JSON.stringify(telResponse));
+      return HttpResponse.json(telResponse);
     }
-    return HttpResponse.json(JSON.stringify(findAllResponse));
+
+    return HttpResponse.json(findAllResponse);
   })
 );

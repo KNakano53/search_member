@@ -51,6 +51,7 @@ function SearchBox(): JSX.Element {
         }
         response.json().then((json) => {
           if (undefined == json.error) {
+            console.log(json);
             setData(json.data.items);
             setMeta(json.data.meta);
           }

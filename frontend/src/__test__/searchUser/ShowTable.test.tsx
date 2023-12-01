@@ -1,20 +1,12 @@
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import React from "react";
 import SearchBox from "../../searchUser/SearchBox";
-import { getServer } from "../mock/mockServer";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expect, test } from "vitest";
 
-const server = getServer;
-
-beforeAll(() => server.listen());
-afterAll(() => server.close());
-afterEach(() => {
-  cleanup();
-  server.resetHandlers();
-});
+afterEach(() => cleanup());
 
 describe("テーブル表示", () => {
   test("api呼び出し", async () => {
@@ -29,7 +21,9 @@ describe("テーブル表示", () => {
     await userEvent.type(idInput, "TS0001");
 
     const searchBtn = screen.getByRole("button", { name: "検索" });
-    await userEvent.click(searchBtn);
+    await waitFor(async () => {
+      await userEvent.click(searchBtn);
+    });
 
     expect(screen.getByRole("table")).toBeInTheDocument();
   });
