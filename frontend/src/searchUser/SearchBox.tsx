@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ShowMessage } from "../ShowMessage";
 import { ShowTable } from "./ShowTable";
 import { Link } from "react-router-dom";
-import { Meta } from "../response.type";
+import { Meta } from "../type/response.type";
 
 function SearchBox(): JSX.Element {
   const [data, setData] = useState([]);
@@ -51,7 +51,6 @@ function SearchBox(): JSX.Element {
         }
         response.json().then((json) => {
           if (undefined == json.error) {
-            console.log(json);
             setData(json.data.items);
             setMeta(json.data.meta);
           }

@@ -1,8 +1,8 @@
 import ReactPaginate from "react-paginate";
 import { isEmpty } from "lodash";
 import React from "react";
-import { UserModel } from "../userModel";
-import { Meta } from "../response.type";
+import { UserModel } from "../type/userModel";
+import { Meta } from "../type/response.type";
 
 type Props = {
   param: { id: string; name: string; address: string; tel: string };
@@ -72,6 +72,7 @@ export function ShowTable(props: Props) {
           props.messageState.setMesssage(json.message);
           props.dataState.setData(json.data.items);
           props.metaState.setMeta(json.data.meta);
+          console.log(json.data.items);
         });
       })
       .catch((error) => {

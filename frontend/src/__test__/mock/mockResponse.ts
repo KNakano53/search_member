@@ -1,3 +1,11 @@
+import { nextPageData } from "./mockData";
+
+export interface Response {
+  statusCode: number;
+  message: string[];
+  data: unknown;
+}
+
 export const idResponse = {
   statusCode: 200,
   message: [""],
@@ -306,6 +314,27 @@ export const findAllResponse = {
       previous: "",
       next: "http://localhost:3001/search-member?page=2&limit=20",
       last: "http://localhost:3001/search-member?page=6&limit=20",
+    },
+  },
+};
+
+export const nextPageResponse = {
+  statusCode: 200,
+  message: [""],
+  data: {
+    items: nextPageData,
+    meta: {
+      totalItems: 2,
+      itemCount: 2,
+      itemsPerPage: 1,
+      totalPages: 2,
+      currentPage: 2,
+    },
+    links: {
+      first: "http://localhost:3001/search-member?limit=20",
+      previous: "",
+      next: "",
+      last: "http://localhost:3001/search-member?page=1&limit=20",
     },
   },
 };
