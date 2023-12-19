@@ -72,7 +72,6 @@ export function ShowTable(props: Props) {
           props.messageState.setMesssage(json.message);
           props.dataState.setData(json.data.items);
           props.metaState.setMeta(json.data.meta);
-          console.log(json.data.items);
         });
       })
       .catch((error) => {
