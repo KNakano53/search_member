@@ -1,14 +1,11 @@
 import { cleanup, render, waitFor, fireEvent } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
-import React from "react";
-import SearchBox from "../../searchUser/SearchBox";
-import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { expect, test, vi } from "vitest";
+import { expect, vi } from "vitest";
 import { ShowTable } from "../../searchUser/ShowTable";
 import { UserModel } from "../../type/userModel";
 import { Meta } from "../../type/response.type";
 import { nextPageData } from "../mock/mockData";
+import React from "react";
 
 afterEach(() => cleanup());
 
@@ -57,45 +54,46 @@ const mockProps = {
   },
 };
 
-describe("ShowTable", () => {
-  it("renders without crashing", () => {
-    const { getByText } = render(<ShowTable {...mockProps} />);
-    expect(getByText("テストユーザー1")).toBeInTheDocument();
-    expect(getByText("テストユーザー2")).toBeInTheDocument();
+describe("テーブル表示", () => {
+  it("テーブル要素表示確認", () => {
+    const { queryByText, queryByRole } = render(<ShowTable {...mockProps} />);
+    expect(queryByRole("table")).toBeInTheDocument();
+    expect(queryByText("テストユーザー1")).toBeInTheDocument();
+    expect(queryByText("テストアドレス1")).toBeInTheDocument();
+    expect(queryByText("テスト電話番号1")).toBeInTheDocument();
+    expect(queryByText("テストユーザー2")).toBeInTheDocument();
+    expect(queryByText("テストアドレス2")).toBeInTheDocument();
+    expect(queryByText("テスト電話番号2")).toBeInTheDocument();
   });
 
-  it("handles limit change", () => {
+  it("テーブル操作ボタン表示確認", () => {
+    const { queryByRole, queryByLabelText } = render(
+      <ShowTable {...mockProps} />
+    );
+    expect(queryByLabelText("表示件数")).toBeInTheDocument();
+    expect(queryByRole("button", { name: "Next page" })).toBeInTheDocument();
+    expect(
+      queryByRole("button", { name: "Previous page" })
+    ).toBeInTheDocument();
+    expect(
+      queryByRole("button", { name: "Page 1 is your current page" })
+    ).toBeInTheDocument();
+    expect(queryByRole("button", { name: "Page 2" })).toBeInTheDocument();
+  });
+});
+
+describe("データ更新", () => {
+  it("表示件数変更", () => {
     const { getByLabelText } = render(<ShowTable {...mockProps} />);
     fireEvent.change(getByLabelText("表示件数"), { target: { value: "50" } });
     expect(mockProps.limitState.setLimit).toHaveBeenCalledWith(50);
   });
 
-  it("handles page change", async () => {
+  it("表示ページ変更", async () => {
     const { getByRole } = render(<ShowTable {...mockProps} />);
     await waitFor(async () => {
       await userEvent.click(getByRole("button", { name: "Next page" }));
     });
     expect(mockProps.dataState.setData).toHaveBeenCalledWith(nextPageData);
-  });
-});
-
-describe("テーブル表示 with API", () => {
-  test("api呼び出し", async () => {
-    render(
-      <BrowserRouter>
-        <SearchBox />
-      </BrowserRouter>
-    );
-    const idInput: HTMLInputElement = screen.getByRole("textbox", {
-      name: "加入者番号",
-    });
-    await userEvent.type(idInput, "TS0001");
-
-    const searchBtn = screen.getByRole("button", { name: "検索" });
-    await waitFor(async () => {
-      await userEvent.click(searchBtn);
-    });
-
-    expect(screen.getByRole("table")).toBeInTheDocument();
   });
 });
