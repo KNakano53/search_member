@@ -1,8 +1,12 @@
 import {
   addressResponseData,
+  defaultMeta,
   idResponseData,
+  limitChageMeta,
+  limitChangeData,
   nameResponseData,
   nextPageData,
+  pageChangeMeta,
   telResponseData,
 } from "./mockData";
 
@@ -17,13 +21,7 @@ export const idResponse = {
   message: [""],
   data: {
     items: idResponseData,
-    meta: {
-      totalItems: 1,
-      itemCount: 1,
-      itemsPerPage: 20,
-      totalPages: 1,
-      currentPage: 1,
-    },
+    meta: defaultMeta,
     links: {
       first: "http://localhost:3001/search-member?limit=20",
       previous: "",
@@ -38,13 +36,7 @@ export const nameResponse = {
   message: [""],
   data: {
     items: nameResponseData,
-    meta: {
-      totalItems: 7,
-      itemCount: 7,
-      itemsPerPage: 20,
-      totalPages: 1,
-      currentPage: 1,
-    },
+    meta: defaultMeta,
     links: {
       first: "http://localhost:3001/search-member?limit=20",
       previous: "",
@@ -59,13 +51,7 @@ export const addressResponse = {
   message: [""],
   data: {
     items: addressResponseData,
-    meta: {
-      totalItems: 2,
-      itemCount: 2,
-      itemsPerPage: 20,
-      totalPages: 1,
-      currentPage: 1,
-    },
+    meta: defaultMeta,
     links: {
       first: "http://localhost:3001/search-member?limit=20",
       previous: "",
@@ -80,13 +66,7 @@ export const telResponse = {
   message: [""],
   data: {
     items: telResponseData,
-    meta: {
-      totalItems: 1,
-      itemCount: 1,
-      itemsPerPage: 20,
-      totalPages: 1,
-      currentPage: 1,
-    },
+    meta: defaultMeta,
     links: {
       first: "http://localhost:3001/search-member?limit=20",
       previous: "",
@@ -117,13 +97,7 @@ export const findAllResponse = {
   message: [""],
   data: {
     items: idResponse,
-    meta: {
-      totalItems: 106,
-      itemCount: 20,
-      itemsPerPage: 20,
-      totalPages: 6,
-      currentPage: 1,
-    },
+    meta: defaultMeta,
     links: {
       first: "http://localhost:3001/search-member?limit=20",
       previous: "",
@@ -138,18 +112,27 @@ export const nextPageResponse = {
   message: [""],
   data: {
     items: nextPageData,
-    meta: {
-      totalItems: 2,
-      itemCount: 2,
-      itemsPerPage: 1,
-      totalPages: 2,
-      currentPage: 2,
-    },
+    meta: pageChangeMeta,
     links: {
       first: "http://localhost:3001/search-member?limit=20",
       previous: "",
       next: "",
       last: "http://localhost:3001/search-member?page=1&limit=20",
+    },
+  },
+};
+
+export const limitChangeResponse = {
+  statusCode: 200,
+  message: [""],
+  data: {
+    items: limitChangeData,
+    meta: limitChageMeta,
+    links: {
+      first: "http://localhost:3001/search-member?limit=50",
+      previous: "",
+      next: "",
+      last: "http://localhost:3001/search-member?page=1&limit=50",
     },
   },
 };

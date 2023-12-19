@@ -28,19 +28,19 @@ describe("検索ボックス", () => {
       </BrowserRouter>
     );
     const idInput = getByRole("textbox", { name: "加入者番号" });
-    await userEvent.type(idInput, "TS0001");
+    userEvent.type(idInput, "TS0001");
     expect(idInput).toHaveValue("TS0001");
 
     const nameInput = getByRole("textbox", { name: "氏名" });
-    await userEvent.type(nameInput, "鈴木");
+    userEvent.type(nameInput, "鈴木");
     expect(nameInput).toHaveValue("鈴木");
 
     const addressInput = getByRole("textbox", { name: "住所" });
-    await userEvent.type(addressInput, "東京都");
+    userEvent.type(addressInput, "東京都");
     expect(addressInput).toHaveValue("東京都");
 
     const telInput = getByRole("textbox", { name: "電話番号" });
-    await userEvent.type(telInput, "09012345678");
+    userEvent.type(telInput, "09012345678");
     expect(telInput).toHaveValue("09012345678");
   });
 
@@ -51,18 +51,20 @@ describe("検索ボックス", () => {
       </BrowserRouter>
     );
     const idInput = getByRole("textbox", { name: "加入者番号" });
-    await userEvent.type(idInput, "TS0001");
+    userEvent.type(idInput, "TS0001");
 
     const nameInput = getByRole("textbox", { name: "氏名" });
-    await userEvent.type(nameInput, "鈴木");
+    userEvent.type(nameInput, "鈴木");
 
     const addressInput = getByRole("textbox", { name: "住所" });
-    await userEvent.type(addressInput, "東京都");
+    userEvent.type(addressInput, "東京都");
 
     const telInput = getByRole("textbox", { name: "電話番号" });
-    await userEvent.type(telInput, "09012345678");
+    userEvent.type(telInput, "09012345678");
 
-    await userEvent.click(getByRole("button", { name: "リセット" }));
+    await waitFor(() => {
+      userEvent.click(getByRole("button", { name: "リセット" }));
+    });
 
     expect(idInput).toHaveValue("");
     expect(nameInput).toHaveValue("");
@@ -73,23 +75,23 @@ describe("検索ボックス", () => {
 
 describe("API呼び出し", () => {
   it("検索正常処理", async () => {
-    const { getByRole, queryByRole, queryByText } = render(
+    const { getByRole, queryByRole } = render(
       <BrowserRouter>
         <SearchBox />
       </BrowserRouter>
     );
     const idInput = getByRole("textbox", { name: "加入者番号" });
-    await userEvent.type(idInput, "TS0001");
+    userEvent.type(idInput, "TS0001");
 
     await waitFor(() => {
       userEvent.click(getByRole("button", { name: "検索" }));
     });
 
     expect(queryByRole("table")).toBeInTheDocument();
-    expect(queryByText("id")).toBeInTheDocument();
-    expect(queryByText("ID検索 氏名")).toBeInTheDocument();
-    expect(queryByText("ID検索住所")).toBeInTheDocument();
-    expect(queryByText("012345678")).toBeInTheDocument();
+    expect(queryByRole("cell", { name: "id" })).toBeInTheDocument();
+    expect(queryByRole("cell", { name: "ID検索 氏名" })).toBeInTheDocument();
+    expect(queryByRole("cell", { name: "ID検索住所" })).toBeInTheDocument();
+    expect(queryByRole("cell", { name: "012345678" })).toBeInTheDocument();
   });
 
   it("検索結果0件", async () => {
@@ -99,7 +101,7 @@ describe("API呼び出し", () => {
       </BrowserRouter>
     );
     const idInput = getByRole("textbox", { name: "加入者番号" });
-    await userEvent.type(idInput, "TS");
+    userEvent.type(idInput, "TS");
 
     await waitFor(() => {
       userEvent.click(getByRole("button", { name: "検索" }));
@@ -116,7 +118,7 @@ describe("API呼び出し", () => {
       </BrowserRouter>
     );
     const idInput = getByRole("textbox", { name: "電話番号" });
-    await userEvent.type(idInput, "000");
+    userEvent.type(idInput, "000");
 
     await waitFor(() => {
       userEvent.click(getByRole("button", { name: "検索" }));
@@ -133,7 +135,7 @@ describe("API呼び出し", () => {
       </BrowserRouter>
     );
     const idInput = getByRole("textbox", { name: "電話番号" });
-    await userEvent.type(idInput, "0120");
+    userEvent.type(idInput, "0120");
 
     await waitFor(() => {
       userEvent.click(getByRole("button", { name: "検索" }));

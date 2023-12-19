@@ -7,6 +7,7 @@ import {
   errorResponse,
   findAllResponse,
   idResponse,
+  limitChangeResponse,
   nextPageResponse,
 } from "./mockResponse";
 
@@ -18,6 +19,14 @@ export const getServer = setupServer(
       address?: string;
       tel?: string;
     };
+    const pageLimit = new URL(request.url).searchParams.get("limit");
+    if (pageLimit && pageLimit == "50") {
+      return HttpResponse.json<Response>(limitChangeResponse);
+    }
+    if (pageLimit && pageLimit == "100") {
+      return HttpResponse.error();
+    }
+
     const selectedPage = new URL(request.url).searchParams.get("page");
     if (selectedPage && selectedPage == "2") {
       return HttpResponse.json<Response>(nextPageResponse);
