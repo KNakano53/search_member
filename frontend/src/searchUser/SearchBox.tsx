@@ -1,6 +1,6 @@
 import "../css/SearchPage.css";
 import React, { useState } from "react";
-import { ShowMessage } from "../ShowMessage";
+import { ShowMessage } from "../ShowMessage/ShowMessage";
 import { ShowTable } from "./ShowTable";
 import { Link } from "react-router-dom";
 import { Meta } from "../type/response.type";
@@ -82,7 +82,7 @@ function SearchBox(): JSX.Element {
   };
 
   return (
-    <div className="App">
+    <div className="App" data-testid="search-box">
       <h1 className="text-center">加入者検索</h1>
       <div className="searchBox mx-auto">
         <div id="searchUserForm">

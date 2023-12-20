@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/InsertPage.css";
-import { ShowMessage } from "../ShowMessage";
+import { ShowMessage } from "../ShowMessage/ShowMessage";
 
 export function InsertUser(): JSX.Element {
   const [nameInput, setNameInput] = useState("");
@@ -64,7 +64,7 @@ export function InsertUser(): JSX.Element {
   };
 
   return (
-    <div className="insertUser">
+    <div className="insertUser" data-testid="insert-user">
       <h1 className="text-center">加入者登録</h1>
       <Link to={"/"}>
         <button className="btn btn-primary position-left">戻る</button>
