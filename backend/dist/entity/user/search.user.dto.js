@@ -15,23 +15,23 @@ class SearchUserDTO {
 }
 exports.SearchUserDTO = SearchUserDTO;
 __decorate([
-    (0, class_validator_1.ValidateIf)((o, v) => v != '' && v.length),
+    (0, class_validator_1.ValidateIf)((o) => o.id != '' && o.id != undefined),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MaxLength)(6, { message: '加入者番号は6文字以下で入力してください' }),
     __metadata("design:type", String)
 ], SearchUserDTO.prototype, "id", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)((o, v) => v != '' && v.length),
+    (0, class_validator_1.ValidateIf)((o) => o.name != '' && o.name != undefined),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], SearchUserDTO.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)((o, v) => v != '' && v.length),
+    (0, class_validator_1.ValidateIf)((o) => o.address != '' && o.address != undefined),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], SearchUserDTO.prototype, "address", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)((o, v) => v != '' && v.length),
+    (0, class_validator_1.ValidateIf)((o) => o.tel != '' && o.tel != undefined),
     (0, class_validator_1.IsNumberString)(undefined, {
         message: '電話番号は半角数字で入力してください',
     }),

@@ -7,20 +7,20 @@ import {
 } from 'class-validator';
 
 export class SearchUserDTO implements IUsers {
-  @ValidateIf((o, v) => v != '' && v.length)
+  @ValidateIf((o) => o.id != '' && o.id != undefined)
   @IsString()
   @MaxLength(6, { message: '加入者番号は6文字以下で入力してください' })
   id: string;
 
-  @ValidateIf((o, v) => v != '' && v.length)
+  @ValidateIf((o) => o.name != '' && o.name != undefined)
   @IsString()
   name: string;
 
-  @ValidateIf((o, v) => v != '' && v.length)
+  @ValidateIf((o) => o.address != '' && o.address != undefined)
   @IsString()
   address: string;
 
-  @ValidateIf((o, v) => v != '' && v.length)
+  @ValidateIf((o) => o.tel != '' && o.tel != undefined)
   @IsNumberString(undefined, {
     message: '電話番号は半角数字で入力してください',
   })
