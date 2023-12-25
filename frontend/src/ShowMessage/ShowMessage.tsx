@@ -1,10 +1,11 @@
 import _ from "lodash";
 import React from "react";
 
-type Props = {
+interface Props {
   message: string[];
-};
-export function ShowMessage(props: Props) {
+}
+
+export const ShowMessage = (props: Props) => {
   if ("SUCCESS" === props.message[0] || _.isEmpty(props.message[0])) {
     return null;
   }
@@ -19,4 +20,4 @@ export function ShowMessage(props: Props) {
       })}
     </div>
   );
-}
+};
