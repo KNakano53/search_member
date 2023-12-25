@@ -4,7 +4,7 @@ import React from "react";
 import { UserModel } from "../type/userModel";
 import { Meta } from "../type/response.type";
 
-type Props = {
+interface Props {
   param: { id: string; name: string; address: string; tel: string };
   metaState: {
     meta: Meta;
@@ -22,7 +22,7 @@ type Props = {
     limit: number;
     setLimit: React.Dispatch<React.SetStateAction<number>>;
   };
-};
+}
 
 const TABLE_HEAD = [
   { label: "加入者番号", key: "id" },
@@ -31,7 +31,7 @@ const TABLE_HEAD = [
   { label: "電話番号", key: "tel" },
 ];
 
-export function ShowTable(props: Props) {
+export const ShowTable = (props: Props) => {
   const meta = props.metaState.meta;
 
   if (isEmpty(props.dataState.data)) {
@@ -146,4 +146,4 @@ export function ShowTable(props: Props) {
       </div>
     </div>
   );
-}
+};

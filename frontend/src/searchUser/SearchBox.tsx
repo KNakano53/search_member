@@ -5,7 +5,7 @@ import { ShowTable } from "./ShowTable";
 import { Link } from "react-router-dom";
 import { Meta } from "../type/response.type";
 
-function SearchBox(): JSX.Element {
+export const SearchBox = () => {
   const [data, setData] = useState([]);
   const [message, setMesssage] = useState([""]);
 
@@ -181,6 +181,4 @@ function SearchBox(): JSX.Element {
       />
     </div>
   );
-}
-
-export default SearchBox;
+};

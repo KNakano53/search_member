@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../css/InsertPage.css";
 import { ShowMessage } from "../ShowMessage/ShowMessage";
 
-export function InsertUser(): JSX.Element {
+export const InsertUser = () => {
   const [nameInput, setNameInput] = useState("");
   const [addressInput, setAddressInput] = useState("");
   const [telInput, setTelInput] = useState("");
@@ -134,4 +134,4 @@ export function InsertUser(): JSX.Element {
       <ShowMessage message={message} />
     </div>
   );
-}
+};
