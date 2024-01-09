@@ -2,8 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { SearchMemberController } from '../../src/search-member/search-member.controller';
 import { SearchMemberService } from '../../src/search-member/search-member.service';
 import { SearchUserDTO } from '../../src/entity/user/search.user.dto';
-import { AppModule } from 'src/app.module';
 import * as request from 'supertest';
+import { SearchMemberModule } from 'src/search-member/search-member.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Users } from 'src/entity/user/users.entity';
+import { Sequence } from 'src/entity/user/sequence.entity';
 
 const result = {
   statusCode: 200,
@@ -14,7 +17,7 @@ const result = {
 const serviceProider = {
   provide: SearchMemberService,
   useFactory: () => ({
-    searchMember: jest.fn((body: SearchUserDTO, { page, limit, route }) => {
+    searchMember: jest.fn(() => {
       return Promise.resolve(result);
     }),
   }),
@@ -52,13 +55,20 @@ describe('SearchMemberController', () => {
   });
 });
 
-describe('SearchMemberController (e2e)', () => {
+describe('e2e Tests', () => {
   let app;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-      providers: [serviceProider],
+      imports: [
+        SearchMemberModule,
+        TypeOrmModule.forRoot({
+          type: 'sqlite',
+          database: ':memory:',
+          entities: [Users, Sequence],
+          synchronize: true,
+        }),
+      ],
     }).compile();
 
     app = moduleFixture.createNestApplication();

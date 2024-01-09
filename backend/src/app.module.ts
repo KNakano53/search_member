@@ -18,7 +18,7 @@ import { Sequence } from './entity/user/sequence.entity';
             password: 'password',
             database: 'test_search_member',
             entities: [Users, Sequence],
-            synchronize: true,
+            // synchronize: true,
           }
         : {
             // 実行時のデータベース接続設定
@@ -29,7 +29,7 @@ import { Sequence } from './entity/user/sequence.entity';
             password: 'password',
             database: 'search_member',
             entities: [Users, Sequence],
-            synchronize: true,
+            // synchronize: true,
           },
     ),
     SearchMemberModule,

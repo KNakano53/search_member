@@ -59,7 +59,12 @@ export class InsertMemberService {
   }
 
   private zeroPadding(num: number, digits: number): string {
-    let strNum = num.toString();
+    let strNum;
+    if (num == undefined) {
+      strNum = '1';
+    } else {
+      strNum = num.toString();
+    }
     while (strNum.length < digits) {
       strNum = '0' + strNum;
     }

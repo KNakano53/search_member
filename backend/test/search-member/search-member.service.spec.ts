@@ -39,7 +39,7 @@ describe('SearchMemberService', () => {
     expect(service).toBeDefined();
   });
 
-  it('ID検索', async () => {
+  it('find by ID', async () => {
     const testBody: IUsers = {
       id: 'testID',
       name: '',
@@ -64,7 +64,7 @@ describe('SearchMemberService', () => {
     expect(result).toStrictEqual(expectResult);
   });
 
-  it('名前検索', async () => {
+  it('find By Name', async () => {
     const testBody: IUsers = {
       id: '',
       name: 'testName',
@@ -83,7 +83,7 @@ describe('SearchMemberService', () => {
     });
   });
 
-  it('住所検索', async () => {
+  it('find By Address', async () => {
     const testBody: IUsers = {
       id: '',
       name: '',
@@ -102,7 +102,7 @@ describe('SearchMemberService', () => {
     });
   });
 
-  it('電話番号検索', async () => {
+  it('find by Tel', async () => {
     const testBody: IUsers = {
       id: '',
       name: '',
@@ -121,7 +121,7 @@ describe('SearchMemberService', () => {
     });
   });
 
-  it('全項目検索', async () => {
+  it('find by all column', async () => {
     const testBody: IUsers = {
       id: 'testID',
       name: 'testName',
@@ -145,7 +145,7 @@ describe('SearchMemberService', () => {
     });
   });
 
-  it('全件検索', async () => {
+  it('find all records', async () => {
     const testBody: IUsers = {
       id: '',
       name: '',
