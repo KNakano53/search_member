@@ -1,5 +1,5 @@
 import { cleanup, render, waitFor } from "@testing-library/react";
-import SearchBox from "../../searchUser/SearchBox";
+import { SearchBox } from "../../searchUser/SearchBox";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
