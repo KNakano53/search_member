@@ -14,9 +14,9 @@ export class InsertMemberService {
   ) {}
 
   async insertUser(body: InsertUserDTO): Promise<Response> {
-    return await this.manager.transaction(
-      async (transactionalEntityManager) => {
-        try {
+    try {
+      return await this.manager.transaction(
+        async (transactionalEntityManager) => {
           const savedUser = await this.saveUser(
             transactionalEntityManager,
             body,
@@ -25,12 +25,12 @@ export class InsertMemberService {
             [],
             ['登録が完了しました', '新規加入者番号:' + savedUser.id],
           );
-        } catch (e) {
-          console.log(e);
-          return generateResponse([], ['登録処理に失敗しました'], 400);
-        }
-      },
-    );
+        },
+      );
+    } catch (e) {
+      console.log(e);
+      return generateResponse([], ['登録処理に失敗しました'], 400);
+    }
   }
 
   private async saveUser(
@@ -39,7 +39,8 @@ export class InsertMemberService {
   ): Promise<Users> {
     const user: Users = body;
     user.id = await this.generateUserID(entityManager);
-    return entityManager.getRepository(Users).save(user);
+    await entityManager.getRepository(Users).insert(user);
+    return Promise.resolve(user);
   }
 
   private async getLastNum(entityManager: EntityManager): Promise<Sequence> {
@@ -49,7 +50,8 @@ export class InsertMemberService {
       .select('MAX(id)+1', 'id')
       .getRawOne<Sequence>();
 
-    return entityManager.getRepository(Sequence).save(sequence);
+    await entityManager.getRepository(Sequence).insert(sequence);
+    return Promise.resolve(sequence);
   }
 
   private async generateUserID(entityManager: EntityManager): Promise<string> {

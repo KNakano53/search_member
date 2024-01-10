@@ -40,14 +40,14 @@ describe('InsertMemberService', () => {
     const sequence = new Sequence(1);
     // リポジトリのモックを設定
     const usersRepositoryMock = {
-      save: jest.fn().mockResolvedValue(user),
+      insert: jest.fn().mockResolvedValue(user),
     };
     const sequenceRepositoryMock = {
       createQueryBuilder: jest.fn().mockReturnValue({
         select: jest.fn().mockReturnThis(),
         getRawOne: jest.fn().mockResolvedValue({ id: 1 }),
       }),
-      save: jest.fn().mockResolvedValue(sequence),
+      insert: jest.fn().mockResolvedValue(sequence),
     };
 
     jest
@@ -84,9 +84,9 @@ describe('InsertMemberService', () => {
     expect(response).toBeDefined();
     expect(response).toEqual(successResponse);
 
-    expect(usersRepositoryMock.save).toHaveBeenCalled();
+    expect(usersRepositoryMock.insert).toHaveBeenCalled();
 
-    expect(sequenceRepositoryMock.save).toHaveBeenCalled();
+    expect(sequenceRepositoryMock.insert).toHaveBeenCalled();
   });
 });
 
@@ -111,14 +111,14 @@ describe('InsertMemberService - Error Cases', () => {
     const sequence = new Sequence(1);
     // リポジトリのモックを設定
     const usersRepositoryMock = {
-      save: jest.fn().mockRejectedValue(new Error('Transaction failed')),
+      insert: jest.fn().mockRejectedValue(new Error('Transaction failed')),
     };
     const sequenceRepositoryMock = {
       createQueryBuilder: jest.fn().mockReturnValue({
         select: jest.fn().mockReturnThis(),
         getRawOne: jest.fn().mockResolvedValue({ id: 1 }),
       }),
-      save: jest.fn().mockResolvedValue(sequence),
+      insert: jest.fn().mockResolvedValue(sequence),
     };
 
     jest
@@ -162,14 +162,14 @@ describe('InsertMemberService - Error Cases', () => {
     const sequence = new Sequence(1);
     // リポジトリのモックを設定
     const usersRepositoryMock = {
-      save: jest.fn().mockResolvedValue(user),
+      insert: jest.fn().mockResolvedValue(user),
     };
     const sequenceRepositoryMock = {
       createQueryBuilder: jest.fn().mockReturnValue({
         select: jest.fn().mockReturnThis(),
         getRawOne: jest.fn().mockRejectedValue(new Error('Transaction failed')),
       }),
-      save: jest.fn().mockResolvedValue(sequence),
+      insert: jest.fn().mockResolvedValue(sequence),
     };
 
     jest
@@ -213,14 +213,14 @@ describe('InsertMemberService - Error Cases', () => {
 
     // リポジトリのモックを設定
     const usersRepositoryMock = {
-      save: jest.fn().mockResolvedValue(user),
+      insert: jest.fn().mockResolvedValue(user),
     };
     const sequenceRepositoryMock = {
       createQueryBuilder: jest.fn().mockReturnValue({
         select: jest.fn().mockReturnThis(),
         getRawOne: jest.fn().mockResolvedValue({ id: 1 }),
       }),
-      save: jest.fn().mockRejectedValue(new Error('Transaction failed')),
+      insert: jest.fn().mockRejectedValue(new Error('Transaction failed')),
     };
 
     jest

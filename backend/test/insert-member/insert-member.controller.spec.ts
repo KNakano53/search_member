@@ -16,6 +16,18 @@ const result = {
   statusCode: 200,
 };
 
+const result2 = {
+  data: [],
+  message: ['登録が完了しました', '新規加入者番号:TS0002'],
+  statusCode: 200,
+};
+
+const errorResponse = {
+  data: [],
+  message: ['登録処理に失敗しました'],
+  statusCode: 400,
+};
+
 describe('InsertMemberController', () => {
   let controller: InsertMemberController;
   let service: InsertMemberService;
@@ -112,6 +124,96 @@ describe('e2e Tests', () => {
       .select('MAX(id)', 'id')
       .getRawOne<Sequence>();
     const expectSequence = { id: 1 };
+    expect(insertSequence).toEqual(expectSequence);
+  });
+
+  it('insert User twice', async () => {
+    const dto = new InsertUserDTO();
+    dto.name = 'test name';
+    dto.address = 'test address';
+    dto.tel = '012345678';
+
+    await request(app.getHttpServer())
+      .post('/insert-member')
+      .send(dto)
+      .expect(201)
+      .expect(result);
+
+    await request(app.getHttpServer())
+      .post('/insert-member')
+      .send(dto)
+      .expect(201)
+      .expect(result2);
+
+    let insertUser = await dataSource
+      .getRepository(Users)
+      .findOneBy({ id: 'TS0001' });
+    let expectUser: Users = dto;
+    expectUser.id = 'TS0001';
+    expect(insertUser).toEqual(expectUser);
+
+    insertUser = await dataSource
+      .getRepository(Users)
+      .findOneBy({ id: 'TS0002' });
+    expectUser = dto;
+    expectUser.id = 'TS0002';
+    expect(insertUser).toEqual(expectUser);
+
+    const insertSequence = await dataSource
+      .getRepository(Sequence)
+      .createQueryBuilder('sequence')
+      .select('MAX(id)', 'id')
+      .getRawOne<Sequence>();
+    const expectSequence = { id: 2 };
+    expect(insertSequence).toEqual(expectSequence);
+  });
+
+  it('roll back', async () => {
+    const dto = new InsertUserDTO();
+    dto.name = 'test name';
+    dto.address = 'test address';
+    dto.tel = '012345678';
+
+    await request(app.getHttpServer())
+      .post('/insert-member')
+      .send(dto)
+      .expect(201)
+      .expect(result); // 期待するレスポンス内容
+
+    let insertUser = await dataSource
+      .getRepository(Users)
+      .findOneBy({ id: 'TS0001' });
+    let expectUser: Users = dto;
+    expectUser.id = 'TS0001';
+    expect(insertUser).toEqual(expectUser);
+
+    await dataSource.getRepository(Sequence).delete({ id: 1 });
+
+    await request(app.getHttpServer())
+      .post('/insert-member')
+      .send(dto)
+      .expect(201)
+      .expect(errorResponse);
+
+    insertUser = await dataSource
+      .getRepository(Users)
+      .findOneBy({ id: 'TS0001' });
+    expectUser = dto;
+    expectUser.id = 'TS0001';
+    expect(insertUser).toEqual(expectUser);
+
+    insertUser = await dataSource
+      .getRepository(Users)
+      .findOneBy({ id: 'TS0002' });
+    expectUser = null;
+    expect(insertUser).toEqual(expectUser);
+
+    const insertSequence = await dataSource
+      .getRepository(Sequence)
+      .createQueryBuilder('sequence')
+      .select('MAX(id)', 'id')
+      .getRawOne<Sequence>();
+    const expectSequence = { id: null };
     expect(insertSequence).toEqual(expectSequence);
   });
 });
