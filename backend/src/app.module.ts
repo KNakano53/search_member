@@ -7,31 +7,17 @@ import { Sequence } from './entity/user/sequence.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(
-      process.env.NODE_ENV === 'test'
-        ? {
-            // テスト用のデータベース接続設定
-            type: 'mysql',
-            host: 'localhost',
-            port: 3306,
-            username: 'root',
-            password: 'password',
-            database: 'test_search_member',
-            entities: [Users, Sequence],
-            // synchronize: true,
-          }
-        : {
-            // 実行時のデータベース接続設定
-            type: 'mysql',
-            host: 'localhost',
-            port: 3306,
-            username: 'root',
-            password: 'password',
-            database: 'search_member',
-            entities: [Users, Sequence],
-            // synchronize: true,
-          },
-    ),
+    TypeOrmModule.forRoot({
+      // 実行時のデータベース接続設定
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'password',
+      database: 'search_member',
+      entities: [Users, Sequence],
+      // synchronize: true,
+    }),
     SearchMemberModule,
     InsertMemberModule,
   ],
