@@ -2,8 +2,8 @@ import {
   Body,
   Controller,
   DefaultValuePipe,
+  Get,
   ParseIntPipe,
-  Post,
   Query,
 } from '@nestjs/common';
 import { SearchMemberService } from './search-member.service';
@@ -13,7 +13,7 @@ import { SearchUserDTO } from 'src/entity/user/search.user.dto';
 export class SearchMemberController {
   constructor(private service: SearchMemberService) {}
 
-  @Post()
+  @Get()
   async searchMemberForPagination(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
     @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit: number = 20,

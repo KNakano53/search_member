@@ -16,18 +16,18 @@ class SearchUserDTO {
 exports.SearchUserDTO = SearchUserDTO;
 __decorate([
     (0, class_validator_1.ValidateIf)((o) => o.id != '' && o.id != undefined),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsString)({ message: '管理者番号は文字列で入力してください' }),
     (0, class_validator_1.MaxLength)(6, { message: '加入者番号は6文字以下で入力してください' }),
     __metadata("design:type", String)
 ], SearchUserDTO.prototype, "id", void 0);
 __decorate([
     (0, class_validator_1.ValidateIf)((o) => o.name != '' && o.name != undefined),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsString)({ message: '氏名は文字列で入力してください' }),
     __metadata("design:type", String)
 ], SearchUserDTO.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.ValidateIf)((o) => o.address != '' && o.address != undefined),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsString)({ message: '住所は文字列で入力してください' }),
     __metadata("design:type", String)
 ], SearchUserDTO.prototype, "address", void 0);
 __decorate([

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { InsertUserDTO } from '../../../src/entity/user/insert.user.dto';
 import { validate } from 'class-validator';
 
@@ -34,6 +35,14 @@ describe('InsertUserDTO', () => {
     expect(errors[0].constraints).toHaveProperty('isNotEmpty');
     expect(errors[0].constraints.isNotEmpty).toBe('氏名は必須です');
 
+    (dto as any).name = 123; //文字列以外は不正
+    errors = await validate(dto);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].constraints).toHaveProperty('isString');
+    expect(errors[0].constraints.isString).toBe(
+      '氏名は文字列で入力してください',
+    );
+
     dto.name = 'a'.repeat(128); // 128文字は不正
     errors = await validate(dto);
     expect(errors).toHaveLength(1);
@@ -56,6 +65,14 @@ describe('InsertUserDTO', () => {
     expect(errors).toHaveLength(1);
     expect(errors[0].constraints).toHaveProperty('isNotEmpty');
     expect(errors[0].constraints.isNotEmpty).toBe('住所は必須です');
+
+    (dto as any).address = 123; //文字列以外は不正
+    errors = await validate(dto);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].constraints).toHaveProperty('isString');
+    expect(errors[0].constraints.isString).toBe(
+      '住所は文字列で入力してください',
+    );
 
     dto.address = 'a'.repeat(128); // 128文字は不正
     errors = await validate(dto);

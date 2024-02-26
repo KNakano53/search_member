@@ -6,7 +6,8 @@ import { IPaginationOptions } from 'nestjs-typeorm-paginate';
 export declare class SearchMemberService {
     private repository;
     constructor(repository: Repository<Users>);
-    searchMember(body: IUsers, option?: IPaginationOptions): Promise<Response>;
+    searchMember(body: IUsers, option: IPaginationOptions): Promise<Response>;
     private createWhereConditions;
     private findByConditions;
+    private checkForLimit;
 }

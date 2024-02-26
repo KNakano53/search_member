@@ -4,15 +4,47 @@ import { Like, Repository } from 'typeorm';
 import { Users } from '../../src/entity/user/users.entity';
 import { SearchMemberService } from 'src/search-member/search-member.service';
 import { IUsers } from '../../src/entity/user/user.interface';
-import { paginate } from 'nestjs-typeorm-paginate';
+import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
 import { Response } from 'src/type/response.type';
 
+const successData = {
+  items: [
+    {
+      id: 'test1',
+      name: 'test1',
+      address: 'test1',
+      tel: '0120',
+    },
+  ],
+  meta: {
+    totalItems: 1,
+    itemCount: 1,
+    itemsPerPage: 20,
+    totalPages: 1,
+    currentPage: 1,
+  },
+  links: {
+    first: 'http://localhost:3001/search-member?limit=20',
+    previous: '',
+    next: '',
+    last: 'http://localhost:3001/search-member?page=1&limit=20',
+  },
+};
+
+const limitFailResult: Response = {
+  statusCode: 400,
+  message: ['表示件数はプルダウンから選択してください'],
+  data: { items: [] },
+};
+
+const successResult: Response = {
+  statusCode: 200,
+  message: [''],
+  data: successData,
+};
+
 jest.mock('nestjs-typeorm-paginate', () => ({
-  paginate: jest
-    .fn()
-    .mockImplementation(() =>
-      Promise.resolve({ items: [], meta: {}, links: {} }),
-    ),
+  paginate: jest.fn().mockImplementation(() => Promise.resolve(successData)),
 }));
 
 describe('SearchMemberService', () => {
@@ -39,16 +71,19 @@ describe('SearchMemberService', () => {
     expect(service).toBeDefined();
   });
 
-  it('find by ID', async () => {
+  it('find by ID and generate response', async () => {
     const testBody: IUsers = {
       id: 'testID',
       name: '',
       address: '',
       tel: '',
     };
-    const option = undefined;
+    const option: IPaginationOptions = {
+      limit: 20,
+      page: 1,
+    };
     const conditions = { id: 'testID' };
-    const result = await service.searchMember(testBody);
+    const result = await service.searchMember(testBody, option);
     expect(paginate).toBeCalledTimes(1);
     expect(paginate).toHaveBeenCalledWith(repo, option, {
       where: conditions,
@@ -56,11 +91,7 @@ describe('SearchMemberService', () => {
         id: 'asc',
       },
     });
-    const expectResult: Response = {
-      statusCode: 200,
-      message: ['検索結果がありません'],
-      data: { items: [] },
-    };
+    const expectResult = successResult;
     expect(result).toStrictEqual(expectResult);
   });
 
@@ -71,9 +102,12 @@ describe('SearchMemberService', () => {
       address: '',
       tel: '',
     };
-    const option = undefined;
+    const option: IPaginationOptions = {
+      limit: 20,
+      page: 1,
+    };
     const conditions = { name: Like('%testName%') };
-    await service.searchMember(testBody);
+    await service.searchMember(testBody, option);
     expect(paginate).toBeCalledTimes(1);
     expect(paginate).toHaveBeenCalledWith(repo, option, {
       where: conditions,
@@ -90,9 +124,12 @@ describe('SearchMemberService', () => {
       address: 'testAddress',
       tel: '',
     };
-    const option = undefined;
+    const option: IPaginationOptions = {
+      limit: 50,
+      page: 1,
+    };
     const conditions = { address: Like('%testAddress%') };
-    await service.searchMember(testBody);
+    await service.searchMember(testBody, option);
     expect(paginate).toBeCalledTimes(1);
     expect(paginate).toHaveBeenCalledWith(repo, option, {
       where: conditions,
@@ -109,9 +146,12 @@ describe('SearchMemberService', () => {
       address: '',
       tel: 'testTel',
     };
-    const option = undefined;
+    const option: IPaginationOptions = {
+      limit: 50,
+      page: 1,
+    };
     const conditions = { tel: 'testTel' };
-    await service.searchMember(testBody);
+    await service.searchMember(testBody, option);
     expect(paginate).toBeCalledTimes(1);
     expect(paginate).toHaveBeenCalledWith(repo, option, {
       where: conditions,
@@ -128,14 +168,17 @@ describe('SearchMemberService', () => {
       address: 'testAddress',
       tel: 'testTel',
     };
-    const option = undefined;
+    const option: IPaginationOptions = {
+      limit: 100,
+      page: 1,
+    };
     const conditions = {
       id: 'testID',
       name: Like('%testName%'),
       address: Like('%testAddress%'),
       tel: 'testTel',
     };
-    await service.searchMember(testBody);
+    await service.searchMember(testBody, option);
     expect(paginate).toBeCalledTimes(1);
     expect(paginate).toHaveBeenCalledWith(repo, option, {
       where: conditions,
@@ -152,9 +195,12 @@ describe('SearchMemberService', () => {
       address: '',
       tel: '',
     };
-    const option = undefined;
+    const option: IPaginationOptions = {
+      limit: 100,
+      page: 1,
+    };
     const conditions = {};
-    await service.searchMember(testBody);
+    await service.searchMember(testBody, option);
     expect(paginate).toBeCalledTimes(1);
     expect(paginate).toHaveBeenCalledWith(repo, option, {
       where: conditions,
@@ -162,5 +208,22 @@ describe('SearchMemberService', () => {
         id: 'asc',
       },
     });
+  });
+
+  it('failed by limit', async () => {
+    const testBody: IUsers = {
+      id: '',
+      name: '',
+      address: '',
+      tel: '',
+    };
+    const option: IPaginationOptions = {
+      limit: 10,
+      page: 1,
+    };
+    const result = await service.searchMember(testBody, option);
+    const expectResult = limitFailResult;
+    expect(result).toStrictEqual(expectResult);
+    expect(paginate).toBeCalledTimes(0);
   });
 });

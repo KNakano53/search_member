@@ -30,7 +30,7 @@ let SearchMemberController = class SearchMemberController {
 };
 exports.SearchMemberController = SearchMemberController;
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Get)(),
     __param(0, (0, common_1.Query)('page', new common_1.DefaultValuePipe(1), common_1.ParseIntPipe)),
     __param(1, (0, common_1.Query)('limit', new common_1.DefaultValuePipe(20), common_1.ParseIntPipe)),
     __param(2, (0, common_1.Body)()),

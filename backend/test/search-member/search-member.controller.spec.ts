@@ -7,8 +7,50 @@ import { SearchMemberModule } from 'src/search-member/search-member.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from 'src/entity/user/users.entity';
 import { Sequence } from 'src/entity/user/sequence.entity';
+import { EntityManager } from 'typeorm';
+import { Response } from 'src/type/response.type';
 
-const result = {
+const successResult = {
+  statusCode: 200,
+  message: [''],
+  data: {
+    items: [
+      {
+        id: 'TS0001',
+        name: 'テスト氏名1',
+        address: 'テスト住所1',
+        tel: '0123456789',
+      },
+      {
+        id: 'TS0002',
+        name: 'テスト氏名2',
+        address: 'テスト住所2',
+        tel: '0123456789',
+      },
+      {
+        id: 'TS0003',
+        name: 'テスト氏名3',
+        address: 'テスト住所3',
+        tel: '0123456789',
+      },
+    ],
+    meta: {
+      totalItems: 3,
+      itemCount: 3,
+      itemsPerPage: 20,
+      totalPages: 1,
+      currentPage: 1,
+    },
+    links: {
+      first: 'http://localhost:3001/search-member?limit=20',
+      previous: '',
+      next: '',
+      last: 'http://localhost:3001/search-member?page=1&limit=20',
+    },
+  },
+};
+
+const notFindResponse: Response = {
   statusCode: 200,
   message: ['検索結果がありません'],
   data: { items: [] },
@@ -18,7 +60,7 @@ const serviceProider = {
   provide: SearchMemberService,
   useFactory: () => ({
     searchMember: jest.fn(() => {
-      return Promise.resolve(result);
+      return Promise.resolve(successResult);
     }),
   }),
 };
@@ -49,7 +91,33 @@ describe('SearchMemberController', () => {
       };
 
       expect(await controller.searchMemberForPagination(1, 20, dto)).toBe(
-        result,
+        successResult,
+      );
+    });
+
+    it('should return a paginated list of members with default page and limit', async () => {
+      const dto: SearchUserDTO = {
+        name: '',
+        address: '',
+        tel: '',
+        id: '',
+      };
+
+      expect(
+        await controller.searchMemberForPagination(undefined, undefined, dto),
+      ).toBe(successResult);
+    });
+
+    it('should return a paginated list of members specified page and limit', async () => {
+      const dto: SearchUserDTO = {
+        name: '',
+        address: '',
+        tel: '',
+        id: '',
+      };
+
+      expect(await controller.searchMemberForPagination(2, 50, dto)).toBe(
+        successResult,
       );
     });
   });
@@ -72,6 +140,15 @@ describe('e2e Tests', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    const entityManager = app.get(EntityManager);
+    await entityManager.query(`
+      insert into users (id,name,address,tel)
+      values 
+      ('TS0001','テスト氏名1','テスト住所1','0123456789'),
+      ('TS0002','テスト氏名2','テスト住所2','0123456789'),
+      ('TS0003','テスト氏名3','テスト住所3','0123456789')
+      `);
+
     await app.init();
   }, 10000);
 
@@ -81,7 +158,7 @@ describe('e2e Tests', () => {
     }
   });
 
-  it('/POST items', () => {
+  it('/GET items', () => {
     const dto: SearchUserDTO = {
       name: '',
       address: '',
@@ -89,9 +166,22 @@ describe('e2e Tests', () => {
       id: '',
     };
     return request(app.getHttpServer())
-      .post('/search-member')
+      .get('/search-member')
       .send(dto)
-      .expect(201)
-      .expect(result); // 期待するレスポンス内容
+      .expect(200)
+      .expect(successResult); // 期待するレスポンス内容
+  });
+  it('/GET items with option', () => {
+    const dto = {
+      name: '',
+      address: '',
+      tel: '',
+      id: '',
+    };
+    return request(app.getHttpServer())
+      .get('/search-member?page=2&limit=50')
+      .send(dto)
+      .expect(200)
+      .expect(notFindResponse); // 期待するレスポンス内容
   });
 });

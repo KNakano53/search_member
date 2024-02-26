@@ -12,12 +12,12 @@ export class InsertUserDTO implements IUsers {
   id: string;
 
   @IsNotEmpty({ message: '氏名は必須です' })
-  @IsString()
+  @IsString({ message: '氏名は文字列で入力してください' })
   @MaxLength(127, { message: '氏名は127文字以内で入力してください' })
   name: string;
 
   @IsNotEmpty({ message: '住所は必須です' })
-  @IsString()
+  @IsString({ message: '住所は文字列で入力してください' })
   @MaxLength(127, { message: '住所は127文字以内で入力してください' })
   address: string;
 

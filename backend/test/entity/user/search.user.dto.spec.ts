@@ -30,7 +30,9 @@ describe('SearchUserDTO', () => {
     errors = await validate(dto);
     expect(errors.length).toBeGreaterThan(0);
     expect(errors[0].constraints).toHaveProperty('isString');
-    expect(errors[0].constraints.isString).toBe('id must be a string');
+    expect(errors[0].constraints.isString).toBe(
+      '管理者番号は文字列で入力してください',
+    );
   });
 
   it('氏名入力の確認', async () => {
@@ -42,7 +44,9 @@ describe('SearchUserDTO', () => {
     errors = await validate(dto);
     expect(errors.length).toBeGreaterThan(0);
     expect(errors[0].constraints).toHaveProperty('isString');
-    expect(errors[0].constraints.isString).toBe('name must be a string');
+    expect(errors[0].constraints.isString).toBe(
+      '氏名は文字列で入力してください',
+    );
   });
 
   it('should validate address field', async () => {
@@ -54,7 +58,9 @@ describe('SearchUserDTO', () => {
     errors = await validate(dto);
     expect(errors.length).toBeGreaterThan(0);
     expect(errors[0].constraints).toHaveProperty('isString');
-    expect(errors[0].constraints.isString).toBe('address must be a string');
+    expect(errors[0].constraints.isString).toBe(
+      '住所は文字列で入力してください',
+    );
   });
 
   it('should validate tel field', async () => {

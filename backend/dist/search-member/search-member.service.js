@@ -23,15 +23,25 @@ const nestjs_typeorm_paginate_1 = require("nestjs-typeorm-paginate");
 let SearchMemberService = class SearchMemberService {
     constructor(repository) {
         this.repository = repository;
+        this.checkForLimit = (option) => {
+            return ((0, lodash_1.isEqual)(option.limit, 20) ||
+                (0, lodash_1.isEqual)(option.limit, 50) ||
+                (0, lodash_1.isEqual)(option.limit, 100));
+        };
     }
     async searchMember(body, option) {
-        try {
-            const conditions = this.createWhereConditions(body);
-            return await this.findByConditions(option, conditions);
+        if (this.checkForLimit(option)) {
+            try {
+                const conditions = this.createWhereConditions(body);
+                return await this.findByConditions(option, conditions);
+            }
+            catch (e) {
+                console.log(e);
+                return (0, response_type_1.generateResponse)({ items: [] }, ['検索処理でエラーが発生しました。'], 400);
+            }
         }
-        catch (e) {
-            console.log(e);
-            return (0, response_type_1.generateResponse)({ items: [] }, ['検索処理でエラーが発生しました。'], 400);
+        else {
+            return (0, response_type_1.generateResponse)({ items: [] }, ['表示件数はプルダウンから選択してください'], 400);
         }
     }
     createWhereConditions(body) {

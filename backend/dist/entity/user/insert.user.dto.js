@@ -20,13 +20,13 @@ __decorate([
 ], InsertUserDTO.prototype, "id", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: '氏名は必須です' }),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsString)({ message: '氏名は文字列で入力してください' }),
     (0, class_validator_1.MaxLength)(127, { message: '氏名は127文字以内で入力してください' }),
     __metadata("design:type", String)
 ], InsertUserDTO.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: '住所は必須です' }),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsString)({ message: '住所は文字列で入力してください' }),
     (0, class_validator_1.MaxLength)(127, { message: '住所は127文字以内で入力してください' }),
     __metadata("design:type", String)
 ], InsertUserDTO.prototype, "address", void 0);

@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { Users } from 'src/entity/user/users.entity';
 import { CustomObject } from 'src/type/object.type';
-import { isEmpty } from 'lodash';
+import { isEmpty, isEqual } from 'lodash';
 import { IUsers } from 'src/entity/user/user.interface';
 import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
 
@@ -12,16 +12,24 @@ import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
 export class SearchMemberService {
   constructor(@InjectRepository(Users) private repository: Repository<Users>) {}
 
-  async searchMember(body: IUsers, option?: IPaginationOptions) {
-    try {
-      const conditions = this.createWhereConditions(body);
+  async searchMember(body: IUsers, option: IPaginationOptions) {
+    if (this.checkForLimit(option)) {
+      try {
+        const conditions = this.createWhereConditions(body);
 
-      return await this.findByConditions(option, conditions);
-    } catch (e) {
-      console.log(e);
+        return await this.findByConditions(option, conditions);
+      } catch (e) {
+        console.log(e);
+        return generateResponse(
+          { items: [] },
+          ['検索処理でエラーが発生しました。'],
+          400,
+        );
+      }
+    } else {
       return generateResponse(
         { items: [] },
-        ['検索処理でエラーが発生しました。'],
+        ['表示件数はプルダウンから選択してください'],
         400,
       );
     }
@@ -60,4 +68,12 @@ export class SearchMemberService {
     }
     return generateResponse(result);
   }
+
+  private checkForLimit = (option: IPaginationOptions) => {
+    return (
+      isEqual(option.limit, 20) ||
+      isEqual(option.limit, 50) ||
+      isEqual(option.limit, 100)
+    );
+  };
 }

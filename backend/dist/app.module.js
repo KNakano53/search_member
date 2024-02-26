@@ -19,27 +19,15 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forRoot(process.env.NODE_ENV === 'test'
-                ? {
-                    type: 'mysql',
-                    host: 'localhost',
-                    port: 3306,
-                    username: 'root',
-                    password: 'password',
-                    database: 'test_search_member',
-                    entities: [users_entity_1.Users, sequence_entity_1.Sequence],
-                    synchronize: true,
-                }
-                : {
-                    type: 'mysql',
-                    host: 'localhost',
-                    port: 3306,
-                    username: 'root',
-                    password: 'password',
-                    database: 'search_member',
-                    entities: [users_entity_1.Users, sequence_entity_1.Sequence],
-                    synchronize: true,
-                }),
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'mysql',
+                host: 'localhost',
+                port: 3306,
+                username: 'root',
+                password: 'password',
+                database: 'search_member',
+                entities: [users_entity_1.Users, sequence_entity_1.Sequence],
+            }),
             search_member_module_1.SearchMemberModule,
             insert_member_module_1.InsertMemberModule,
         ],
