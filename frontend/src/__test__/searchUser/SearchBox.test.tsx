@@ -144,4 +144,21 @@ describe("API呼び出し", () => {
     expect(queryByRole("table")).not.toBeInTheDocument();
     expect(queryByText("通信に失敗しました")).toBeInTheDocument();
   });
+
+  it("通信エラー表示", async () => {
+    const { getByRole, queryByRole, queryByText } = render(
+      <BrowserRouter>
+        <SearchBox />
+      </BrowserRouter>
+    );
+    const idInput = getByRole("textbox", { name: "住所" });
+    userEvent.type(idInput, "東京");
+
+    await waitFor(() => {
+      userEvent.click(getByRole("button", { name: "検索" }));
+    });
+
+    expect(queryByRole("table")).not.toBeInTheDocument();
+    expect(queryByText("通信に失敗しました")).toBeInTheDocument();
+  });
 });

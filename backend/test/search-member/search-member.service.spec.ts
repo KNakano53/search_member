@@ -32,13 +32,13 @@ const successData = {
 };
 
 const limitFailResult: Response = {
-  statusCode: 400,
+  status: 400,
   message: ['表示件数はプルダウンから選択してください'],
   data: { items: [] },
 };
 
 const successResult: Response = {
-  statusCode: 200,
+  status: 200,
   message: [''],
   data: successData,
 };

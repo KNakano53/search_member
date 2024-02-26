@@ -1,10 +1,21 @@
-import react from "@vitejs/plugin-react";
-import { defineConfig } from "vitest/config";
+import { defineConfig, UserConfig } from "vitest/config";
 import * as path from "path";
 
-export default defineConfig({
-  plugins: [react()],
+const config: UserConfig = {
   test: {
+    coverage: {
+      provider: "v8", // or 'istanbul'
+      reporter: ["text", "json", "html"],
+      reportsDirectory: "../frontend_coverage",
+      exclude: [
+        "**/__test__/**",
+        "**/type/**",
+        ".eslintrc.cjs",
+        "**/**coverage/**",
+        "**/index.tsx",
+        "**/reportWebVitals.ts ",
+      ],
+    },
     globals: true,
     environment: "jsdom",
     include: ["src/**/*.test.{js,ts,jsx,tsx}"],
@@ -13,4 +24,6 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-});
+};
+
+export default defineConfig(config);

@@ -1,5 +1,5 @@
 export type Response = {
-  statusCode: number;
+  status: number;
   message: string[];
   data: unknown;
 };
@@ -7,9 +7,9 @@ export type Response = {
 export function generateResponse(
   data: unknown,
   message?: string[],
-  statusCode?: number,
+  status?: number,
 ): Response {
-  statusCode ??= 200;
+  status ??= 200;
   message ??= [''];
-  return { statusCode: statusCode, message: message, data: data };
+  return { status: status, message: message, data: data };
 }

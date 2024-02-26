@@ -30,12 +30,26 @@ export const getServer = setupServer(
     const selectedPage = new URL(request.url).searchParams.get("page");
     if (selectedPage && selectedPage == "2") {
       return HttpResponse.json<Response>(nextPageResponse);
+    } else if (selectedPage && selectedPage == "3") {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: "server error",
+      });
     }
+
     if (!_.isEmpty(body.id)) {
       if (_.isEqual("TS", body.id)) {
         return HttpResponse.json<Response>(emptyResponse);
       }
       return HttpResponse.json<Response>(idResponse);
+    }
+    if (!_.isEmpty(body.address)) {
+      if (_.isEqual("東京", body.address)) {
+        return new HttpResponse(null, {
+          status: 404,
+          statusText: "server error",
+        });
+      }
     }
     if (!_.isEmpty(body.tel)) {
       if (_.isEqual("000", body.tel)) {
@@ -45,21 +59,26 @@ export const getServer = setupServer(
     }
     return HttpResponse.json<Response>(findAllResponse);
   }),
+
   http.post("http://localhost:3001/insert-member", async ({ request }) => {
     const body = (await request.json()) as {
       name?: string;
       address?: string;
       tel?: string;
     };
-    if (
-      _.isEmpty(body.name) ||
-      _.isEmpty(body.address) ||
-      _.isEmpty(body.tel)
-    ) {
+    if (_.isEmpty(body.tel)) {
       return HttpResponse.json<Response>({
         data: [],
         message: ["登録処理に失敗しました"],
-        statusCode: 400,
+        status: 400,
+      });
+    } else if (_.isEmpty(body.name) || _.isEmpty(body.address)) {
+      return HttpResponse.error();
+    }
+    if (_.isEqual("01234", body.tel)) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: "server error",
       });
     }
     const idNum = 101;
@@ -74,7 +93,7 @@ export const getServer = setupServer(
     return HttpResponse.json<Response>({
       data: [],
       message: ["登録が完了しました", "新規加入者番号:" + userId],
-      statusCode: 200,
+      status: 200,
     });
   })
 );

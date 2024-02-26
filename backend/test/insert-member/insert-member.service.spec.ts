@@ -9,13 +9,13 @@ import { Sequence } from 'src/entity/user/sequence.entity';
 const successResponse = {
   data: [],
   message: ['登録が完了しました', '新規加入者番号:TS0001'],
-  statusCode: 200,
+  status: 200,
 };
 
 const errorResponse = {
   data: [],
   message: ['登録処理に失敗しました'],
-  statusCode: 400,
+  status: 400,
 };
 
 describe('InsertMemberService', () => {

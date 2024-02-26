@@ -9,7 +9,7 @@ import { Response } from 'src/type/response.type';
 import { Repository } from 'typeorm/repository/Repository';
 
 const findErrorResult: Response = {
-  statusCode: 400,
+  status: 400,
   message: ['検索処理でエラーが発生しました。'],
   data: { items: [] },
 };

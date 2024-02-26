@@ -37,8 +37,8 @@ const mockData: UserModel[] = [
 ];
 
 const mockMeta: Meta = {
-  totalPages: 2,
-  totalItems: 2,
+  totalPages: 3,
+  totalItems: 3,
   itemsPerPage: 1,
   currentPage: 1,
   itemCount: 1,
@@ -183,5 +183,16 @@ describe("データ更新", () => {
     ]);
     expect(mockProps.dataState.setData).toHaveBeenCalledWith([]);
     expect(mockProps.metaState.setMeta).not.toHaveBeenCalled();
+  });
+
+  it("通信エラー2", async () => {
+    const { getByRole } = render(<ShowTable {...mockProps} />);
+    await waitFor(async () => {
+      userEvent.click(getByRole("button", { name: "Page 3" }));
+    });
+
+    expect(mockProps.messageState.setMesssage).toHaveBeenCalledWith([
+      "通信に失敗しました",
+    ]);
   });
 });

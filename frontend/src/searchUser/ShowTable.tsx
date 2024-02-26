@@ -67,6 +67,7 @@ export const ShowTable = (props: Props) => {
       .then((response) => {
         if (!response.ok) {
           props.messageState.setMesssage(["通信に失敗しました"]);
+          return;
         }
         response.json().then((json) => {
           props.messageState.setMesssage(json.message);

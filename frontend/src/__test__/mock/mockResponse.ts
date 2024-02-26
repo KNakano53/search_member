@@ -11,13 +11,13 @@ import {
 } from "./mockData";
 
 export interface Response {
-  statusCode: number;
+  status: number;
   message: string[];
   data: unknown;
 }
 
 export const idResponse = {
-  statusCode: 200,
+  status: 200,
   message: [""],
   data: {
     items: idResponseData,
@@ -32,7 +32,7 @@ export const idResponse = {
 };
 
 export const nameResponse = {
-  statusCode: 200,
+  status: 200,
   message: [""],
   data: {
     items: nameResponseData,
@@ -47,7 +47,7 @@ export const nameResponse = {
 };
 
 export const addressResponse = {
-  statusCode: 200,
+  status: 200,
   message: [""],
   data: {
     items: addressResponseData,
@@ -62,7 +62,7 @@ export const addressResponse = {
 };
 
 export const telResponse = {
-  statusCode: 200,
+  status: 200,
   message: [""],
   data: {
     items: telResponseData,
@@ -77,7 +77,7 @@ export const telResponse = {
 };
 
 export const emptyResponse = {
-  statusCode: 200,
+  status: 200,
   message: ["検索結果がありません"],
   data: {
     items: [],
@@ -85,7 +85,7 @@ export const emptyResponse = {
 };
 
 export const errorResponse = {
-  statusCode: 400,
+  status: 400,
   message: ["検索処理でエラーが発生しました。"],
   data: {
     items: [],
@@ -93,7 +93,7 @@ export const errorResponse = {
 };
 
 export const findAllResponse = {
-  statusCode: 200,
+  status: 200,
   message: [""],
   data: {
     items: idResponse,
@@ -108,7 +108,7 @@ export const findAllResponse = {
 };
 
 export const nextPageResponse = {
-  statusCode: 200,
+  status: 200,
   message: [""],
   data: {
     items: nextPageData,
@@ -123,7 +123,7 @@ export const nextPageResponse = {
 };
 
 export const limitChangeResponse = {
-  statusCode: 200,
+  status: 200,
   message: [""],
   data: {
     items: limitChangeData,

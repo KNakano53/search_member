@@ -5,12 +5,12 @@ describe('generateResponse', () => {
   it('should return a response object', () => {
     const data = { items: new Users() };
     const message: string[] = ['Test message'];
-    const statusCode: number = 400;
+    const status: number = 400;
 
-    const result = generateResponse(data, message, statusCode);
+    const result = generateResponse(data, message, status);
 
     expect(result).toEqual({
-      statusCode: statusCode,
+      status: status,
       message: message,
       data: data,
     });
@@ -19,12 +19,12 @@ describe('generateResponse', () => {
   it('param only data', () => {
     const data = { items: new Users() };
     const message: string[] = [''];
-    const statusCode: number = 200;
+    const status: number = 200;
 
     const result = generateResponse(data);
 
     expect(result).toEqual({
-      statusCode: statusCode,
+      status: status,
       message: message,
       data: data,
     });
@@ -33,12 +33,12 @@ describe('generateResponse', () => {
   it('param with data and message', () => {
     const data = { items: new Users() };
     const message: string[] = ['Test message'];
-    const statusCode: number = 200;
+    const status: number = 200;
 
     const result = generateResponse(data, message);
 
     expect(result).toEqual({
-      statusCode: statusCode,
+      status: status,
       message: message,
       data: data,
     });

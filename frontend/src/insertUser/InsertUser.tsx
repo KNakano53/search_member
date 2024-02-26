@@ -34,10 +34,11 @@ export const InsertUser = () => {
       .then((response) => {
         if (!response.ok) {
           setMesssage(["通信に失敗しました"]);
+          return;
         }
         response.json().then((json) => {
           setMesssage(json.message);
-          if (200 == json.statusCode) {
+          if (200 == json.status) {
             setNameInput("");
             setAddressInput("");
             setTelInput("");

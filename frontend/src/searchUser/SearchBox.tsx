@@ -48,6 +48,7 @@ export const SearchBox = () => {
       .then((response) => {
         if (!response.ok) {
           setMesssage(["通信に失敗しました"]);
+          return;
         }
         response.json().then((json) => {
           if (undefined == json.error) {
@@ -64,12 +65,8 @@ export const SearchBox = () => {
   }
 
   const submitHandler = () => {
-    try {
-      setData([]);
-      callApi(id, name, address, tel);
-    } catch (e) {
-      setMesssage(["通信処理に失敗しました"]);
-    }
+    setData([]);
+    callApi(id, name, address, tel);
   };
 
   const resetData = () => {

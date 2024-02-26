@@ -11,7 +11,7 @@ import { EntityManager } from 'typeorm';
 import { Response } from 'src/type/response.type';
 
 const successResult = {
-  statusCode: 200,
+  status: 200,
   message: [''],
   data: {
     items: [
@@ -51,7 +51,7 @@ const successResult = {
 };
 
 const notFindResponse: Response = {
-  statusCode: 200,
+  status: 200,
   message: ['検索結果がありません'],
   data: { items: [] },
 };

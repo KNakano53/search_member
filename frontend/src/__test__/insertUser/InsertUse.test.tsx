@@ -101,4 +101,37 @@ describe("InsertUser", () => {
     });
     expect(getByText("登録処理に失敗しました")).toBeInTheDocument();
   });
+
+  it("通信エラー", async () => {
+    const { getByLabelText, getByText } = render(
+      <Router>
+        <InsertUser />
+      </Router>
+    );
+
+    userEvent.type(getByLabelText("住所"), "東京都新宿区");
+    userEvent.type(getByLabelText("電話番号"), "0123");
+
+    await waitFor(() => {
+      userEvent.click(getByText("登録"));
+    });
+    expect(getByText("通信に失敗しました")).toBeInTheDocument();
+  });
+
+  it("通信エラー2", async () => {
+    const { getByLabelText, getByText } = render(
+      <Router>
+        <InsertUser />
+      </Router>
+    );
+
+    userEvent.type(getByLabelText("氏名"), "テストネーム");
+    userEvent.type(getByLabelText("住所"), "東京都新宿区");
+    userEvent.type(getByLabelText("電話番号"), "01234");
+
+    await waitFor(() => {
+      userEvent.click(getByText("登録"));
+    });
+    expect(getByText("通信に失敗しました")).toBeInTheDocument();
+  });
 });
