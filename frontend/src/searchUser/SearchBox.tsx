@@ -29,20 +29,20 @@ export const SearchBox = () => {
     address: string | undefined,
     tel: string | undefined
   ) {
+    const params = new URLSearchParams();
+    params.append("limit", limit.toString());
+    params.append("id", id || "");
+    params.append("name", name || "");
+    params.append("address", address || "");
+    params.append("tel", tel || "");
     const requestOptions = {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify({
-        id,
-        name,
-        address,
-        tel,
-      }),
     };
-    const url = "http://localhost:3001/search-member?limit=" + limit;
+    const url = "http://localhost:3001/search-member?" + params;
 
     fetch(url, requestOptions)
       .then((response) => {
@@ -145,7 +145,7 @@ export const SearchBox = () => {
           </div>
           <div style={{ marginLeft: "7em" }}>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary btn-search"
               onClick={() => {
                 submitHandler();
               }}
@@ -153,7 +153,7 @@ export const SearchBox = () => {
               検索
             </button>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary btn-reset"
               onClick={() => {
                 resetData();
               }}

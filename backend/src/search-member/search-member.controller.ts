@@ -1,5 +1,4 @@
 import {
-  Body,
   Controller,
   DefaultValuePipe,
   Get,
@@ -7,7 +6,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { SearchMemberService } from './search-member.service';
-import { SearchUserDTO } from 'src/entity/user/search.user.dto';
+import { SearchUserDTO } from '../entity/user/search.user.dto';
 
 @Controller('search-member')
 export class SearchMemberController {
@@ -17,12 +16,18 @@ export class SearchMemberController {
   async searchMemberForPagination(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
     @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit: number = 20,
-    @Body() body: SearchUserDTO,
+    @Query('id') id: string = '',
+    @Query('name') name: string = '',
+    @Query('address') address: string = '',
+    @Query('tel') tel: string = '',
   ) {
-    return await this.service.searchMember(body, {
-      page,
-      limit,
-      route: 'http://localhost:3001/search-member',
-    });
+    return await this.service.searchMember(
+      new SearchUserDTO(id, name, address, tel),
+      {
+        page,
+        limit,
+        route: 'http://localhost:3001/search-member',
+      },
+    );
   }
 }

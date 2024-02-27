@@ -4,6 +4,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 import React from "react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
+import {
+  getInsertError,
+  getInsertMember,
+  getInsertNotFound,
+  getInsertServerError,
+} from "../mock/mockServer";
 
 afterEach(() => cleanup());
 
@@ -66,6 +72,7 @@ describe("InsertUser", () => {
   });
 
   it("リクエスト送信", async () => {
+    getInsertMember.listen();
     const { getByLabelText, getByText } = render(
       <Router>
         <InsertUser />
@@ -83,9 +90,11 @@ describe("InsertUser", () => {
     });
     expect(getByText("登録が完了しました")).toBeInTheDocument();
     expect(getByText("新規加入者番号:TS0101")).toBeInTheDocument();
+    getInsertMember.close();
   });
 
   it("エラーメッセージ表示", async () => {
+    getInsertError.listen();
     const { getByLabelText, getByText } = render(
       <Router>
         <InsertUser />
@@ -100,9 +109,11 @@ describe("InsertUser", () => {
       userEvent.click(getByText("登録"));
     });
     expect(getByText("登録処理に失敗しました")).toBeInTheDocument();
+    getInsertError.close();
   });
 
   it("通信エラー", async () => {
+    getInsertServerError.listen();
     const { getByLabelText, getByText } = render(
       <Router>
         <InsertUser />
@@ -116,9 +127,11 @@ describe("InsertUser", () => {
       userEvent.click(getByText("登録"));
     });
     expect(getByText("通信に失敗しました")).toBeInTheDocument();
+    getInsertServerError.close();
   });
 
   it("通信エラー2", async () => {
+    getInsertNotFound.listen();
     const { getByLabelText, getByText } = render(
       <Router>
         <InsertUser />
@@ -133,5 +146,6 @@ describe("InsertUser", () => {
       userEvent.click(getByText("登録"));
     });
     expect(getByText("通信に失敗しました")).toBeInTheDocument();
+    getInsertNotFound.close();
   });
 });

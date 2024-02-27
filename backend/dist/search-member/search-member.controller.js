@@ -20,8 +20,8 @@ let SearchMemberController = class SearchMemberController {
     constructor(service) {
         this.service = service;
     }
-    async searchMemberForPagination(page = 1, limit = 20, body) {
-        return await this.service.searchMember(body, {
+    async searchMemberForPagination(page = 1, limit = 20, id = '', name = '', address = '', tel = '') {
+        return await this.service.searchMember(new search_user_dto_1.SearchUserDTO(id, name, address, tel), {
             page,
             limit,
             route: 'http://localhost:3001/search-member',
@@ -33,9 +33,12 @@ __decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)('page', new common_1.DefaultValuePipe(1), common_1.ParseIntPipe)),
     __param(1, (0, common_1.Query)('limit', new common_1.DefaultValuePipe(20), common_1.ParseIntPipe)),
-    __param(2, (0, common_1.Body)()),
+    __param(2, (0, common_1.Query)('id')),
+    __param(3, (0, common_1.Query)('name')),
+    __param(4, (0, common_1.Query)('address')),
+    __param(5, (0, common_1.Query)('tel')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number, search_user_dto_1.SearchUserDTO]),
+    __metadata("design:paramtypes", [Number, Number, String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], SearchMemberController.prototype, "searchMemberForPagination", null);
 exports.SearchMemberController = SearchMemberController = __decorate([

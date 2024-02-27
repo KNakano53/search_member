@@ -12,6 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchUserDTO = void 0;
 const class_validator_1 = require("class-validator");
 class SearchUserDTO {
+    constructor(id, name, address, tel) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.tel = tel;
+    }
 }
 exports.SearchUserDTO = SearchUserDTO;
 __decorate([

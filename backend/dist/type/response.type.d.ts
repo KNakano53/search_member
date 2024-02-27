@@ -1,6 +1,6 @@
 export type Response = {
-    statusCode: number;
+    status: number;
     message: string[];
     data: unknown;
 };
-export declare function generateResponse(data: unknown, message?: string[], statusCode?: number): Response;
+export declare function generateResponse(data: unknown, message?: string[], status?: number): Response;

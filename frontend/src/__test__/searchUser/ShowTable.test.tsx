@@ -11,6 +11,12 @@ import {
   pageChangeMeta,
 } from "../mock/mockData";
 import React from "react";
+import {
+  getSearchSeverError,
+  getLimitChange,
+  getSearchNotFound,
+  getPageChange,
+} from "../mock/mockServer";
 
 afterEach(() => {
   cleanup();
@@ -149,6 +155,7 @@ describe("テーブル表示", () => {
 
 describe("データ更新", () => {
   it("表示件数変更", async () => {
+    getLimitChange.listen();
     const { getByLabelText } = render(<ShowTable {...mockProps} />);
     await waitFor(() => {
       userEvent.selectOptions(getByLabelText("表示件数"), ["50"]);
@@ -158,9 +165,11 @@ describe("データ更新", () => {
     expect(mockProps.messageState.setMesssage).toHaveBeenCalledWith([""]);
     expect(mockProps.dataState.setData).toHaveBeenCalledWith(limitChangeData);
     expect(mockProps.metaState.setMeta).toHaveBeenCalledWith(limitChageMeta);
+    getLimitChange.close();
   });
 
   it("表示ページ変更", async () => {
+    getPageChange.listen();
     const { getByRole } = render(<ShowTable {...mockProps} />);
     await waitFor(async () => {
       userEvent.click(getByRole("button", { name: "Next page" }));
@@ -169,9 +178,11 @@ describe("データ更新", () => {
     expect(mockProps.messageState.setMesssage).toHaveBeenCalledWith([""]);
     expect(mockProps.dataState.setData).toHaveBeenCalledWith(nextPageData);
     expect(mockProps.metaState.setMeta).toHaveBeenCalledWith(pageChangeMeta);
+    getPageChange.close();
   });
 
   it("通信エラー", async () => {
+    getSearchSeverError.listen();
     const { getByLabelText } = render(<ShowTable {...mockProps} />);
     await waitFor(() => {
       userEvent.selectOptions(getByLabelText("表示件数"), ["100"]);
@@ -183,9 +194,11 @@ describe("データ更新", () => {
     ]);
     expect(mockProps.dataState.setData).toHaveBeenCalledWith([]);
     expect(mockProps.metaState.setMeta).not.toHaveBeenCalled();
+    getSearchSeverError.close();
   });
 
   it("通信エラー2", async () => {
+    getSearchNotFound.listen();
     const { getByRole } = render(<ShowTable {...mockProps} />);
     await waitFor(async () => {
       userEvent.click(getByRole("button", { name: "Page 3" }));
@@ -194,5 +207,6 @@ describe("データ更新", () => {
     expect(mockProps.messageState.setMesssage).toHaveBeenCalledWith([
       "通信に失敗しました",
     ]);
+    getSearchNotFound.close();
   });
 });

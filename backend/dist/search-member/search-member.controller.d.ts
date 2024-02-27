@@ -1,7 +1,6 @@
 import { SearchMemberService } from './search-member.service';
-import { SearchUserDTO } from 'src/entity/user/search.user.dto';
 export declare class SearchMemberController {
     private service;
     constructor(service: SearchMemberService);
-    searchMemberForPagination(page: number, limit: number, body: SearchUserDTO): Promise<import("../type/response.type").Response>;
+    searchMemberForPagination(page?: number, limit?: number, id?: string, name?: string, address?: string, tel?: string): Promise<import("../type/response.type").Response>;
 }

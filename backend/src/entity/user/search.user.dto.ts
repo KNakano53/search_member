@@ -7,6 +7,12 @@ import {
 } from 'class-validator';
 
 export class SearchUserDTO implements IUsers {
+  constructor(id?: string, name?: string, address?: string, tel?: string) {
+    this.id = id;
+    this.name = name;
+    this.address = address;
+    this.tel = tel;
+  }
   @ValidateIf((o) => o.id != '' && o.id != undefined)
   @IsString({ message: '管理者番号は文字列で入力してください' })
   @MaxLength(6, { message: '加入者番号は6文字以下で入力してください' })

@@ -43,25 +43,22 @@ export const ShowTable = (props: Props) => {
     selectedPage: number,
     pageLimit?: number
   ) {
+    const params = new URLSearchParams();
+    params.append("page", selectedPage.toString());
+    params.append("limit", pageLimit?.toString() || "");
+    params.append("id", param.id || "");
+    params.append("name", param.name || "");
+    params.append("address", param.address || "");
+    params.append("tel", param.tel || "");
     const requestOptions = {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify({
-        id: param.id,
-        name: param.name,
-        address: param.address,
-        tel: param.tel,
-      }),
     };
     pageLimit ??= meta.itemsPerPage;
-    const url =
-      "http://localhost:3001/search-member?page=" +
-      selectedPage +
-      "&limit=" +
-      pageLimit;
+    const url = "http://localhost:3001/search-member?" + params;
 
     fetch(url, requestOptions)
       .then((response) => {

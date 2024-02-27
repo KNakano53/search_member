@@ -90,9 +90,16 @@ describe('SearchMemberController', () => {
         id: '',
       };
 
-      expect(await controller.searchMemberForPagination(1, 20, dto)).toBe(
-        successResult,
-      );
+      expect(
+        await controller.searchMemberForPagination(
+          1,
+          20,
+          dto.id,
+          dto.name,
+          dto.address,
+          dto.tel,
+        ),
+      ).toBe(successResult);
     });
 
     it('should return a paginated list of members with default page and limit', async () => {
@@ -104,7 +111,14 @@ describe('SearchMemberController', () => {
       };
 
       expect(
-        await controller.searchMemberForPagination(undefined, undefined, dto),
+        await controller.searchMemberForPagination(
+          undefined,
+          undefined,
+          dto.id,
+          dto.name,
+          dto.address,
+          dto.tel,
+        ),
       ).toBe(successResult);
     });
 
@@ -116,9 +130,16 @@ describe('SearchMemberController', () => {
         id: '',
       };
 
-      expect(await controller.searchMemberForPagination(2, 50, dto)).toBe(
-        successResult,
-      );
+      expect(
+        await controller.searchMemberForPagination(
+          2,
+          50,
+          dto.id,
+          dto.name,
+          dto.address,
+          dto.tel,
+        ),
+      ).toBe(successResult);
     });
   });
 });

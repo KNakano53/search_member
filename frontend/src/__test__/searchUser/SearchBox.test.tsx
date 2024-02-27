@@ -3,6 +3,13 @@ import { SearchBox } from "../../searchUser/SearchBox";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+import {
+  getEmptyResponse,
+  getSearchSeverError,
+  getSearchError,
+  getIdResponse,
+  getSearchNotFound,
+} from "../mock/mockServer";
 
 afterEach(() => cleanup());
 
@@ -75,6 +82,7 @@ describe("検索ボックス", () => {
 
 describe("API呼び出し", () => {
   it("検索正常処理", async () => {
+    getIdResponse.listen();
     const { getByRole, queryByRole } = render(
       <BrowserRouter>
         <SearchBox />
@@ -92,9 +100,11 @@ describe("API呼び出し", () => {
     expect(queryByRole("cell", { name: "ID検索 氏名" })).toBeInTheDocument();
     expect(queryByRole("cell", { name: "ID検索住所" })).toBeInTheDocument();
     expect(queryByRole("cell", { name: "012345678" })).toBeInTheDocument();
+    getIdResponse.close();
   });
 
   it("検索結果0件", async () => {
+    getEmptyResponse.listen();
     const { getByRole, queryByRole, queryByText } = render(
       <BrowserRouter>
         <SearchBox />
@@ -109,9 +119,11 @@ describe("API呼び出し", () => {
 
     expect(queryByRole("table")).not.toBeInTheDocument();
     expect(queryByText("検索結果がありません")).toBeInTheDocument();
+    getEmptyResponse.close();
   });
 
   it("検索エラー表示", async () => {
+    getSearchError.listen();
     const { getByRole, queryByRole, queryByText } = render(
       <BrowserRouter>
         <SearchBox />
@@ -126,9 +138,11 @@ describe("API呼び出し", () => {
 
     expect(queryByRole("table")).not.toBeInTheDocument();
     expect(queryByText("検索処理でエラーが発生しました。")).toBeInTheDocument();
+    getSearchError.close();
   });
 
-  it("通信エラー表示", async () => {
+  it("通信エラー表示1", async () => {
+    getSearchNotFound.listen();
     const { getByRole, queryByRole, queryByText } = render(
       <BrowserRouter>
         <SearchBox />
@@ -143,9 +157,11 @@ describe("API呼び出し", () => {
 
     expect(queryByRole("table")).not.toBeInTheDocument();
     expect(queryByText("通信に失敗しました")).toBeInTheDocument();
+    getSearchNotFound.close();
   });
 
-  it("通信エラー表示", async () => {
+  it("通信エラー表示2", async () => {
+    getSearchSeverError.listen();
     const { getByRole, queryByRole, queryByText } = render(
       <BrowserRouter>
         <SearchBox />
@@ -160,5 +176,6 @@ describe("API呼び出し", () => {
 
     expect(queryByRole("table")).not.toBeInTheDocument();
     expect(queryByText("通信に失敗しました")).toBeInTheDocument();
+    getSearchSeverError.close();
   });
 });
