@@ -14,6 +14,7 @@ const config: UserConfig = {
         "**/**coverage/**",
         "**/index.tsx",
         "**/reportWebVitals.ts ",
+        "**/build/**",
       ],
     },
     globals: true,
