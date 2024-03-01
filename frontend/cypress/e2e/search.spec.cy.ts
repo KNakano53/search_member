@@ -9,6 +9,8 @@ import {
   notFound,
   page1,
   page2,
+  searchError,
+  serverError,
 } from "./intercept/search.intercept";
 
 describe("検索機能", () => {
@@ -80,6 +82,36 @@ describe("検索機能", () => {
     cy.get(".message").should("be.visible");
     cy.get(".message").should("contain", "検索結果がありません");
     cy.get(".resultTable").should("not.exist");
+  });
+
+  it("通信エラー時に適切なメッセージが表示されること", () => {
+    searchError();
+    cy.get("#inputUserID").type("TS0001");
+    cy.get("#inputUserName").type("山田 太郎");
+    cy.get("#inputUserAddress").type("東京都港区");
+    cy.get("#inputUserTel").type("8012345678");
+
+    // 検索ボタンをクリック
+    cy.get(".btn-search").click();
+    cy.wait("@searchError");
+
+    cy.get(".message").should("be.visible");
+    cy.get(".message").should("contain", "通信に失敗しました");
+  });
+
+  it("サーバーエラー時に適切なメッセージが表示されること", () => {
+    serverError();
+    cy.get("#inputUserID").type("TS0001");
+    cy.get("#inputUserName").type("山田 太郎");
+    cy.get("#inputUserAddress").type("東京都港区");
+    cy.get("#inputUserTel").type("8012345678");
+
+    // 検索ボタンをクリック
+    cy.get(".btn-search").click();
+    cy.wait("@serverError");
+
+    cy.get(".message").should("be.visible");
+    cy.get(".message").should("contain", "通信に失敗しました");
   });
 
   it("ページ番号ボタンを使ってページを切り替えることができること", () => {
@@ -169,7 +201,7 @@ describe("検索機能", () => {
     cy.get(".table tbody tr td").eq(2).should("contain", "東京都港区");
     cy.get(".table tbody tr td").eq(3).should("contain", "9012345678");
 
-    // 検索ボタンをクリック
+    // 1ページ目へ移動
     cy.get('[aria-label="Previous page"]').click();
     cy.wait("@page1");
 
@@ -293,5 +325,10 @@ describe("検索機能", () => {
     // 検索結果が表示されていることを確認
     cy.get(".resultTable").should("be.visible");
     cy.get("#pageLimit").should("have.value", "100");
+  });
+
+  it("登録画面へ遷移できること", () => {
+    cy.get(".btn-insert").click();
+    cy.location("pathname").should("eq", "/insertUser");
   });
 });

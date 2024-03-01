@@ -68,7 +68,7 @@ export const InsertUser = () => {
     <div className="insertUser" data-testid="insert-user">
       <h1 className="text-center">加入者登録</h1>
       <Link to={"/"}>
-        <button className="btn btn-primary position-left">戻る</button>
+        <button className="btn btn-primary position-left btn-home">戻る</button>
       </Link>
       <div className="insertForm mx-auto">
         <div>
@@ -115,7 +115,7 @@ export const InsertUser = () => {
         </div>
         <div style={{ marginLeft: "7em" }}>
           <button
-            className="btn btn-primary"
+            className="btn btn-primary btn-submit"
             onClick={() => {
               submitHandler();
             }}
@@ -123,7 +123,7 @@ export const InsertUser = () => {
             登録
           </button>
           <button
-            className="btn btn-primary"
+            className="btn btn-primary btn-reset"
             onClick={() => {
               resetData();
             }}

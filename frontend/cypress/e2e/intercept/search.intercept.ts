@@ -44,6 +44,18 @@ export const notFound = () => {
   }).as("notFound");
 };
 
+export const searchError = () => {
+  cy.intercept("GET", "http://localhost:3001/search-member?*", {
+    statusCode: 500,
+  }).as("searchError");
+};
+
+export const serverError = () => {
+  cy.intercept("GET", "http://localhost:3001/search-member?*", {
+    forceNetworkError: true,
+  }).as("serverError");
+};
+
 export const findOnes = () => {
   cy.intercept("GET", "http://localhost:3001/search-member?limit=20&*", {
     status: 200,
